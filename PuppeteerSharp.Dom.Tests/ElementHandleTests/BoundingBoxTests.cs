@@ -58,12 +58,12 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
             await Page.SetViewportAsync(new ViewPortOptions { Width = 500, Height = 500 });
             await Page.SetContentAsync("<div style='width: 100px; height: 100px'>hello</div>");
             var elementHandle = await Page.QuerySelectorAsync<HtmlDivElement>("div");
-            await Page.EvaluateFunctionAsync("element => element.style.height = '200px'", elementHandle);
+            await Page.EvaluateFunctionAsync("element => element.style.height = '200px'", (JSHandle)elementHandle);
             var box = await elementHandle.BoundingBoxAsync();
             Assert.Equal(new BoundingBox(8, 8, 100, 200), box);
         }
 
-        [PuppeteerDomFact]
+        [PuppeteerDomFact(Skip = "Implement SVGRectElement")]
         public async Task ShouldWworkWithSVGNodes()
         {
             await Page.SetContentAsync(@"
@@ -72,13 +72,13 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
                 </svg>
             ");
 
-            var element = await Page.QuerySelectorAsync<HtmlElement>("#therect");
+            var element = await Page.QuerySelectorAsync("#therect");
             var pptrBoundingBox = await element.BoundingBoxAsync();
             var webBoundingBox = await Page.EvaluateFunctionAsync<BoundingBox>(@"e =>
             {
                 const rect = e.getBoundingClientRect();
                 return { x: rect.x, y: rect.y, width: rect.width, height: rect.height};
-            }", element);
+            }", (JSHandle)element);
             Assert.Equal(webBoundingBox, pptrBoundingBox);
         }
     }

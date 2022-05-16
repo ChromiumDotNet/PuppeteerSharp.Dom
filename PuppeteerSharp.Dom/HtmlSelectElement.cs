@@ -40,9 +40,9 @@ namespace PuppeteerSharp.Dom
                     return option;
                 }",
                 value,
-                text).ConfigureAwait(true);
+                text).ConfigureAwait(false);
 
-            await EvaluateFunctionInternalAsync("(e, item, before) => e.add(item, before)", element, before).ConfigureAwait(true);
+            await EvaluateFunctionInternalAsync("(e, item, before) => e.add(item, before)", element, before).ConfigureAwait(false);
 
             return element;
         }

@@ -19,7 +19,7 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
             const string expected = "Testing123";
 
             await Page.GoToAsync(TestConstants.ServerUrl + "/input/button.html");
-            var button = await Page.QuerySelectorAsync("button");
+            var button = await Page.QuerySelectorAsync<HtmlButtonElement>("button");
 
             var before = await button.GetTextContentAsync();
 

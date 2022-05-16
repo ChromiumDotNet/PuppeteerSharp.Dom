@@ -23,7 +23,7 @@ namespace PuppeteerSharp.Dom
         /// <returns>IAsyncEnumerator</returns>
         public async IAsyncEnumerator<File> GetAsyncEnumerator(CancellationToken token)
         {
-            var arr = await GetArray<File>().ConfigureAwait(true);
+            var arr = await GetArray<File>().ConfigureAwait(false);
 
             foreach (var element in arr)
             {
@@ -60,7 +60,7 @@ namespace PuppeteerSharp.Dom
         /// <returns>Task</returns>
         public async Task<File[]> ToArrayAsync()
         {
-            return (await GetArray<File>().ConfigureAwait(true)).ToArray();
+            return (await GetArray<File>().ConfigureAwait(false)).ToArray();
         }
     }
 }

@@ -191,9 +191,9 @@ namespace PuppeteerSharp.Dom
                     return array;
                 }",
                 this,
-                expression).ConfigureAwait(true);
-            var properties = await arrayHandle.GetArray<HtmlElement>().ConfigureAwait(true);
-            await arrayHandle.DisposeAsync().ConfigureAwait(true);
+                expression).ConfigureAwait(false);
+            var properties = await arrayHandle.GetArray<HtmlElement>().ConfigureAwait(false);
+            await arrayHandle.DisposeAsync().ConfigureAwait(false);
 
             return properties.ToArray();
         }
@@ -331,7 +331,7 @@ namespace PuppeteerSharp.Dom
                 @"(object, propertyName) => {
                     return object[propertyName];
                 }",
-                "style").ConfigureAwait(true);
+                "style").ConfigureAwait(false);
 
             return handle;
         }

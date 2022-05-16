@@ -21,13 +21,21 @@ namespace PuppeteerSharp.Dom
         /// <summary>CreateObject</summary>
         static object? CreateObjectInternal(string className, PuppeteerSharp.JSHandle jsHandle)
         {
-            if ((className == "StyleSheet"))
+            if ((className == "Range"))
             {
-                return new StyleSheet(className, jsHandle);
+                return new Range(className, jsHandle);
+            }
+            if ((className == "Document"))
+            {
+                return new Document(className, jsHandle);
             }
             if ((className == "Node"))
             {
                 return new Node(className, jsHandle);
+            }
+            if ((className == "StyleSheet"))
+            {
+                return new StyleSheet(className, jsHandle);
             }
             if ((className == "Element"))
             {
@@ -361,81 +369,1031 @@ namespace PuppeteerSharp.Dom
             {
                 return new MediaList(className, jsHandle);
             }
+            if ((className == "StyleSheetList"))
+            {
+                return new StyleSheetList(className, jsHandle);
+            }
+            if ((className == "DOMStringList"))
+            {
+                return new StringList(className, jsHandle);
+            }
+            if ((className == "DocumentType"))
+            {
+                return new DocumentType(className, jsHandle);
+            }
             return null;
         }
     }
     
     ///  <summary>
-    ///  Represent a stylesheet for collecting style information.
+    ///  The Range interface represents a fragment of a document that can
+    ///  contain nodes and parts of text nodes in a given document.
     ///  </summary>
-    public partial class StyleSheet : DomHandle
+    public partial class Range : DomHandle
     {
         
         ///  <summary>
-        ///  Gets the style sheet language for this style sheet.
+        ///  Selects the start of the given range by using the given reference
+        ///  node and a relative offset.
         ///  </summary>
-        public virtual System.Threading.Tasks.Task<String> GetTypeAsync()
+        ///  <param name="refNode">The reference node to use.</param>
+        ///  <param name="offset">
+        ///  The offset relative to the reference node.
+        ///  </param>
+        public virtual System.Threading.Tasks.Task SetStartAsync(Node refNode, Int32 offset)
         {
-            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.type; }");
+            return this.EvaluateFunctionInternalAsync("(element, refNode, offset) => { return element.setStart(refNode, offset); }", refNode, offset);
         }
         
         ///  <summary>
-        ///  Gets the value of the attribute, which is its location. For inline
-        ///  style sheets, the value of this attribute is null.
+        ///  Selects the end of the given range by using the given reference
+        ///  node and a relative offset.
         ///  </summary>
-        public virtual System.Threading.Tasks.Task<String> GetHrefAsync()
+        ///  <param name="refNode">The reference node to use.</param>
+        ///  <param name="offset">
+        ///  The offset relative to the reference node.
+        ///  </param>
+        public virtual System.Threading.Tasks.Task SetEndAsync(Node refNode, Int32 offset)
         {
-            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.href; }");
+            return this.EvaluateFunctionInternalAsync("(element, refNode, offset) => { return element.setEnd(refNode, offset); }", refNode, offset);
         }
         
         ///  <summary>
-        ///  Gets the element that associates this style sheet with the
+        ///  Selects the start of the given range by using an inclusive
+        ///  reference node.
+        ///  </summary>
+        ///  <param name="refNode">The reference node to use.</param>
+        public virtual System.Threading.Tasks.Task SetStartBeforeAsync(Node refNode)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, refNode) => { return element.setStartBefore(refNode); }", refNode);
+        }
+        
+        ///  <summary>
+        ///  Selects the end of the given range by using an inclusive reference
+        ///  node.
+        ///  </summary>
+        ///  <param name="refNode">The reference node to use.</param>
+        public virtual System.Threading.Tasks.Task SetEndBeforeAsync(Node refNode)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, refNode) => { return element.setEndBefore(refNode); }", refNode);
+        }
+        
+        ///  <summary>
+        ///  Selects the start of the given range by using an exclusive
+        ///  reference node.
+        ///  </summary>
+        ///  <param name="refNode">The reference node to use.</param>
+        public virtual System.Threading.Tasks.Task SetStartAfterAsync(Node refNode)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, refNode) => { return element.setStartAfter(refNode); }", refNode);
+        }
+        
+        ///  <summary>
+        ///  Selects the end of the given range by using an exclusive reference
+        ///  node.
+        ///  </summary>
+        ///  <param name="refNode">The referenced node.</param>
+        public virtual System.Threading.Tasks.Task SetEndAfterAsync(Node refNode)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, refNode) => { return element.setEndAfter(refNode); }", refNode);
+        }
+        
+        ///  <summary>
+        ///  Collapses the range to a single level.
+        ///  </summary>
+        ///  <param name="toStart">
+        ///  Determines if only the first level should be selected.
+        ///  </param>
+        public virtual System.Threading.Tasks.Task CollapseAsync(Boolean toStart)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, toStart) => { return element.collapse(toStart); }", toStart);
+        }
+        
+        ///  <summary>
+        ///  Selects the contained node.
+        ///  </summary>
+        ///  <param name="refNode">The node to use.</param>
+        public virtual System.Threading.Tasks.Task SelectNodeAsync(Node refNode)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, refNode) => { return element.selectNode(refNode); }", refNode);
+        }
+        
+        ///  <summary>
+        ///  Selects the contained nodes by taking a reference node as origin.
+        ///  </summary>
+        ///  <param name="refNode">The reference node.</param>
+        public virtual System.Threading.Tasks.Task SelectNodeContentsAsync(Node refNode)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, refNode) => { return element.selectNodeContents(refNode); }", refNode);
+        }
+        
+        ///  <summary>
+        ///  Clears the contained nodes.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task DeleteContentsAsync()
+        {
+            return this.EvaluateFunctionInternalAsync("(element) => { return element.deleteContents(); }");
+        }
+        
+        ///  <summary>
+        ///  Clears the node representation and returns a document fragment with
+        ///  the originally contained nodes.
+        ///  </summary>
+        ///  <returns>The document fragment containing the nodes.</returns>
+        public virtual System.Threading.Tasks.Task<DocumentFragment> ExtractContentsAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<DocumentFragment>("(element) => { return element.extractContents(); }");
+        }
+        
+        ///  <summary>
+        ///  Creates a document fragement of the contained nodes.
+        ///  </summary>
+        ///  <returns>The created document fragment.</returns>
+        public virtual System.Threading.Tasks.Task<DocumentFragment> CloneContentsAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<DocumentFragment>("(element) => { return element.cloneContents(); }");
+        }
+        
+        ///  <summary>
+        ///  Inserts a node into the range.
+        ///  </summary>
+        ///  <param name="node">The node to include.</param>
+        public virtual System.Threading.Tasks.Task InsertNodeAsync(Node node)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, node) => { return element.insertNode(node); }", node);
+        }
+        
+        ///  <summary>
+        ///  Includes the given node with its siblings in the range.
+        ///  </summary>
+        ///  <param name="newParent">The range to surround.</param>
+        public virtual System.Threading.Tasks.Task SurroundContentsAsync(Node newParent)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, newParent) => { return element.surroundContents(newParent); }", newParent);
+        }
+        
+        ///  <summary>
+        ///  Creates a copy of this range.
+        ///  </summary>
+        ///  <returns>The copy representing the same range.</returns>
+        public virtual System.Threading.Tasks.Task<Range> CloneRangeAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Range>("(element) => { return element.cloneRange(); }");
+        }
+        
+        ///  <summary>
+        ///  Detaches the range from the DOM tree.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task DetachAsync()
+        {
+            return this.EvaluateFunctionInternalAsync("(element) => { return element.detach(); }");
+        }
+        
+        ///  <summary>
+        ///  Checks if the given node is within this range by using a offset.
+        ///  </summary>
+        ///  <param name="node">The node to check for.</param>
+        ///  <param name="offset">The offset to use.</param>
+        ///  <returns>
+        ///  True if the point is within the range, otherwise false.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<Boolean> IsPointInRangeAsync(Node node, Int32 offset)
+        {
+            return this.EvaluateFunctionInternalAsync<Boolean>("(element, node, offset) => { return element.isPointInRange(node, offset); }", node, offset);
+        }
+        
+        ///  <summary>
+        ///  Compares the boundary points of the range.
+        ///  </summary>
+        ///  <param name="how">
+        ///  Determines how these points should be compared.
+        ///  </param>
+        ///  <param name="sourceRange">
+        ///  The range of the other boundary points.
+        ///  </param>
+        ///  <returns>A relative position.</returns>
+        public virtual System.Threading.Tasks.Task<RangePosition> CompareBoundaryPointsAsync(RangeType how, Range sourceRange)
+        {
+            return this.EvaluateFunctionInternalAsync<RangePosition>("(element, how, sourceRange) => { return element.compareBoundaryPoints(how, source" +
+                    "Range); }", how, sourceRange);
+        }
+        
+        ///  <summary>
+        ///  Compares the node to the given offset and returns the relative
+        ///  position.
+        ///  </summary>
+        ///  <param name="node">The node to use.</param>
+        ///  <param name="offset">The offset to use.</param>
+        ///  <returns>The relative position in the range.</returns>
+        public virtual System.Threading.Tasks.Task<RangePosition> ComparePointAsync(Node node, Int32 offset)
+        {
+            return this.EvaluateFunctionInternalAsync<RangePosition>("(element, node, offset) => { return element.comparePoint(node, offset); }", node, offset);
+        }
+        
+        ///  <summary>
+        ///  Checks if the given node is contained in this range.
+        ///  </summary>
+        ///  <param name="node">The node to check for.</param>
+        ///  <returns>
+        ///  True if the node is within the range, otherwise false.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<Boolean> IntersectsNodeAsync(Node node)
+        {
+            return this.EvaluateFunctionInternalAsync<Boolean>("(element, node) => { return element.intersectsNode(node); }", node);
+        }
+        
+        ///  <summary>
+        ///  Gets the node that starts the container.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Node> GetHeadAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Node>("(element) => { return element.startContainer; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the offset of the StartContainer in the document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Int32> GetStartAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<Int32>("(element) => { return element.startOffset; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the node that ends the container.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Node> GetTailAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Node>("(element) => { return element.endContainer; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the offset of the EndContainer in the document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Int32> GetEndAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<Int32>("(element) => { return element.endOffset; }");
+        }
+        
+        ///  <summary>
+        ///  Gets a value that indicates if the representation is collapsed.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Boolean> GetIsCollapsedAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<Boolean>("(element) => { return element.collapsed; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the common ancestor node of the contained range.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Node> GetCommonAncestorAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Node>("(element) => { return element.commonAncestorContainer; }");
+        }
+    }
+    
+    ///  <summary>
+    ///  The Document interface serves as an entry point to the web page's
+    ///  content.
+    ///  </summary>
+    public partial class Document : Node
+    {
+        
+        ///  <summary>
+        ///  Causes the Document to be replaced in-place, as if it was a new
+        ///  Document object, but reusing the previous object, which is then
+        ///  returned.
+        ///  </summary>
+        ///  <param name="type">The new content type.</param>
+        ///  <param name="replace">
+        ///  Special annotation to replace the history.
+        ///  </param>
+        public virtual System.Threading.Tasks.Task<Document> OpenAsync(String type, String replace)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Document>("(element, type, replace) => { return element.open(type, replace); }", type, replace);
+        }
+        
+        ///  <summary>
+        ///  Finishes writing to a document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task CloseAsync()
+        {
+            return this.EvaluateFunctionInternalAsync("(element) => { return element.close(); }");
+        }
+        
+        ///  <summary>
+        ///  Writes text to a document.
+        ///  </summary>
+        ///  <param name="content">
+        ///  The text to be written on the document.
+        ///  </param>
+        public virtual System.Threading.Tasks.Task WriteAsync(String content)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, content) => { return element.write(content); }", content);
+        }
+        
+        ///  <summary>
+        ///  Writes a line of text to a document.
+        ///  </summary>
+        ///  <param name="content">
+        ///  The text to be written on the document.
+        ///  </param>
+        public virtual System.Threading.Tasks.Task WritelnAsync(String content)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, content) => { return element.writeln(content); }", content);
+        }
+        
+        ///  <summary>
+        ///  Loads the document content from the given url.
+        ///  </summary>
+        ///  <param name="url">The url that hosts the content.</param>
+        public virtual System.Threading.Tasks.Task LoadAsync(String url)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, url) => { return element.load(url); }", url);
+        }
+        
+        ///  <summary>
+        ///  Returns a list of elements with a given name in the HTML document.
+        ///  </summary>
+        ///  <param name="name">
+        ///  The value of the name attribute of the element.
+        ///  </param>
+        ///  <returns>A collection of HTML elements.</returns>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<Element>> GetElementsByNameAsync(String name)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<Element>>("(element, name) => { return element.getElementsByName(name); }", name);
+        }
+        
+        ///  <summary>
+        ///  Returns a set of elements which have all the given class names.
+        ///  </summary>
+        ///  <param name="classNames">
+        ///  A string representing the list of class names to match; class names
+        ///  are separated by whitespace.
+        ///  </param>
+        ///  <returns>A collection of elements.</returns>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<Element>> GetElementsByClassNameAsync(String classNames)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<Element>>("(element, classNames) => { return element.getElementsByClassName(classNames); }", classNames);
+        }
+        
+        ///  <summary>
+        ///  Returns a NodeList of elements with the given tag name. The
+        ///  complete document is searched, including the root node.
+        ///  </summary>
+        ///  <param name="tagName">
+        ///  A string representing the name of the elements. The special string
+        ///  "*" represents all elements.
+        ///  </param>
+        ///  <returns>
+        ///  A collection of elements in the order they appear in the tree.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<Element>> GetElementsByTagNameAsync(String tagName)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<Element>>("(element, tagName) => { return element.getElementsByTagName(tagName); }", tagName);
+        }
+        
+        ///  <summary>
+        ///  Returns a list of elements with the given tag name belonging to the
+        ///  given namespace. The complete document is searched, including the
+        ///  root node.
+        ///  </summary>
+        ///  <param name="namespaceUri">
+        ///  The namespace URI of elements to look for.
+        ///  </param>
+        ///  <param name="tagName">
+        ///  Either the local name of elements to look for or the special value
+        ///  "*", which matches all elements.
+        ///  </param>
+        ///  <returns>
+        ///  A collection of elements in the order they appear in the tree.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<Element>> GetElementsByTagNameNSAsync(String namespaceUri, String tagName)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<Element>>("(element, namespaceUri, tagName) => { return element.getElementsByTagNameNS(names" +
+                    "paceUri, tagName); }", namespaceUri, tagName);
+        }
+        
+        ///  <summary>
+        ///  Creates a new Range object.
+        ///  </summary>
+        ///  <returns>The range.</returns>
+        public virtual System.Threading.Tasks.Task<Range> CreateRangeAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Range>("(element) => { return element.createRange(); }");
+        }
+        
+        ///  <summary>
+        ///  Creates an empty DocumentFragment object.
+        ///  </summary>
+        ///  <returns>The new document fragment.</returns>
+        public virtual System.Threading.Tasks.Task<DocumentFragment> CreateDocumentFragmentAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<DocumentFragment>("(element) => { return element.createDocumentFragment(); }");
+        }
+        
+        ///  <summary>
+        ///  Creates a new element with the given tag name.
+        ///  </summary>
+        ///  <param name="name">
+        ///  A string that specifies the type of element to be created.
+        ///  </param>
+        ///  <returns>The created element object.</returns>
+        public virtual System.Threading.Tasks.Task<Element> CreateElementAsync(String name)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Element>("(element, name) => { return element.createElement(name); }", name);
+        }
+        
+        ///  <summary>
+        ///  Creates a new element with the given tag name and namespace URI.
+        ///  </summary>
+        ///  <param name="namespaceUri">
+        ///  Specifies the namespace URI to associate with the element.
+        ///  </param>
+        ///  <param name="name">
+        ///  A string that specifies the type of element to be created.
+        ///  </param>
+        ///  <returns>The created element.</returns>
+        public virtual System.Threading.Tasks.Task<Element> CreateElementNSAsync(String namespaceUri, String name)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Element>("(element, namespaceUri, name) => { return element.createElementNS(namespaceUri, n" +
+                    "ame); }", namespaceUri, name);
+        }
+        
+        ///  <summary>
+        ///  Creates an Attr of the given name.
+        ///  </summary>
+        ///  <param name="name">
+        ///  The name of the attribute.
+        ///  </param>
+        ///  <returns>
+        ///  A new Attr object with the nodeName attribute set to name, and
+        ///  localName, prefix, and namespaceURI set to null. The value of the
+        ///  attribute is the empty string.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<Attr> CreateAttributeAsync(String name)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Attr>("(element, name) => { return element.createAttribute(name); }", name);
+        }
+        
+        ///  <summary>
+        ///  Creates an attribute of the given qualified name and namespace URI.
+        ///  </summary>
+        ///  <param name="namespaceUri">
+        ///  The namespace URI of the attribute to create.
+        ///  </param>
+        ///  <param name="name">
+        ///  The qualified name of the attribute to instantiate.
+        ///  </param>
+        ///  <returns>A new Attr object.</returns>
+        public virtual System.Threading.Tasks.Task<Attr> CreateAttributeNSAsync(String namespaceUri, String name)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Attr>("(element, namespaceUri, name) => { return element.createAttributeNS(namespaceUri," +
+                    " name); }", namespaceUri, name);
+        }
+        
+        ///  <summary>
+        ///  Creates a new text node and returns it.
+        ///  </summary>
+        ///  <param name="data">
+        ///  A string containing the data to be put in the text node.
+        ///  </param>
+        ///  <returns>The created text node.</returns>
+        public virtual System.Threading.Tasks.Task<Text> CreateTextNodeAsync(String data)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Text>("(element, data) => { return element.createTextNode(data); }", data);
+        }
+        
+        ///  <summary>
+        ///  Creates a copy of a node from an external document that can be
+        ///  inserted into the current document.
+        ///  </summary>
+        ///  <param name="externalNode">
+        ///  The node from another document to be imported.
+        ///  </param>
+        ///  <param name="deep">
+        ///  Optional argument, indicating whether the descendants of the
+        ///  imported node need to be imported.
+        ///  </param>
+        ///  <returns>
+        ///  The new node that is imported into the document. The new node's
+        ///  parentNode is null, since it has not yet been inserted into the
+        ///  document tree.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<Node> ImportNodeAsync(Node externalNode, Boolean deep)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Node>("(element, externalNode, deep) => { return element.importNode(externalNode, deep);" +
+                    " }", externalNode, deep);
+        }
+        
+        ///  <summary>
+        ///  Adopts a node from an external document. The node and its subtree
+        ///  is removed from the document it's in (if any), and its
+        ///  ownerDocument is changed to the current document. The node can then
+        ///  be inserted into the current document. The new node's parentNode is
+        ///  null, since it has not yet been inserted into the document tree.
+        ///  </summary>
+        ///  <param name="externalNode">
+        ///  The node from another document to be adopted.
+        ///  </param>
+        ///  <returns>
+        ///  The adopted node that can be used in the current document.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<Node> AdoptNodeAsync(Node externalNode)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Node>("(element, externalNode) => { return element.adoptNode(externalNode); }", externalNode);
+        }
+        
+        ///  <summary>
+        ///  Checks if the document is currently focused.
+        ///  </summary>
+        ///  <returns>True if the document is active and in the focus.</returns>
+        public virtual System.Threading.Tasks.Task<Boolean> HasFocusAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<Boolean>("(element) => { return element.hasFocus(); }");
+        }
+        
+        ///  <summary>
+        ///  Executes a command with the provided id and the optional arguments.
+        ///  </summary>
+        ///  <param name="commandId">The id of the command to issue.</param>
+        ///  <param name="showUserInterface">Shall the UI be shown?</param>
+        ///  <param name="value">
+        ///  The argument value of the command, if any.
+        ///  </param>
+        ///  <returns>
+        ///  True if the command has been successfully executed, otherwise
+        ///  false.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<Boolean> ExecCommandAsync(String commandId, Boolean showUserInterface, String value)
+        {
+            return this.EvaluateFunctionInternalAsync<Boolean>("(element, commandId, showUserInterface, value) => { return element.execCommand(co" +
+                    "mmandId, showUserInterface, value); }", commandId, showUserInterface, value);
+        }
+        
+        ///  <summary>
+        ///  Checks if the command with the provided id is enabled.
+        ///  </summary>
+        ///  <param name="commandId">The id of the command to check.</param>
+        ///  <returns>
+        ///  True if the command exists and is enabled, otherwise false.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<Boolean> QueryCommandEnabledAsync(String commandId)
+        {
+            return this.EvaluateFunctionInternalAsync<Boolean>("(element, commandId) => { return element.queryCommandEnabled(commandId); }", commandId);
+        }
+        
+        ///  <summary>
+        ///  Checks if the command with the provided id is currently in an
+        ///  indeterminate state.
+        ///  </summary>
+        ///  <param name="commandId">The id of the command to check.</param>
+        ///  <returns>
+        ///  True if the command exists and is neither enabled nor disabled,
+        ///  otherwise false.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<Boolean> QueryCommandIndetermAsync(String commandId)
+        {
+            return this.EvaluateFunctionInternalAsync<Boolean>("(element, commandId) => { return element.queryCommandIndeterm(commandId); }", commandId);
+        }
+        
+        ///  <summary>
+        ///  Checks if the command with the provided id has already been
+        ///  executed for the current value.
+        ///  </summary>
+        ///  <param name="commandId">The id of the command to check.</param>
+        ///  <returns>
+        ///  True if the command has been executed, otherwise false.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<Boolean> QueryCommandStateAsync(String commandId)
+        {
+            return this.EvaluateFunctionInternalAsync<Boolean>("(element, commandId) => { return element.queryCommandState(commandId); }", commandId);
+        }
+        
+        ///  <summary>
+        ///  Checks if a command with the provided id exists and is supported
+        ///  in the current context.
+        ///  </summary>
+        ///  <param name="commandId">The id of the command to check.</param>
+        ///  <returns>True if the command exists, otherwise false.</returns>
+        public virtual System.Threading.Tasks.Task<Boolean> QueryCommandSupportedAsync(String commandId)
+        {
+            return this.EvaluateFunctionInternalAsync<Boolean>("(element, commandId) => { return element.queryCommandSupported(commandId); }", commandId);
+        }
+        
+        ///  <summary>
+        ///  Gets the value of the document, range, or current selection, for
+        ///  the provided command.
+        ///  </summary>
+        ///  <param name="commandId">The id of the command to issue.</param>
+        ///  <returns>The modified value.</returns>
+        public virtual System.Threading.Tasks.Task<String?> QueryCommandValueAsync(String commandId)
+        {
+            return this.EvaluateFunctionInternalAsync<String?>("(element, commandId) => { return element.queryCommandValue(commandId); }", commandId);
+        }
+        
+        ///  <summary>
+        ///  Appends nodes to current document.
+        ///  </summary>
+        ///  <param name="nodes">The nodes to append.</param>
+        public virtual System.Threading.Tasks.Task AppendAsync(Node[] nodes)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, nodes) => { return element.append(nodes); }", nodes);
+        }
+        
+        ///  <summary>
+        ///  Prepends nodes to the current document.
+        ///  </summary>
+        ///  <param name="nodes">The nodes to prepend.</param>
+        public virtual System.Threading.Tasks.Task PrependAsync(Node[] nodes)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, nodes) => { return element.prepend(nodes); }", nodes);
+        }
+        
+        ///  <summary>
+        ///  Enables the stylesheets matching the specified name in the current
+        ///  style sheet set, and disables all other style sheets (except those
+        ///  without a title, which are always enabled).
+        ///  </summary>
+        ///  <param name="name">The name of the sheets to enable.</param>
+        public virtual System.Threading.Tasks.Task EnableStyleSheetsForSetAsync(String name)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, name) => { return element.enableStyleSheetsForSet(name); }", name);
+        }
+        
+        ///  <summary>
+        ///  Returns the Element whose ID is given by elementId. If no such
+        ///  element exists, returns null. The behavior is not defined if
+        ///  more than one element have this ID.
+        ///  </summary>
+        ///  <param name="elementId">
+        ///  A case-sensitive string representing the unique ID of the element
+        ///  being sought.
+        ///  </param>
+        ///  <returns>The matching element.</returns>
+        public virtual System.Threading.Tasks.Task<Element?> GetElementByIdAsync(String elementId)
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element, elementId) => { return element.getElementById(elementId); }", elementId);
+        }
+        
+        ///  <summary>
+        ///  Gets a list of all of the anchors in the document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<HtmlAnchorElement>> GetAnchorsAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<HtmlAnchorElement>>("(element) => { return element.anchors; }");
+        }
+        
+        ///  <summary>
+        ///  Gets whether the entire document is editable.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetDesignModeAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.designMode; }");
+        }
+        
+        ///  <summary>
+        ///  Sets whether the entire document is editable.
+        ///  </summary>
+        public virtual Task SetDesignModeAsync(String designMode)
+        {
+            return this.EvaluateFunctionInternalAsync("(e, val) => { e.designMode = val; }", designMode);
+        }
+        
+        ///  <summary>
+        ///  Gets the value of the dir attribute.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String?> GetDirectionAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String?>("(element) => { return element.dir; }");
+        }
+        
+        ///  <summary>
+        ///  Sets the value of the dir attribute.
+        ///  </summary>
+        public virtual Task SetDirAsync(String? dir)
+        {
+            return this.EvaluateFunctionInternalAsync("(e, val) => { e.dir = val; }", dir);
+        }
+        
+        ///  <summary>
+        ///  Gets the URI of the current document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetDocumentUriAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.documentURI; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the character encoding of the current document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetCharacterSetAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.characterSet; }");
+        }
+        
+        ///  <summary>
+        ///  Gets a value to indicate whether the document is rendered in Quirks
+        ///  mode (BackComp) or Strict mode (CSS1Compat).
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetCompatModeAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.compatMode; }");
+        }
+        
+        ///  <summary>
+        ///  Gets a string containing the URL of the current document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetUrlAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.URL; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the Content-Type from the MIME Header of the current document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetContentTypeAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.contentType; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the document type.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<DocumentType> GetDoctypeAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<DocumentType>("(element) => { return element.doctype; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the root element of the document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Element> GetDocumentElementAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Element>("(element) => { return element.documentElement; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the date of the last modification.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String?> GetLastModifiedAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String?>("(element) => { return element.lastModified; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the current location of the document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Location> GetLocationAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Location>("(element) => { return element.location; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the forms in the document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<HtmlFormElement>> GetFormsAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<HtmlFormElement>>("(element) => { return element.forms; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the images in the document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<HtmlImageElement>> GetImagesAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<HtmlImageElement>>("(element) => { return element.images; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the scripts in the document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<HtmlScriptElement>> GetScriptsAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<HtmlScriptElement>>("(element) => { return element.scripts; }");
+        }
+        
+        ///  <summary>
+        ///  Gets a list of the embed elements within the current document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<HtmlEmbedElement>> GetPluginsAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<HtmlEmbedElement>>("(element) => { return element.embeds; }");
+        }
+        
+        ///  <summary>
+        ///  Gets a list of the commands (menu item, button, and link elements)
+        ///  within the current document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<Element>> GetCommandsAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<Element>>("(element) => { return element.commands; }");
+        }
+        
+        ///  <summary>
+        ///  Gets a collection of all area and anchor elements in a document
+        ///  with a value for the href attribute.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<Element>> GetLinksAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<Element>>("(element) => { return element.links; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the title of the document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String?> GetTitleAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String?>("(element) => { return element.title; }");
+        }
+        
+        ///  <summary>
+        ///  Sets the title of the document.
+        ///  </summary>
+        public virtual Task SetTitleAsync(String? title)
+        {
+            return this.EvaluateFunctionInternalAsync("(e, val) => { e.title = val; }", title);
+        }
+        
+        ///  <summary>
+        ///  Gets the head element.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<HtmlHeadElement?> GetHeadAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlHeadElement?>("(element) => { return element.head; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the body element.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<HtmlElement?> GetBodyAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlElement?>("(element) => { return element.body; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the body element.
+        ///  </summary>
+        public virtual Task SetBodyAsync(HtmlElement? body)
+        {
+            return this.EvaluateFunctionInternalAsync("(e, val) => { e.body = val; }", body);
+        }
+        
+        ///  <summary>
+        ///  Gets the document cookie.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetCookieAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.cookie; }");
+        }
+        
+        ///  <summary>
+        ///  Sets the document cookie.
+        ///  </summary>
+        public virtual Task SetCookieAsync(String cookie)
+        {
+            return this.EvaluateFunctionInternalAsync("(e, val) => { e.cookie = val; }", cookie);
+        }
+        
+        ///  <summary>
+        ///  Gets the Unicode serialization of document's origin.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String?> GetOriginAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String?>("(element) => { return element.origin; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the domain portion of the origin of the current
         ///  document.
         ///  </summary>
-        public virtual System.Threading.Tasks.Task<Element> GetOwnerNodeAsync()
+        public virtual System.Threading.Tasks.Task<String> GetDomainAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Element>("(element) => { return element.ownerNode; }");
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.domain; }");
         }
         
         ///  <summary>
-        ///  Gets the advisory title. The title is often specified in the
-        ///  ownerNode.
+        ///  Sets the domain portion of the origin of the current
+        ///  document.
         ///  </summary>
-        public virtual System.Threading.Tasks.Task<String> GetTitleAsync()
+        public virtual Task SetDomainAsync(String domain)
         {
-            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.title; }");
+            return this.EvaluateFunctionInternalAsync("(e, val) => { e.domain = val; }", domain);
         }
         
         ///  <summary>
-        ///  Gets the indented destination media for style information. The
-        ///  media is often specified in the ownerNode. If no media has been
-        ///  specified, the MediaList is empty.
+        ///  Gets the referer to that pointed to the current document.
         ///  </summary>
-        public virtual System.Threading.Tasks.Task<MediaList> GetMediaAsync()
+        public virtual System.Threading.Tasks.Task<String?> GetReferrerAsync()
         {
-            return this.EvaluateFunctionHandleInternalAsync<MediaList>("(element) => { return element.media; }");
+            return this.EvaluateFunctionInternalAsync<String?>("(element) => { return element.referrer; }");
         }
         
         ///  <summary>
-        ///  Gets if the stylesheet is applied to the document.
-        ///  Modifying this attribute may cause a new resolution of style for
-        ///  the document. If the media doesn't apply to the current user agent,
-        ///  the disabled attribute is ignored.
+        ///  Gets the currently focused element, that is, the element that will
+        ///  get keystroke events if the user types any.
         ///  </summary>
-        public virtual System.Threading.Tasks.Task<Boolean> GetDisabledAsync()
+        public virtual System.Threading.Tasks.Task<Element?> GetActiveElementAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Boolean>("(element) => { return element.disabled; }");
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.activeElement; }");
         }
         
         ///  <summary>
-        ///  Sets if the stylesheet is applied to the document.
-        ///  Modifying this attribute may cause a new resolution of style for
-        ///  the document. If the media doesn't apply to the current user agent,
-        ///  the disabled attribute is ignored.
+        ///  Gets the script element which is currently being processed.
         ///  </summary>
-        public virtual Task SetDisabledAsync(Boolean disabled)
+        public virtual System.Threading.Tasks.Task<HtmlScriptElement?> GetCurrentScriptAsync()
         {
-            return this.EvaluateFunctionInternalAsync("(e, val) => { e.disabled = val; }", disabled);
+            return this.EvaluateFunctionHandleInternalAsync<HtmlScriptElement?>("(element) => { return element.currentScript; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the window object associated with the document or null if none
+        ///  available.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Window?> GetDefaultViewAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Window?>("(element) => { return element.defaultView; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the child elements.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<HtmlCollection<Element>> GetChildrenAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<HtmlCollection<Element>>("(element) => { return element.children; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the first child element of this element.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Element?> GetFirstElementChildAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.firstElementChild; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the last child element of this element.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Element?> GetLastElementChildAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.lastElementChild; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the number of child elements.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Int32> GetChildElementCountAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<Int32>("(element) => { return element.childElementCount; }");
+        }
+        
+        ///  <summary>
+        ///  Gets a list of stylesheet objects for stylesheets explicitly linked
+        ///  into or embedded in a document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<StyleSheetList> GetStyleSheetsAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<StyleSheetList>("(element) => { return element.styleSheets; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the selected set of stylesheets.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String?> GetSelectedStyleSheetSetAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String?>("(element) => { return element.selectedStyleSheetSet; }");
+        }
+        
+        ///  <summary>
+        ///  Sets the selected set of stylesheets.
+        ///  </summary>
+        public virtual Task SetSelectedStyleSheetSetAsync(String? selectedStyleSheetSet)
+        {
+            return this.EvaluateFunctionInternalAsync("(e, val) => { e.selectedStyleSheetSet = val; }", selectedStyleSheetSet);
+        }
+        
+        ///  <summary>
+        ///  Gets the last stylesheet set.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String?> GetLastStyleSheetSetAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String?>("(element) => { return element.lastStyleSheetSet; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the preferred stylesheet set.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String?> GetPreferredStyleSheetSetAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String?>("(element) => { return element.preferredStyleSheetSet; }");
+        }
+        
+        ///  <summary>
+        ///  Gets a live list of all of the currently-available style sheet
+        ///  sets.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<StringList> GetStyleSheetSetsAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<StringList>("(element) => { return element.styleSheetSets; }");
         }
     }
     
@@ -629,7 +1587,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Document?> GetOwnerAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Document?>("(element) => { return element.ownerDocument; }");
+            return this.EvaluateFunctionHandleInternalAsync<Document?>("(element) => { return element.ownerDocument; }");
         }
         
         ///  <summary>
@@ -639,7 +1597,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Element?> GetParentElementAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Element?>("(element) => { return element.parentElement; }");
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.parentElement; }");
         }
         
         ///  <summary>
@@ -649,7 +1607,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Node?> GetParentAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Node?>("(element) => { return element.parentNode; }");
+            return this.EvaluateFunctionHandleInternalAsync<Node?>("(element) => { return element.parentNode; }");
         }
         
         ///  <summary>
@@ -658,7 +1616,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Node?> GetFirstChildAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Node?>("(element) => { return element.firstChild; }");
+            return this.EvaluateFunctionHandleInternalAsync<Node?>("(element) => { return element.firstChild; }");
         }
         
         ///  <summary>
@@ -667,7 +1625,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Node?> GetLastChildAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Node?>("(element) => { return element.lastChild; }");
+            return this.EvaluateFunctionHandleInternalAsync<Node?>("(element) => { return element.lastChild; }");
         }
         
         ///  <summary>
@@ -676,7 +1634,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Node?> GetNextSiblingAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Node?>("(element) => { return element.nextSibling; }");
+            return this.EvaluateFunctionHandleInternalAsync<Node?>("(element) => { return element.nextSibling; }");
         }
         
         ///  <summary>
@@ -685,7 +1643,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Node?> GetPreviousSiblingAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Node?>("(element) => { return element.previousSibling; }");
+            return this.EvaluateFunctionHandleInternalAsync<Node?>("(element) => { return element.previousSibling; }");
         }
         
         ///  <summary>
@@ -738,6 +1696,80 @@ namespace PuppeteerSharp.Dom
         public virtual System.Threading.Tasks.Task<Boolean> GetHasChildNodesAsync()
         {
             return this.EvaluateFunctionInternalAsync<Boolean>("(element) => { return element.hasChildNodes; }");
+        }
+    }
+    
+    ///  <summary>
+    ///  Represent a stylesheet for collecting style information.
+    ///  </summary>
+    public partial class StyleSheet : DomHandle
+    {
+        
+        ///  <summary>
+        ///  Gets the style sheet language for this style sheet.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetTypeAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.type; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the value of the attribute, which is its location. For inline
+        ///  style sheets, the value of this attribute is null.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetHrefAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.href; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the element that associates this style sheet with the
+        ///  document.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Element> GetOwnerNodeAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<Element>("(element) => { return element.ownerNode; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the advisory title. The title is often specified in the
+        ///  ownerNode.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetTitleAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.title; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the indented destination media for style information. The
+        ///  media is often specified in the ownerNode. If no media has been
+        ///  specified, the MediaList is empty.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<MediaList> GetMediaAsync()
+        {
+            return this.EvaluateFunctionHandleInternalAsync<MediaList>("(element) => { return element.media; }");
+        }
+        
+        ///  <summary>
+        ///  Gets if the stylesheet is applied to the document.
+        ///  Modifying this attribute may cause a new resolution of style for
+        ///  the document. If the media doesn't apply to the current user agent,
+        ///  the disabled attribute is ignored.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Boolean> GetDisabledAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<Boolean>("(element) => { return element.disabled; }");
+        }
+        
+        ///  <summary>
+        ///  Sets if the stylesheet is applied to the document.
+        ///  Modifying this attribute may cause a new resolution of style for
+        ///  the document. If the media doesn't apply to the current user agent,
+        ///  the disabled attribute is ignored.
+        ///  </summary>
+        public virtual Task SetDisabledAsync(Boolean disabled)
+        {
+            return this.EvaluateFunctionInternalAsync("(e, val) => { e.disabled = val; }", disabled);
         }
     }
     
@@ -1082,7 +2114,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Element?> GetAssignedSlotAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Element?>("(element) => { return element.assignedSlot; }");
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.assignedSlot; }");
         }
         
         ///  <summary>
@@ -1106,7 +2138,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<ShadowRoot?> GetShadowRootAsync()
         {
-            return this.EvaluateFunctionInternalAsync<ShadowRoot?>("(element) => { return element.shadowRoot; }");
+            return this.EvaluateFunctionHandleInternalAsync<ShadowRoot?>("(element) => { return element.shadowRoot; }");
         }
         
         ///  <summary>
@@ -1122,7 +2154,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Element?> GetFirstElementChildAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Element?>("(element) => { return element.firstElementChild; }");
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.firstElementChild; }");
         }
         
         ///  <summary>
@@ -1130,7 +2162,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Element?> GetLastElementChildAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Element?>("(element) => { return element.lastElementChild; }");
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.lastElementChild; }");
         }
         
         ///  <summary>
@@ -1148,7 +2180,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Element?> GetNextElementSiblingAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Element?>("(element) => { return element.nextElementSibling; }");
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.nextElementSibling; }");
         }
         
         ///  <summary>
@@ -1158,7 +2190,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Element?> GetPreviousElementSiblingAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Element?>("(element) => { return element.previousElementSibling; }");
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.previousElementSibling; }");
         }
     }
     
@@ -1221,7 +2253,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Element?> GetOwnerElementAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Element?>("(element) => { return element.ownerElement; }");
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.ownerElement; }");
         }
         
         ///  <summary>
@@ -1443,7 +2475,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Element?> GetAssignedSlotAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Element?>("(element) => { return element.assignedSlot; }");
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.assignedSlot; }");
         }
     }
     
@@ -1584,7 +2616,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Element?> GetNextElementSiblingAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Element?>("(element) => { return element.nextElementSibling; }");
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.nextElementSibling; }");
         }
         
         ///  <summary>
@@ -1594,7 +2626,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Element?> GetPreviousElementSiblingAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Element?>("(element) => { return element.previousElementSibling; }");
+            return this.EvaluateFunctionHandleInternalAsync<Element?>("(element) => { return element.previousElementSibling; }");
         }
     }
     
@@ -1671,7 +2703,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Document> GetDocumentAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Document>("(element) => { return element.document; }");
+            return this.EvaluateFunctionHandleInternalAsync<Document>("(element) => { return element.document; }");
         }
         
         ///  <summary>
@@ -1679,7 +2711,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Location> GetLocationAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Location>("(element) => { return element.location; }");
+            return this.EvaluateFunctionHandleInternalAsync<Location>("(element) => { return element.location; }");
         }
         
         ///  <summary>
@@ -1761,7 +2793,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Window?> GetProxyAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Window?>("(element) => { return element.window; }");
+            return this.EvaluateFunctionHandleInternalAsync<Window?>("(element) => { return element.window; }");
         }
         
         ///  <summary>
@@ -1769,7 +2801,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Navigator?> GetNavigatorAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Navigator?>("(element) => { return element.navigator; }");
+            return this.EvaluateFunctionHandleInternalAsync<Navigator?>("(element) => { return element.navigator; }");
         }
         
         ///  <summary>
@@ -1777,7 +2809,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<History?> GetHistoryAsync()
         {
-            return this.EvaluateFunctionInternalAsync<History?>("(element) => { return element.history; }");
+            return this.EvaluateFunctionHandleInternalAsync<History?>("(element) => { return element.history; }");
         }
     }
     
@@ -2871,7 +3903,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormElement?> GetFormAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
         }
         
         ///  <summary>
@@ -3033,7 +4065,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<ValidityState> GetValidityAsync()
         {
-            return this.EvaluateFunctionInternalAsync<ValidityState>("(element) => { return element.validity; }");
+            return this.EvaluateFunctionHandleInternalAsync<ValidityState>("(element) => { return element.validity; }");
         }
         
         ///  <summary>
@@ -3152,7 +4184,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlElement> GetCommandAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlElement>("(element) => { return element.command; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlElement>("(element) => { return element.command; }");
         }
     }
     
@@ -3528,7 +4560,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlMenuElement?> GetContextMenuAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlMenuElement?>("(element) => { return element.contextMenu; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlMenuElement?>("(element) => { return element.contextMenu; }");
         }
         
         ///  <summary>
@@ -3665,7 +4697,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormElement?> GetFormAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
         }
         
         ///  <summary>
@@ -3697,7 +4729,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormControlsCollection> GetElementsAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormControlsCollection>("(element) => { return element.elements; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormControlsCollection>("(element) => { return element.elements; }");
         }
         
         ///  <summary>
@@ -3713,7 +4745,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<ValidityState> GetValidityAsync()
         {
-            return this.EvaluateFunctionInternalAsync<ValidityState>("(element) => { return element.validity; }");
+            return this.EvaluateFunctionHandleInternalAsync<ValidityState>("(element) => { return element.validity; }");
         }
         
         ///  <summary>
@@ -3938,7 +4970,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormControlsCollection> GetElementsAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormControlsCollection>("(element) => { return element.elements; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormControlsCollection>("(element) => { return element.elements; }");
         }
     }
     
@@ -4338,7 +5370,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Document?> GetContentDocumentAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Document?>("(element) => { return element.contentDocument; }");
+            return this.EvaluateFunctionHandleInternalAsync<Document?>("(element) => { return element.contentDocument; }");
         }
         
         ///  <summary>
@@ -4346,7 +5378,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Window?> GetContentWindowAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Window?>("(element) => { return element.contentWindow; }");
+            return this.EvaluateFunctionHandleInternalAsync<Window?>("(element) => { return element.contentWindow; }");
         }
     }
     
@@ -4501,7 +5533,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormElement?> GetFormAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
         }
         
         ///  <summary>
@@ -4712,7 +5744,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlDataListElement?> GetListAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlDataListElement?>("(element) => { return element.list; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlDataListElement?>("(element) => { return element.list; }");
         }
         
         ///  <summary>
@@ -5150,7 +6182,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<ValidityState> GetValidityAsync()
         {
-            return this.EvaluateFunctionInternalAsync<ValidityState>("(element) => { return element.validity; }");
+            return this.EvaluateFunctionHandleInternalAsync<ValidityState>("(element) => { return element.validity; }");
         }
         
         ///  <summary>
@@ -5234,7 +6266,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormElement?> GetFormAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
         }
         
         ///  <summary>
@@ -5306,7 +6338,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<ValidityState> GetValidityAsync()
         {
-            return this.EvaluateFunctionInternalAsync<ValidityState>("(element) => { return element.validity; }");
+            return this.EvaluateFunctionHandleInternalAsync<ValidityState>("(element) => { return element.validity; }");
         }
         
         ///  <summary>
@@ -5329,7 +6361,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormElement?> GetFormAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
         }
         
         ///  <summary>
@@ -5353,7 +6385,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlElement?> GetControlAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlElement?>("(element) => { return element.control; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlElement?>("(element) => { return element.control; }");
         }
     }
     
@@ -5368,7 +6400,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormElement?> GetFormAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
         }
     }
     
@@ -5560,7 +6592,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<StyleSheet?> GetSheetAsync()
         {
-            return this.EvaluateFunctionInternalAsync<StyleSheet?>("(element) => { return element.sheet; }");
+            return this.EvaluateFunctionHandleInternalAsync<StyleSheet?>("(element) => { return element.sheet; }");
         }
         
         ///  <summary>
@@ -5569,7 +6601,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Document?> GetImportAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Document?>("(element) => { return element.import; }");
+            return this.EvaluateFunctionHandleInternalAsync<Document?>("(element) => { return element.import; }");
         }
     }
     
@@ -5742,7 +6774,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlElement?> GetCommandAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlElement?>("(element) => { return element.command; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlElement?>("(element) => { return element.command; }");
         }
         
         ///  <summary>
@@ -6187,7 +7219,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormElement?> GetFormAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
         }
         
         ///  <summary>
@@ -6228,7 +7260,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Document?> GetContentDocumentAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Document?>("(element) => { return element.contentDocument; }");
+            return this.EvaluateFunctionHandleInternalAsync<Document?>("(element) => { return element.contentDocument; }");
         }
         
         ///  <summary>
@@ -6236,7 +7268,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<Window?> GetContentWindowAsync()
         {
-            return this.EvaluateFunctionInternalAsync<Window?>("(element) => { return element.contentWindow; }");
+            return this.EvaluateFunctionHandleInternalAsync<Window?>("(element) => { return element.contentWindow; }");
         }
         
         ///  <summary>
@@ -6252,7 +7284,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<ValidityState> GetValidityAsync()
         {
-            return this.EvaluateFunctionInternalAsync<ValidityState>("(element) => { return element.validity; }");
+            return this.EvaluateFunctionHandleInternalAsync<ValidityState>("(element) => { return element.validity; }");
         }
         
         ///  <summary>
@@ -6291,7 +7323,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormElement?> GetFormAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
         }
         
         ///  <summary>
@@ -6615,7 +7647,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormElement?> GetFormAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
         }
         
         ///  <summary>
@@ -6647,7 +7679,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<ValidityState> GetValidityAsync()
         {
-            return this.EvaluateFunctionInternalAsync<ValidityState>("(element) => { return element.validity; }");
+            return this.EvaluateFunctionHandleInternalAsync<ValidityState>("(element) => { return element.validity; }");
         }
         
         ///  <summary>
@@ -7025,7 +8057,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormElement?> GetFormAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
         }
         
         ///  <summary>
@@ -7121,7 +8153,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlOptionsCollection> GetOptionsAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlOptionsCollection>("(element) => { return element.options; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlOptionsCollection>("(element) => { return element.options; }");
         }
         
         ///  <summary>
@@ -7169,7 +8201,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<ValidityState> GetValidityAsync()
         {
-            return this.EvaluateFunctionInternalAsync<ValidityState>("(element) => { return element.validity; }");
+            return this.EvaluateFunctionHandleInternalAsync<ValidityState>("(element) => { return element.validity; }");
         }
         
         ///  <summary>
@@ -7353,7 +8385,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<StyleSheet?> GetSheetAsync()
         {
-            return this.EvaluateFunctionInternalAsync<StyleSheet?>("(element) => { return element.sheet; }");
+            return this.EvaluateFunctionHandleInternalAsync<StyleSheet?>("(element) => { return element.sheet; }");
         }
     }
     
@@ -7551,7 +8583,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlTableCaptionElement?> GetCaptionAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlTableCaptionElement?>("(element) => { return element.caption; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlTableCaptionElement?>("(element) => { return element.caption; }");
         }
         
         ///  <summary>
@@ -7835,7 +8867,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<HtmlFormElement?> GetFormAsync()
         {
-            return this.EvaluateFunctionInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
+            return this.EvaluateFunctionHandleInternalAsync<HtmlFormElement?>("(element) => { return element.form; }");
         }
         
         ///  <summary>
@@ -8119,7 +9151,7 @@ namespace PuppeteerSharp.Dom
         ///  </summary>
         public virtual System.Threading.Tasks.Task<ValidityState> GetValidityAsync()
         {
-            return this.EvaluateFunctionInternalAsync<ValidityState>("(element) => { return element.validity; }");
+            return this.EvaluateFunctionHandleInternalAsync<ValidityState>("(element) => { return element.validity; }");
         }
         
         ///  <summary>
@@ -8339,6 +9371,114 @@ namespace PuppeteerSharp.Dom
         public virtual System.Threading.Tasks.Task<Int32> GetLengthAsync()
         {
             return this.EvaluateFunctionInternalAsync<Int32>("(element) => { return element.length; }");
+        }
+    }
+    
+    ///  <summary>
+    ///  Represents a list of stylesheet elements.
+    ///  </summary>
+    public partial class StyleSheetList : DomHandle
+    {
+        
+        ///  <summary>
+        ///  Gets the number of elements in the list of stylesheets.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Int32> GetLengthAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<Int32>("(element) => { return element.length; }");
+        }
+    }
+    
+    ///  <summary>
+    ///  Represents a string list.
+    ///  </summary>
+    public partial class StringList : DomHandle
+    {
+        
+        ///  <summary>
+        ///  Returns a boolean indicating if the specified entry is available.
+        ///  </summary>
+        ///  <param name="entry">The entry that will be looked for.</param>
+        ///  <returns>
+        ///  True if the element is available, otherwise false.
+        ///  </returns>
+        public virtual System.Threading.Tasks.Task<Boolean> ContainsAsync(String entry)
+        {
+            return this.EvaluateFunctionInternalAsync<Boolean>("(element, entry) => { return element.contains(entry); }", entry);
+        }
+        
+        ///  <summary>
+        ///  Gets the number of entries.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<Int32> GetLengthAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<Int32>("(element) => { return element.length; }");
+        }
+    }
+    
+    ///  <summary>
+    ///  The DocumentType interface represents a Node containing a doctype.
+    ///  </summary>
+    public partial class DocumentType : Node
+    {
+        
+        ///  <summary>
+        ///  Inserts nodes just before the current node.
+        ///  </summary>
+        ///  <param name="nodes">The nodes to insert.</param>
+        public virtual System.Threading.Tasks.Task BeforeAsync(Node[] nodes)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, nodes) => { return element.before(nodes); }", nodes);
+        }
+        
+        ///  <summary>
+        ///  Inserts nodes just after the current node.
+        ///  </summary>
+        ///  <param name="nodes">The nodes to insert.</param>
+        public virtual System.Threading.Tasks.Task AfterAsync(Node[] nodes)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, nodes) => { return element.after(nodes); }", nodes);
+        }
+        
+        ///  <summary>
+        ///  Replaces the current node with nodes.
+        ///  </summary>
+        ///  <param name="nodes">The nodes to insert.</param>
+        public virtual System.Threading.Tasks.Task ReplaceAsync(Node[] nodes)
+        {
+            return this.EvaluateFunctionInternalAsync("(element, nodes) => { return element.replace(nodes); }", nodes);
+        }
+        
+        ///  <summary>
+        ///  Removes the current node.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task RemoveAsync()
+        {
+            return this.EvaluateFunctionInternalAsync("(element) => { return element.remove(); }");
+        }
+        
+        ///  <summary>
+        ///  Gets the name of the document type.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetNameAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.name; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the public ID of the document type.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetPublicIdentifierAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.publicId; }");
+        }
+        
+        ///  <summary>
+        ///  Gets the system ID of the document type.
+        ///  </summary>
+        public virtual System.Threading.Tasks.Task<String> GetSystemIdentifierAsync()
+        {
+            return this.EvaluateFunctionInternalAsync<String>("(element) => { return element.systemId; }");
         }
     }
 }

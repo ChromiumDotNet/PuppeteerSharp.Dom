@@ -44,9 +44,9 @@ namespace PuppeteerSharp.Dom
                 throw new ArgumentNullException(nameof(cell));
             }
 
-            var index = await cell.GetCellIndexAsync().ConfigureAwait(true);
+            var index = await cell.GetCellIndexAsync().ConfigureAwait(false);
 
-            await DeleteCellAsync(index).ConfigureAwait(true);
+            await DeleteCellAsync(index).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace PuppeteerSharp.Dom
         /// <returns>A Task that when awaited inserts the cell at the specified index</returns>
         public async Task<HtmlTableCellElement> InsertCellAsync(int index, string text)
         {
-            var cell = await InsertCellAsync(index).ConfigureAwait(true);
+            var cell = await InsertCellAsync(index).ConfigureAwait(false);
 
-            await cell.SetInnerTextAsync(text).ConfigureAwait(true);
+            await cell.SetInnerTextAsync(text).ConfigureAwait(false);
 
             return cell;
         }

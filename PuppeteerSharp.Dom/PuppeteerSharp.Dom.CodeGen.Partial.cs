@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using PuppeteerSharp.Messaging;
 
 namespace PuppeteerSharp.Dom
@@ -49,6 +51,34 @@ namespace PuppeteerSharp.Dom
         }
     }
 
+    public partial class DocumentType
+    {
+        internal DocumentType(string className, JSHandle jsHandle) : base(className, jsHandle)
+        {
+        }
+    }
+
+    public partial class Range
+    {
+        internal Range(string className, JSHandle jsHandle) : base(className, jsHandle)
+        {
+        }
+    }
+
+    public partial class StyleSheetList
+    {
+        internal StyleSheetList(string className, JSHandle jsHandle) : base(className, jsHandle)
+        {
+        }
+    }
+
+    public partial class StringList
+    {
+        internal StringList(string className, JSHandle jsHandle) : base(className, jsHandle)
+        {
+        }
+    }
+
     public partial class ValidityState
     {
         internal ValidityState(string className, JSHandle jsHandle) : base(className, jsHandle)
@@ -77,6 +107,19 @@ namespace PuppeteerSharp.Dom
     {
         internal Node(string className, JSHandle jsHandle) : base(className, jsHandle)
         {
+        }
+
+        ///  <summary>
+        ///  Gets an Element that is the parent of this node. If the node has no
+        ///  parent, or if that parent is not an Element, this property returns
+        ///  null.
+        ///  </summary>
+        ///  <typeparam name="T">Type</typeparam>
+        ///  <returns>Parent Element or null</returns>
+        public virtual Task<T?> GetParentElementAsync<T>()
+            where T : Element
+        {
+            return EvaluateFunctionHandleInternalAsync<T?>("(element) => { return element.parentElement; }");
         }
     }
 
@@ -902,17 +945,12 @@ namespace PuppeteerSharp.Dom
         }
     }
 
-#if NETCOREAPP
     public partial class NamedNodeMap : IAsyncEnumerable<Attr>
-#else
-    public partial class NamedNodeMap
-#endif
     {
         internal NamedNodeMap(string className, JSHandle jsHandle) : base(className, jsHandle)
         {
         }
 
-#if NETCOREAPP
         /// <summary>
         /// Exposes an enumerator that provides asynchronous iteration over values of a specified type.
         /// </summary>
@@ -927,7 +965,6 @@ namespace PuppeteerSharp.Dom
                 yield return element;
             }
         }
-#endif
 
         /// <summary>
         /// To Array
@@ -939,17 +976,12 @@ namespace PuppeteerSharp.Dom
         }
     }
 
-#if NETCOREAPP
     public partial class TokenList : IAsyncEnumerable<string>
-#else
-    public partial class TokenList
-#endif
     {
         internal TokenList(string className, JSHandle jsHandle) : base(className, jsHandle)
         {
         }
 
-#if NETCOREAPP
         /// <summary>
         /// Exposes an enumerator that provides asynchronous iteration over values of a specified type.
         /// </summary>
@@ -964,7 +996,7 @@ namespace PuppeteerSharp.Dom
                 yield return element;
             }
         }
-#endif
+
         /// <summary>
         /// To Array
         /// </summary>
@@ -975,17 +1007,12 @@ namespace PuppeteerSharp.Dom
         }
     }
 
-#if NETCOREAPP
     public partial class StringMap : IAsyncEnumerable<KeyValuePair<string, string>>
-#else
-    public partial class StringMap
-#endif
     {
         internal StringMap(string className, JSHandle jsHandle) : base(className, jsHandle)
         {
         }
 
-#if NETCOREAPP
         /// <summary>
         /// Exposes an enumerator that provides asynchronous iteration over values of a specified type.
         /// </summary>
@@ -1000,7 +1027,7 @@ namespace PuppeteerSharp.Dom
                 yield return element;
             }
         }
-#endif
+
         /// <summary>
         /// To Array
         /// </summary>

@@ -33,9 +33,9 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
 
             await Page.GoToAsync(TestConstants.ServerUrl + "/input/checkbox.html");
 
-            var element = Page.QuerySelectorAsync("body");
+            var element = Page.QuerySelectorAsync<HtmlBodyElement>("body");
             var actual = await element
-                .AndThen(x => x.QuerySelectorAsync("#agree"))
+                .AndThen(x => x.QuerySelectorAsync<HtmlInputElement>("#agree"))
                 .AndThen(x => x.GetAttributeAsync<string>("type"));
 
             Assert.Equal(expected, actual);

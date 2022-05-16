@@ -41,6 +41,11 @@ namespace PuppeteerSharp.Dom
         {
             var handle = await frame.QuerySelectorAsync(querySelector);
 
+            if (handle == null)
+            {
+                return default;
+            }    
+
             // If Puppeteer addds RemoteObject.ClassName we can skip this call.
             var result = await handle.EvaluateFunctionAsync("e => e[Symbol.toStringTag]").ConfigureAwait(false);
             var className = result.ToString();

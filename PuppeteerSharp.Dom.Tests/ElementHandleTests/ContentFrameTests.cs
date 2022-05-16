@@ -16,10 +16,10 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
         public async Task ShouldWork()
         {
             await Page.GoToAsync(TestConstants.EmptyPage);
-            await FrameUtils.AttachFrameAsync(DevToolsContext, "frame1", TestConstants.EmptyPage);
+            await FrameUtils.AttachFrameAsync(Page, "frame1", TestConstants.EmptyPage);
             var elementHandle = await Page.QuerySelectorAsync<HtmlInlineFrameElement>("#frame1");
             var frame = await elementHandle.ContentFrameAsync();
-            Assert.Equal(Page.FirstChildFrame().Id, frame.Id);
+            Assert.Equal(Page.FirstChildFrame(), frame);
         }
     }
 }

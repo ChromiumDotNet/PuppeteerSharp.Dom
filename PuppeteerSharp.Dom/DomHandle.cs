@@ -59,7 +59,31 @@ namespace PuppeteerSharp.Dom
         /// <see cref="RemoteObject"/> instances can be passed as arguments
         /// </remarks>
         /// <returns>Task which resolves to script return value</returns>
-        internal Task<T> EvaluateFunctionInternalAsync<T>(string script, params object[] args) => Handle.EvaluateFunctionAsync<T>(script, args);
+        internal Task<T> EvaluateFunctionInternalAsync<T>(string script, params object[] args)
+        {
+            var list = new List<object>(args.Length);
+
+            // TODO: If https://github.com/hardkoded/puppeteer-sharp/issues/1925
+            // is implemented hopefully a IJSHandle interface is added and we can implement that
+            // directly
+
+            var type = typeof(DomHandle);
+
+            foreach (var arg in args)
+            {
+                if (arg != null && type.IsAssignableFrom(arg.GetType()))
+                {
+                    var handle = (DomHandle)arg;
+                    list.Add(handle.Handle);
+                }
+                else
+                {
+                    list.Add(arg);
+                }
+            }
+
+            return Handle.EvaluateFunctionAsync<T>(script, list.ToArray());
+        }
 
         /// <summary>
         /// Executes a function in browser context
@@ -71,7 +95,31 @@ namespace PuppeteerSharp.Dom
         /// <see cref="RemoteObject"/> instances can be passed as arguments
         /// </remarks>
         /// <returns>Task which resolves to script return value</returns>
-        internal Task EvaluateFunctionInternalAsync(string script, params object[] args) => Handle.EvaluateFunctionAsync<object>(script, args);
+        internal Task EvaluateFunctionInternalAsync(string script, params object[] args)
+        {
+            var list = new List<object>(args.Length);
+
+            // TODO: If https://github.com/hardkoded/puppeteer-sharp/issues/1925
+            // is implemented hopefully a IJSHandle interface is added and we can implement that
+            // directly
+
+            var type = typeof(DomHandle);
+
+            foreach(var arg in args)
+            {
+                if (arg != null && type.IsAssignableFrom(arg.GetType()))
+                {
+                    var handle = (DomHandle)arg;
+                    list.Add(handle.Handle);
+                }
+                else
+                {
+                    list.Add(arg);
+                }                
+            }
+
+            return Handle.EvaluateFunctionAsync(script, list.ToArray());
+        }
 
         internal async Task<T> EvaluateFunctionHandleInternalAsync<T>(string script, params object[] args)
             where T : DomHandle
@@ -95,25 +143,21 @@ namespace PuppeteerSharp.Dom
         internal async Task<IEnumerable<T>> GetArray<T>()
             where T : DomHandle
         {
-            var response = await Handle.GetPropertiesAsync().ConfigureAwait(false);
-
+            var properties = await Handle.GetPropertiesAsync().ConfigureAwait(false);
             var result = new List<T>();
 
-            foreach (var property in response)
+            foreach (var jSHandle in properties.Values)
             {
-                //if (property.Enumerable == false)
-                //{
-                //    continue;
-                //}
-
-                if (property.Value.RemoteObject.Value == null)
+                if (jSHandle == null)
                 {
                     result.Add(default);
 
                     continue;
                 }
 
-                var obj = (T)HtmlObjectFactory.CreateObject<T>("", property.Value);
+                var className = await jSHandle.EvaluateFunctionAsync<string>("e => e[Symbol.toStringTag]").ConfigureAwait(false);
+
+                var obj = HtmlObjectFactory.CreateObject<T>(className, jSHandle);
 
                 result.Add(obj);
             }
@@ -126,16 +170,16 @@ namespace PuppeteerSharp.Dom
 
             var result = new List<string>();
 
-            foreach (var property in response.Values)
+            foreach (var jsHandle in response.Values)
             {
-                if (property.RemoteObject.Value == null)
+                if (jsHandle == null)
                 {
                     result.Add(default);
 
                     continue;
                 }
 
-                result.Add(property.RemoteObject.Value.ToString());
+                result.Add(jsHandle.RemoteObject.Value.ToString());
             }
             return result;
         }
@@ -146,27 +190,24 @@ namespace PuppeteerSharp.Dom
 
             var result = new List<KeyValuePair<string, string>>();
 
-            foreach (var property in response)
+            foreach (var kvp in response)
             {
-                //if (property.Enumerable == false)
-                //{
-                //    continue;
-                //}
+                var jsHandle = kvp.Value;
 
-                var val = property.Value.RemoteObject.Value;
-
-                if (val == null)
+                if (jsHandle == null)
                 {
                     result.Add(default);
 
                     continue;
                 }
 
-                var kvp = new KeyValuePair<string, string>(property.Key, val.ToString());
+                result.Add(new KeyValuePair<string, string>(kvp.Key, jsHandle.RemoteObject.Value.ToString()));
 
-                result.Add(kvp);
+                await jsHandle.DisposeAsync().ConfigureAwait(false);
             }
             return result;
         }
+
+        public static implicit operator JSHandle(DomHandle domHandle) => domHandle.Handle;
     }
 }

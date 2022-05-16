@@ -23,11 +23,11 @@ namespace PuppeteerSharp.Dom
                 return Array.Empty<T>();
             }
 
-            var htmlCollection = await task.ConfigureAwait(true);
+            var htmlCollection = await task.ConfigureAwait(false);
 
-            var array = await htmlCollection.ToArrayAsync().ConfigureAwait(true);
+            var array = await htmlCollection.ToArrayAsync().ConfigureAwait(false);
 
-            await htmlCollection.DisposeAsync().ConfigureAwait(true);
+            await htmlCollection.DisposeAsync().ConfigureAwait(false);
 
             return array;
         }
@@ -44,11 +44,11 @@ namespace PuppeteerSharp.Dom
                 return Array.Empty<File>();
             }
 
-            var list = await task.ConfigureAwait(true);
+            var list = await task.ConfigureAwait(false);
 
-            var array = await list.ToArrayAsync().ConfigureAwait(true);
+            var array = await list.ToArrayAsync().ConfigureAwait(false);
 
-            await list.DisposeAsync().ConfigureAwait(true);
+            await list.DisposeAsync().ConfigureAwait(false);
 
             return array;
         }
@@ -65,11 +65,11 @@ namespace PuppeteerSharp.Dom
                 return 0;
             }
 
-            var fileList = await task.ConfigureAwait(true);
+            var fileList = await task.ConfigureAwait(false);
 
-            var length = await fileList.GetLengthAsync().ConfigureAwait(true);
+            var length = await fileList.GetLengthAsync().ConfigureAwait(false);
 
-            await fileList.DisposeAsync().ConfigureAwait(true);
+            await fileList.DisposeAsync().ConfigureAwait(false);
 
             return length;
         }
@@ -88,11 +88,11 @@ namespace PuppeteerSharp.Dom
                 return 0;
             }
 
-            var htmlCollection = await task.ConfigureAwait(true);
+            var htmlCollection = await task.ConfigureAwait(false);
 
-            var length = await htmlCollection.GetLengthAsync().ConfigureAwait(true);
+            var length = await htmlCollection.GetLengthAsync().ConfigureAwait(false);
 
-            await htmlCollection.DisposeAsync().ConfigureAwait(true);
+            await htmlCollection.DisposeAsync().ConfigureAwait(false);
 
             return length;
         }
@@ -110,16 +110,16 @@ namespace PuppeteerSharp.Dom
                 return default;
             }
 
-            var tableSection = await task.ConfigureAwait(true);
+            var tableSection = await task.ConfigureAwait(false);
 
             if (tableSection == null)
             {
                 return default;
             }
 
-            var body = await tableSection.GetBodyAsync().ConfigureAwait(true);
+            var body = await tableSection.GetBodyAsync().ConfigureAwait(false);
 
-            await tableSection.DisposeAsync().ConfigureAwait(true);
+            await tableSection.DisposeAsync().ConfigureAwait(false);
 
             return body;
         }
@@ -160,13 +160,13 @@ namespace PuppeteerSharp.Dom
                 throw new ArgumentNullException(nameof(func));
             }
 
-            var input = await inputTask.ConfigureAwait(true);
+            var input = await inputTask.ConfigureAwait(false);
 
-            var result = await func(input).ConfigureAwait(true);
+            var result = await func(input).ConfigureAwait(false);
 
             if (dispose)
             {
-                await input.DisposeAsync().ConfigureAwait(true);
+                await input.DisposeAsync().ConfigureAwait(false);
             }
 
             return result;
@@ -207,13 +207,13 @@ namespace PuppeteerSharp.Dom
                 throw new ArgumentNullException(nameof(func));
             }
 
-            var input = await inputTask.ConfigureAwait(true);
+            var input = await inputTask.ConfigureAwait(false);
 
-            await func(input).ConfigureAwait(true);
+            await func(input).ConfigureAwait(false);
 
             if (dispose)
             {
-                await input.DisposeAsync().ConfigureAwait(true);
+                await input.DisposeAsync().ConfigureAwait(false);
             }
         }
     }
