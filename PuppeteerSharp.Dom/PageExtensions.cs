@@ -45,7 +45,6 @@ namespace PuppeteerSharp.Dom
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// var frame = devToolsContext.MainFrame;
         /// var handle = await Page.EvaluateExpressionHandleAsync<HtmlElement>("button");
         /// ]]>
         /// </code>

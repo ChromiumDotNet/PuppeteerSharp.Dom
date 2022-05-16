@@ -6,9 +6,9 @@ using PuppeteerSharp.Dom.Tests.Attributes;
 namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class DevToolsContextQuerySelectorTests : PuppeteerPageBaseTest
+    public class PageContextQuerySelectorTests : PuppeteerPageBaseTest
     {
-        public DevToolsContextQuerySelectorTests(ITestOutputHelper output) : base(output)
+        public PageContextQuerySelectorTests(ITestOutputHelper output) : base(output)
         {
         }
 
@@ -51,7 +51,6 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
 
             //Get innerText property for the element
             var innerText = await element.GetInnerTextAsync();
-            //Can also be acessed via calling GetPropertyValueAsync
             //Can use this method to get any property that isn't currently mapped
             innerText = await element.GetInnerTextAsync();
 

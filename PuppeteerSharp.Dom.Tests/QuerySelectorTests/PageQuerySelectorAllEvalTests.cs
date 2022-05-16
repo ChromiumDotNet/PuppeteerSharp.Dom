@@ -3,12 +3,12 @@ using PuppeteerSharp.Dom.Tests.Attributes;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PuppeteerSharp.Dom.Tests.DevToolsContextTests
+namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class DevToolsContextQuerySelectorAllEvalTests : PuppeteerPageBaseTest
+    public class PageQuerySelectorAllEvalTests : PuppeteerPageBaseTest
     {
-        public DevToolsContextQuerySelectorAllEvalTests(ITestOutputHelper output) : base(output)
+        public PageQuerySelectorAllEvalTests(ITestOutputHelper output) : base(output)
         {
         }
 

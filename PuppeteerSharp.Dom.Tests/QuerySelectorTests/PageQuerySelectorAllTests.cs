@@ -7,9 +7,9 @@ using PuppeteerSharp.Dom.Tests.Attributes;
 namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class DevToolsContextQuerySelectorAllTests : PuppeteerPageBaseTest
+    public class PageQuerySelectorAllTests : PuppeteerPageBaseTest
     {
-        public DevToolsContextQuerySelectorAllTests(ITestOutputHelper output) : base(output)
+        public PageQuerySelectorAllTests(ITestOutputHelper output) : base(output)
         {
         }
 

@@ -78,7 +78,7 @@ namespace PuppeteerSharp.Dom
         /// <summary>
         /// Scrolls element into view if needed, and then uses <see cref="Touchscreen.TapAsync(double, double)"/> to tap in the center of the element.
         /// </summary>
-        /// <exception cref="WebView2DevToolsContextException">if the element is detached from DOM</exception>
+        /// <exception cref="PuppeteerException">if the element is detached from DOM</exception>
         /// <returns>Task which resolves when the element is successfully tapped</returns>
         public Task TapAsync()
         {
@@ -132,7 +132,7 @@ namespace PuppeteerSharp.Dom
         /// Scrolls element into view if needed, and then uses <see cref="Page.Mouse"/> to click in the center of the element.
         /// </summary>
         /// <param name="options">click options</param>
-        /// <exception cref="WebView2DevToolsContextException">if the element is detached from DOM</exception>
+        /// <exception cref="PuppeteerException">if the element is detached from DOM</exception>
         /// <returns>Task which resolves when the element is successfully clicked</returns>
         public Task ClickAsync(ClickOptions options = null)
         {

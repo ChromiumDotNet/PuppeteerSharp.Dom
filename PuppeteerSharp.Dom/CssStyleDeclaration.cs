@@ -33,7 +33,7 @@ namespace PuppeteerSharp.Dom
         /// <typeparam name="T">Property Value Type e.g. string, int</typeparam>
         /// <param name="propertyName">property to get</param>
         /// <returns>Task of <typeparamref name="T"/></returns>
-        /// <exception cref="WebView2DevToolsContextException">Thrown if no matching property is found</exception>
+        /// <exception cref="PuppeteerException">Thrown if no matching property is found</exception>
         public Task<string> GetPropertyValueAsync<T>(string propertyName)
         {
             return EvaluateFunctionInternalAsync<string>("(e, name) => { return e.getPropertyValue(name); }", propertyName);
