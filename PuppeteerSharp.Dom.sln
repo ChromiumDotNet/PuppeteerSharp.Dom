@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppeteerSharp.Dom", "PuppeteerSharp.Dom\PuppeteerSharp.Dom.csproj", "{67D875B9-6C55-47B3-8D7A-848F3C528479}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PuppeteerSharp.Dom", "PuppeteerSharp.Dom\PuppeteerSharp.Dom.csproj", "{67D875B9-6C55-47B3-8D7A-848F3C528479}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PuppeteerSharp.Dom.Tests", "PuppeteerSharp.Dom.Tests\PuppeteerSharp.Dom.Tests.csproj", "{A4289F92-D170-45C0-B0C8-6A55B0A64390}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PuppeteerSharp.Dom.TestServer", "PuppeteerSharp.Dom.TestServer\PuppeteerSharp.Dom.TestServer.csproj", "{1102AADC-A067-4655-845A-D8F591231DC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{67D875B9-6C55-47B3-8D7A-848F3C528479}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67D875B9-6C55-47B3-8D7A-848F3C528479}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67D875B9-6C55-47B3-8D7A-848F3C528479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4289F92-D170-45C0-B0C8-6A55B0A64390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4289F92-D170-45C0-B0C8-6A55B0A64390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4289F92-D170-45C0-B0C8-6A55B0A64390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4289F92-D170-45C0-B0C8-6A55B0A64390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1102AADC-A067-4655-845A-D8F591231DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1102AADC-A067-4655-845A-D8F591231DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1102AADC-A067-4655-845A-D8F591231DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1102AADC-A067-4655-845A-D8F591231DC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -73,19 +73,23 @@ namespace PuppeteerSharp.Dom
         /// <returns>Task which resolves to script return value</returns>
         internal Task EvaluateFunctionInternalAsync(string script, params object[] args) => Handle.EvaluateFunctionAsync<object>(script, args);
 
-        internal Task<T> EvaluateFunctionHandleInternalAsync<T>(string script, params object[] args)
+        internal async Task<T> EvaluateFunctionHandleInternalAsync<T>(string script, params object[] args)
             where T : DomHandle
         {
-            var jsHandle = Handle.EvaluateFunctionHandleAsync(script, args);
+            var handle = await Handle.EvaluateFunctionHandleAsync(script, args).ConfigureAwait(false);
 
-            if (jsHandle == null)
+            if (handle == null)
             {
                 return default;
             }
 
-            // TODO: GET CLASS NAME
+            // If Puppeteer addds RemoteObject.ClassName we can skip this call.
+            var result = await handle.EvaluateFunctionAsync("e => e[Symbol.toStringTag]").ConfigureAwait(false);
+            var className = result.ToString();
 
-            return default;
+            var domHandle = HtmlObjectFactory.CreateObject<T>(className, handle);
+
+            return domHandle;
         }
 
         internal async Task<IEnumerable<T>> GetArray<T>()
@@ -109,7 +113,7 @@ namespace PuppeteerSharp.Dom
                     continue;
                 }
 
-                var obj = (T)HtmlObjectFactory.CreateObject("", property.Value);
+                var obj = (T)HtmlObjectFactory.CreateObject<T>("", property.Value);
 
                 result.Add(obj);
             }

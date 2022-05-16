@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<IsTestProject>true</IsTestProject>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<LangVersion>Latest</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="EmulationTests\**" />
+	  <Compile Remove="EvaluationTests\**" />
+	  <Compile Remove="FrameTests\**" />
+	  <Compile Remove="InputTests\**" />
+	  <Compile Remove="JSHandleTests\**" />
+	  <Compile Remove="KeyboardTests\**" />
+	  <Compile Remove="MouseTests\**" />
+	  <Compile Remove="QuerySelectorTests\**" />
+	  <Compile Remove="TouchScreenTests\**" />
+	  <EmbeddedResource Remove="EmulationTests\**" />
+	  <EmbeddedResource Remove="EvaluationTests\**" />
+	  <EmbeddedResource Remove="FrameTests\**" />
+	  <EmbeddedResource Remove="InputTests\**" />
+	  <EmbeddedResource Remove="JSHandleTests\**" />
+	  <EmbeddedResource Remove="KeyboardTests\**" />
+	  <EmbeddedResource Remove="MouseTests\**" />
+	  <EmbeddedResource Remove="QuerySelectorTests\**" />
+	  <EmbeddedResource Remove="TouchScreenTests\**" />
+	  <None Remove="EmulationTests\**" />
+	  <None Remove="EvaluationTests\**" />
+	  <None Remove="FrameTests\**" />
+	  <None Remove="InputTests\**" />
+	  <None Remove="JSHandleTests\**" />
+	  <None Remove="KeyboardTests\**" />
+	  <None Remove="MouseTests\**" />
+	  <None Remove="QuerySelectorTests\**" />
+	  <None Remove="TouchScreenTests\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<!--<PackageReference Include="MarkdownSnippets.MsBuild" Version="24.3.0" PrivateAssets="All" />-->
+		<PackageReference Include="PuppeteerSharp" Version="7.0.0" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<PackageReference Include="xunit" Version="2.4.1" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Assets\es6\es6import.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\es6\es6module.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\es6\es6pathimport.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\file-to-upload.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\injectedfile.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\injectedstyle.css">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\one-style.css">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\one-style.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="test.runsettings">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="xunit.runner.json" />
+		<Content Include="xunit.runner.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\PuppeteerSharp.Dom.TestServer\PuppeteerSharp.Dom.TestServer.csproj" />
+	  <ProjectReference Include="..\PuppeteerSharp.Dom\PuppeteerSharp.Dom.csproj" />
+	</ItemGroup>
+</Project>

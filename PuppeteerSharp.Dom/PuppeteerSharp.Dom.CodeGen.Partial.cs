@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using PuppeteerSharp.Messaging;
 
 namespace PuppeteerSharp.Dom
 {
@@ -10,9 +13,39 @@ namespace PuppeteerSharp.Dom
 #nullable enable
     public static partial class HtmlObjectFactory
     {
-        internal static object? CreateObject(string className, JSHandle jsHandle)
+        internal static T? CreateObject<T>(string className, JSHandle jsHandle)
+            where T : DomHandle
         {
-            return CreateObjectInternal(className, jsHandle);
+            var type = typeof(T);
+
+            switch (className)
+            {
+                case "CSSStyleDeclaration":
+                {
+                    return (T)(object)new CssStyleDeclaration(className, jsHandle);
+                }
+                case "HTMLCollection":
+                {
+                    const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Instance;
+                    return (T)Activator.CreateInstance(type, flags, null, new object[] { className, jsHandle }, CultureInfo.InvariantCulture);
+                }
+                case "FileList":
+                {
+                    return (T)(object)new FileList(className, jsHandle);
+                }
+                case "File":
+                {
+                    return (T)(object)new File(className, jsHandle);
+                }
+            }
+
+            var handle = CreateObjectInternal(className, jsHandle);
+            if (handle != null)
+            {
+                return (T)handle;
+            }
+
+            return default;
         }
     }
 

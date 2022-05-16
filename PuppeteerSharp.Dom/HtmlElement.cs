@@ -7,7 +7,7 @@ namespace PuppeteerSharp.Dom
 {
     /// <summary>
     /// Inherits from <see cref="RemoteObject"/>. It represents an in-page DOM element.
-    /// ElementHandles can be created by <see cref="WebView2DevToolsContext.QuerySelectorAsync(string)"/> or <see cref="WebView2DevToolsContext.QuerySelectorAllAsync(string)"/>.
+    /// ElementHandles can be created by <see cref="Page.QuerySelectorAsync(string)"/> or <see cref="Page.QuerySelectorAllAsync(string)"/>.
     /// </summary>
     public partial class HtmlElement
         : Element
@@ -54,7 +54,7 @@ namespace PuppeteerSharp.Dom
         /// An example of typing into a text field and then submitting the form:
         /// <code>
         /// <![CDATA[
-        /// var elementHandle = await devtoolsContext.QuerySelectorAsync("input");
+        /// var elementHandle = await Page.QuerySelectorAsync("input");
         /// await elementHandle.TypeAsync("some text");
         /// await elementHandle.PressAsync("Enter");
         /// ]]>
@@ -112,7 +112,7 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
-        /// Scrolls element into view if needed, and then uses <see cref="WebView2DevToolsContext.Mouse"/> to hover over the center of the element.
+        /// Scrolls element into view if needed, and then uses <see cref="Page.Mouse"/> to hover over the center of the element.
         /// </summary>
         /// <returns>Task which resolves when the element is successfully hovered</returns>
         public Task HoverAsync()
@@ -127,7 +127,7 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
-        /// Scrolls element into view if needed, and then uses <see cref="WebView2DevToolsContext.Mouse"/> to click in the center of the element.
+        /// Scrolls element into view if needed, and then uses <see cref="Page.Mouse"/> to click in the center of the element.
         /// </summary>
         /// <param name="options">click options</param>
         /// <exception cref="WebView2DevToolsContextException">if the element is detached from DOM</exception>

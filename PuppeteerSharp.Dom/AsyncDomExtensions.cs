@@ -141,7 +141,7 @@ namespace PuppeteerSharp.Dom
         /// An chaining method calls together
         ///<code>
         ///<![CDATA[
-        /// var type = await DevToolsContext.QuerySelectorAsync("body")
+        /// var type = await Page.QuerySelectorAsync("body")
         ///     .AndThen(x => x.QuerySelectorAsync("#agree"))
         ///     .AndThen(x => x.GetAttributeAsync<string>("type"));
         /// ]]>
@@ -188,7 +188,7 @@ namespace PuppeteerSharp.Dom
         /// An chaining method calls together
         ///<code>
         ///<![CDATA[
-        /// var type = await DevToolsContext.QuerySelectorAsync("body")
+        /// var type = await Page.QuerySelectorAsync("body")
         ///     .AndThen(x => x.QuerySelectorAsync("#agree"))
         ///     .AndThen(x => x.GetAttributeAsync<string>("type"));
         /// ]]>
