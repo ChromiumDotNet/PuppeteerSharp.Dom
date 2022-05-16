@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace PuppeteerSharp.Dom
@@ -8,6 +10,106 @@ namespace PuppeteerSharp.Dom
     /// </summary>
     public static class PageExtensions
     {
+        /// <summary>
+        /// Creates a Html Element from the <see cref="JSHandle"/>
+        /// </summary>
+        /// <typeparam name="T">Element type</typeparam>
+        /// <param name="jsHandle">JSHandle</param>
+        /// <returns>Element or null</returns>
+        public static async Task<T> ToDomHandleAsync<T>(this JSHandle jsHandle)
+            where T : DomHandle
+        {
+            if (jsHandle == null)
+            {
+                return default;
+            }
+
+            var remoteObject = jsHandle.RemoteObject;
+
+            // Types like FileList are of SubType other
+            if (remoteObject.Type == Messaging.RemoteObjectType.Object &&
+                (remoteObject.Subtype == Messaging.RemoteObjectSubtype.Node || remoteObject.Subtype == Messaging.RemoteObjectSubtype.Other))
+            {
+                // If Puppeteer addds RemoteObject.ClassName we can skip this call.
+                var className = await jsHandle.EvaluateFunctionAsync<string>("e => e[Symbol.toStringTag]").ConfigureAwait(false);
+
+                return HtmlObjectFactory.CreateObject<T>(className, jsHandle);
+            }
+
+            return default;
+        }
+
+        /// <summary>
+        /// Passes an expression to the <see cref="ExecutionContext.EvaluateExpressionHandleAsync(string)"/>, returns a <see cref="Task"/>, then <see cref="ExecutionContext.EvaluateExpressionHandleAsync(string)"/> would wait for the <see cref="Task"/> to resolve and return its value.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// var frame = devToolsContext.MainFrame;
+        /// var handle = await Page.EvaluateExpressionHandleAsync<HtmlElement>("button");
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>Resolves to the return value of <paramref name="script"/></returns>
+        /// <param name="script">Expression to be evaluated in the <seealso cref="ExecutionContext"/></param>
+        public static async Task<T> EvaluateExpressionHandleAsync<T>(this Page page, string script)
+            where T : DomHandle
+        {
+            var handle = await page.EvaluateExpressionHandleAsync(script).ConfigureAwait(false);
+
+            return await handle.ToDomHandleAsync<T>().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates the HTML element specified
+        /// </summary>
+        /// <typeparam name="T">HtmlElementType</typeparam>
+        /// <param name="tagName">
+        /// A string that specifies the type of element to be created.
+        /// The nodeName of the created element is initialized with the
+        /// value of tagName. Don't use qualified names (like "html:a")
+        /// with this method.
+        /// </param>
+        /// <returns>Created element</returns>
+        public static async Task<T> CreateHtmlElementAsync<T>(this Page page, string tagName)
+            where T : HtmlElement
+        {
+            var handle = await page.EvaluateFunctionHandleAsync(
+                @"(tagName) => {
+                    return document.createElement(tagName);
+                }",
+                tagName).ConfigureAwait(false);
+
+            return await handle.ToDomHandleAsync<T>().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates the HTML element specified
+        /// </summary>
+        /// <typeparam name="T">HtmlElementType</typeparam>
+        /// <param name="tagName">
+        /// A string that specifies the type of element to be created.
+        /// The nodeName of the created element is initialized with the
+        /// value of tagName. Don't use qualified names (like "html:a")
+        /// with this method.
+        /// </param>
+        /// <param name="id">element id</param>
+        /// <returns>Created element</returns>
+        public static async Task<T> CreateHtmlElementAsync<T>(this Page page, string tagName, string id)
+            where T : HtmlElement
+        {
+            var handle = await page.EvaluateFunctionHandleAsync(
+                @"(tagName, id) => {
+                    let e = document.createElement(tagName);
+                    e.id = id;
+                    return e;
+                }",
+                tagName,
+                id).ConfigureAwait(false);
+
+            return await handle.ToDomHandleAsync<T>().ConfigureAwait(false);
+        }
+
         /// <summary>
         /// The method runs <c>document.querySelector</c> within the page. If no element matches the selector, the return value resolve to <c>null</c>.
         /// </summary>
@@ -41,18 +143,7 @@ namespace PuppeteerSharp.Dom
         {
             var handle = await frame.QuerySelectorAsync(querySelector);
 
-            if (handle == null)
-            {
-                return default;
-            }    
-
-            // If Puppeteer addds RemoteObject.ClassName we can skip this call.
-            var result = await handle.EvaluateFunctionAsync("e => e[Symbol.toStringTag]").ConfigureAwait(false);
-            var className = result.ToString();
-
-            var domHandle = HtmlObjectFactory.CreateObject<T>(className, handle);
-
-            return domHandle;
+            return await handle.ToDomHandleAsync<T>().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -99,10 +190,19 @@ namespace PuppeteerSharp.Dom
         /// <param name="querySelector">A selector to query page for</param>
         /// <returns>Task which resolves to ElementHandles pointing to the frame elements</returns>
         /// <seealso cref="Frame.QuerySelectorAllAsync(string)"/>
-        public static Task<T[]> QuerySelectorAllAsync<T>(this Page page, string querySelector)
+        public static async Task<T[]> QuerySelectorAllAsync<T>(this Page page, string querySelector)
             where T : Element
         {
-            throw new NotImplementedException();
+            var elements = await page.QuerySelectorAllAsync(querySelector).ConfigureAwait(false);
+
+            var list = new List<T>();
+
+            foreach(var element in elements)
+            {
+                list.Add(await element.ToDomHandleAsync<T>());
+            }
+
+            return list.ToArray();
         }
     }
 }

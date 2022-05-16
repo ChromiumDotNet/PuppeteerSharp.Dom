@@ -111,35 +111,6 @@ namespace PuppeteerSharp.Dom.Tests.ClickTests
         }
 
         [PuppeteerDomFact]
-        public async Task ShouldClickOffscreenButtons()
-        {
-            await Page.GoToAsync(TestConstants.ServerUrl + "/offscreenbuttons.html");
-            var messages = new List<string>();
-            Page.Console += (_, e) => messages.Add(e.Message.Text);
-
-            for (var i = 0; i < 11; ++i)
-            {
-                // We might've scrolled to click a button - reset to (0, 0).
-                await Page.EvaluateFunctionAsync("() => window.scrollTo(0, 0)");
-                await Page.ClickAsync($"#btn{i}");
-            }
-            Assert.Equal(new List<string>
-            {
-                "button #0 clicked",
-                "button #1 clicked",
-                "button #2 clicked",
-                "button #3 clicked",
-                "button #4 clicked",
-                "button #5 clicked",
-                "button #6 clicked",
-                "button #7 clicked",
-                "button #8 clicked",
-                "button #9 clicked",
-                "button #10 clicked"
-            }, messages);
-        }
-
-        [PuppeteerDomFact]
         public async Task ShouldClickWrappedLinks()
         {
             await Page.GoToAsync(TestConstants.ServerUrl + "/wrappedlink.html");

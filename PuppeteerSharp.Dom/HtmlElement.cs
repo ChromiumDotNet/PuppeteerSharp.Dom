@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using PuppeteerSharp.Input;
 
@@ -180,7 +182,7 @@ namespace PuppeteerSharp.Dom
         /// <returns>Task which resolves to an array of <see cref="HtmlElement"/></returns>
         public async Task<HtmlElement[]> XPathAsync(string expression)
         {
-            var arrayHandle = await EvaluateFunctionHandleInternalAsync<DomHandle>(
+            var arrayHandle = await Handle.EvaluateFunctionHandleAsync(
                 @"(element, expression) => {
                     const document = element.ownerDocument || element;
                     const iterator = document.evaluate(expression, element, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE);
@@ -190,12 +192,30 @@ namespace PuppeteerSharp.Dom
                         array.push(item);
                     return array;
                 }",
-                this,
                 expression).ConfigureAwait(false);
-            var properties = await arrayHandle.GetArray<HtmlElement>().ConfigureAwait(false);
+
+            if (arrayHandle == null)
+            {
+                return default;
+            }
+
+            var properties = await arrayHandle.GetPropertiesAsync().ConfigureAwait(false);
             await arrayHandle.DisposeAsync().ConfigureAwait(false);
 
-            return properties.ToArray();
+            var list = new List<HtmlElement>();
+
+            foreach(var jsHandle in properties.Values)
+{
+                var obj = await jsHandle.ToDomHandleAsync<HtmlElement>().ConfigureAwait(false);
+
+                if (obj != null)
+                {
+                    list.Add(obj);
+                }
+            }
+
+            return list.ToArray();
+
         }
 
         /// <summary>

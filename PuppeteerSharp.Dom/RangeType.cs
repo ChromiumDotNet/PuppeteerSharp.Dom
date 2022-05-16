@@ -1,10 +1,13 @@
+using System.ComponentModel;
 using System.Runtime.Serialization;
+using PuppeteerSharp.Dom.Converters;
 
 namespace PuppeteerSharp.Dom
 {
     /// <summary>
     /// An enumeration with possible values on how to compare boundary points.
     /// </summary>
+    [TypeConverter(typeof(StringToEnumTypeConverter))]
     public enum RangeType : byte
     {
         /// <summary>

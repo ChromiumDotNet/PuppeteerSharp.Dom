@@ -16,19 +16,19 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
         [PuppeteerDomFact]
         public async Task ShouldQueryExistingElements()
         {
-            await DevToolsContext.SetContentAsync("<html><body><div>A</div><br/><div>B</div></body></html>");
-            var html = await DevToolsContext.QuerySelectorAsync("html");
+            await Page.SetContentAsync("<html><body><div>A</div><br/><div>B</div></body></html>");
+            var html = await Page.QuerySelectorAsync("html");
             var elements = await html.QuerySelectorAllAsync("div");
             Assert.Equal(2, elements.Length);
-            var tasks = elements.Select(element => DevToolsContext.EvaluateFunctionAsync<string>("e => e.textContent", element));
+            var tasks = elements.Select(element => Page.EvaluateFunctionAsync<string>("e => e.textContent", element));
             Assert.Equal(new[] { "A", "B" }, await Task.WhenAll(tasks));
         }
 
         [PuppeteerDomFact]
         public async Task ShouldReturnEmptyArrayForNonExistingElements()
         {
-            await DevToolsContext.SetContentAsync("<html><body><span>A</span><br/><span>B</span></body></html>");
-            var html = await DevToolsContext.QuerySelectorAsync("html");
+            await Page.SetContentAsync("<html><body><span>A</span><br/><span>B</span></body></html>");
+            var html = await Page.QuerySelectorAsync("html");
             var elements = await html.QuerySelectorAllAsync("div");
             Assert.Empty(elements);
         }

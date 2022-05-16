@@ -1,7 +1,8 @@
-using Microsoft.Extensions.Logging;
 using PuppeteerSharp.Messaging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace PuppeteerSharp.Dom
@@ -59,7 +60,7 @@ namespace PuppeteerSharp.Dom
         /// <see cref="RemoteObject"/> instances can be passed as arguments
         /// </remarks>
         /// <returns>Task which resolves to script return value</returns>
-        internal Task<T> EvaluateFunctionInternalAsync<T>(string script, params object[] args)
+        internal async Task<T> EvaluateFunctionInternalAsync<T>(string script, params object[] args)
         {
             var list = new List<object>(args.Length);
 
@@ -82,7 +83,19 @@ namespace PuppeteerSharp.Dom
                 }
             }
 
-            return Handle.EvaluateFunctionAsync<T>(script, list.ToArray());
+            var returnType = typeof(T);
+
+            if (returnType.IsEnum)
+            {
+                var result = await Handle.EvaluateFunctionAsync(script, list.ToArray()).ConfigureAwait(false);
+
+                var typeConverter = TypeDescriptor.GetConverter(returnType);
+
+                return (T)typeConverter.ConvertFrom(result.ToString());
+
+            }
+
+            return await Handle.EvaluateFunctionAsync<T>(script, list.ToArray()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -131,13 +144,7 @@ namespace PuppeteerSharp.Dom
                 return default;
             }
 
-            // If Puppeteer addds RemoteObject.ClassName we can skip this call.
-            var result = await handle.EvaluateFunctionAsync("e => e[Symbol.toStringTag]").ConfigureAwait(false);
-            var className = result.ToString();
-
-            var domHandle = HtmlObjectFactory.CreateObject<T>(className, handle);
-
-            return domHandle;
+            return await handle.ToDomHandleAsync<T>().ConfigureAwait(false);
         }
 
         internal async Task<IEnumerable<T>> GetArray<T>()
@@ -155,9 +162,7 @@ namespace PuppeteerSharp.Dom
                     continue;
                 }
 
-                var className = await jSHandle.EvaluateFunctionAsync<string>("e => e[Symbol.toStringTag]").ConfigureAwait(false);
-
-                var obj = HtmlObjectFactory.CreateObject<T>(className, jSHandle);
+                var obj = await jSHandle.ToDomHandleAsync<T>().ConfigureAwait(false);
 
                 result.Add(obj);
             }

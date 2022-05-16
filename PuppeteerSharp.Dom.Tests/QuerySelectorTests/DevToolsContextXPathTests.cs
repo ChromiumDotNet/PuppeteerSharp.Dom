@@ -15,8 +15,8 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
         [PuppeteerDomFact]
         public async Task ShouldQueryExistingElement()
         {
-            await DevToolsContext.SetContentAsync("<section>test</section>");
-            var elements = await DevToolsContext.XPathAsync("/html/body/section");
+            await Page.SetContentAsync("<section>test</section>");
+            var elements = await Page.XPathAsync("/html/body/section");
             Assert.NotNull(elements[0]);
             Assert.Single(elements);
         }
@@ -24,15 +24,15 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
         [PuppeteerDomFact]
         public async Task ShouldReturnEmptyArrayForNonExistingElement()
         {
-            var elements = await DevToolsContext.XPathAsync("/html/body/non-existing-element");
+            var elements = await Page.XPathAsync("/html/body/non-existing-element");
             Assert.Empty(elements);
         }
 
         [PuppeteerDomFact]
         public async Task ShouldReturnMultipleElements()
         {
-            await DevToolsContext.SetContentAsync("<div></div><div></div>");
-            var elements = await DevToolsContext.XPathAsync("/html/body/div");
+            await Page.SetContentAsync("<div></div><div></div>");
+            var elements = await Page.XPathAsync("/html/body/div");
             Assert.Equal(2, elements.Length);
         }
     }

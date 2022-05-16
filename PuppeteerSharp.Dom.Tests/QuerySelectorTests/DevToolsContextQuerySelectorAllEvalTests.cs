@@ -15,16 +15,16 @@ namespace PuppeteerSharp.Dom.Tests.DevToolsContextTests
         [PuppeteerDomFact]
         public async Task ShouldWork()
         {
-            await DevToolsContext.SetContentAsync("<div>hello</div><div>beautiful</div><div>world!</div>");
-            var divsCount = await DevToolsContext.QuerySelectorAllHandleAsync("div").EvaluateFunctionAsync<int>("divs => divs.length");
+            await Page.SetContentAsync("<div>hello</div><div>beautiful</div><div>world!</div>");
+            var divsCount = await Page.QuerySelectorAllHandleAsync("div").EvaluateFunctionAsync<int>("divs => divs.length");
             Assert.Equal(3, divsCount);
         }
 
         [PuppeteerDomFact]
         public async Task ShouldWorkWithAwaitedElements()
         {
-            await DevToolsContext.SetContentAsync("<div>hello</div><div>beautiful</div><div>world!</div>");
-            var divs = await DevToolsContext.QuerySelectorAllHandleAsync("div");
+            await Page.SetContentAsync("<div>hello</div><div>beautiful</div><div>world!</div>");
+            var divs = await Page.QuerySelectorAllHandleAsync("div");
             var divsCount = await divs.EvaluateFunctionAsync<int>("divs => divs.length");
             Assert.Equal(3, divsCount);
         }

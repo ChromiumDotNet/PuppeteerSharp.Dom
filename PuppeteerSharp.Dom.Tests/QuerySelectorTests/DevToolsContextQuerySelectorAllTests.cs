@@ -13,37 +13,30 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
         {
         }
 
-#pragma warning disable IDE0051 // Remove unused private members
-        void Usage(Microsoft.Web.WebView2.Core.CoreWebView2 coreWebView2)
-#pragma warning restore IDE0051 // Remove unused private members
+#pragma warning disable xUnit1013 // Public method should be marked as test
+        public async Task Usage()
+#pragma warning restore xUnit1013 // Public method should be marked as test
         {
             #region QuerySelectorAll
 
-            // Add using WebView2.DevTools.Dom; to get access to the
-            // CreateDevToolsContextAsync extension method
+            using var browserFetcher = new BrowserFetcher();
+            await browserFetcher.DownloadAsync();
+            await using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true });
+            await using var page = await browser.NewPageAsync();
+            await page.GoToAsync("http://www.google.com"); // In case of fonts being loaded from a CDN, use WaitUntilNavigation.Networkidle0 as a second param.
 
-            coreWebView2.NavigationCompleted += async (sender, args) =>
+            // Add using PuppeteerSharp.Dom to access QuerySelectorAllAsync<T> extension method
+            // Get elements by tag name
+            // https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll
+            var inputElements = await page.QuerySelectorAllAsync<HtmlInputElement>("input");
+
+            foreach (var element in inputElements)
             {
-                if (args.IsSuccess)
-                {
-                    // WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
-                    // via await using or await devToolsContext.DisposeAsync();
-                    // https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#using-async-disposable
-                    await using var devToolsContext = await coreWebView2.CreateDevToolsContextAsync();
+                var name = await element.GetNameAsync();
+                var id = await element.GetIdAsync();
 
-                    // Get elements by tag name
-                    // https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll
-                    var inputElements = await devToolsContext.QuerySelectorAllAsync<HtmlInputElement>("input");
-
-                    foreach (var element in inputElements)
-                    {
-                        var name = await element.GetNameAsync();
-                        var id = await element.GetIdAsync();
-
-                        var value = await element.GetValueAsync<int>();
-                    }
-                }
-            };
+                var value = await element.GetValueAsync<int>();
+            }
 
             #endregion
         }
@@ -51,8 +44,8 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
         [PuppeteerDomFact]
         public async Task ShouldWork()
         {
-            await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/table.html");
-            var elements = await DevToolsContext.QuerySelectorAllAsync<HtmlTableRowElement>("tr");
+            await Page.GoToAsync(TestConstants.ServerUrl + "/table.html");
+            var elements = await Page.QuerySelectorAllAsync<HtmlTableRowElement>("tr");
 
             Assert.NotNull(elements);
             Assert.Equal(4, elements.Length);
@@ -61,8 +54,8 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
         [PuppeteerDomFact]
         public async Task ShouldReturnEmptyArray()
         {
-            await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/table.html");
-            var elements = await DevToolsContext.QuerySelectorAllAsync<HtmlTableRowElement>("#table2 tr");
+            await Page.GoToAsync(TestConstants.ServerUrl + "/table.html");
+            var elements = await Page.QuerySelectorAllAsync<HtmlTableRowElement>("#table2 tr");
 
             Assert.NotNull(elements);
             Assert.Empty(elements);
@@ -71,18 +64,18 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
         [PuppeteerDomFact]
         public async Task ShouldQueryExistingElements()
         {
-            await DevToolsContext.SetContentAsync("<div>A</div><br/><div>B</div>");
-            var elements = await DevToolsContext.QuerySelectorAllAsync("div");
+            await Page.SetContentAsync("<div>A</div><br/><div>B</div>");
+            var elements = await Page.QuerySelectorAllAsync("div");
             Assert.Equal(2, elements.Length);
-            var tasks = elements.Select(element => DevToolsContext.EvaluateFunctionAsync<string>("e => e.textContent", element));
+            var tasks = elements.Select(element => Page.EvaluateFunctionAsync<string>("e => e.textContent", element));
             Assert.Equal(new[] { "A", "B" }, await Task.WhenAll(tasks));
         }
 
         [PuppeteerDomFact]
         public async Task ShouldReturnEmptyArrayIfNothingIsFound()
         {
-            await WebView.CoreWebView2.NavigateToAsync(TestConstants.EmptyPage);
-            var elements = await DevToolsContext.QuerySelectorAllAsync("div");
+            await Page.GoToAsync(TestConstants.EmptyPage);
+            var elements = await Page.QuerySelectorAllAsync("div");
             Assert.Empty(elements);
         }
     }

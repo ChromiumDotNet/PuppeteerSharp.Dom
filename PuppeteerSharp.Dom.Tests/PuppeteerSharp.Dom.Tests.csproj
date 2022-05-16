@@ -7,35 +7,7 @@
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<LangVersion>Latest</LangVersion>
 	</PropertyGroup>
-	<ItemGroup>
-	  <Compile Remove="EmulationTests\**" />
-	  <Compile Remove="EvaluationTests\**" />
-	  <Compile Remove="FrameTests\**" />
-	  <Compile Remove="InputTests\**" />
-	  <Compile Remove="JSHandleTests\**" />
-	  <Compile Remove="KeyboardTests\**" />
-	  <Compile Remove="MouseTests\**" />
-	  <Compile Remove="QuerySelectorTests\**" />
-	  <Compile Remove="TouchScreenTests\**" />
-	  <EmbeddedResource Remove="EmulationTests\**" />
-	  <EmbeddedResource Remove="EvaluationTests\**" />
-	  <EmbeddedResource Remove="FrameTests\**" />
-	  <EmbeddedResource Remove="InputTests\**" />
-	  <EmbeddedResource Remove="JSHandleTests\**" />
-	  <EmbeddedResource Remove="KeyboardTests\**" />
-	  <EmbeddedResource Remove="MouseTests\**" />
-	  <EmbeddedResource Remove="QuerySelectorTests\**" />
-	  <EmbeddedResource Remove="TouchScreenTests\**" />
-	  <None Remove="EmulationTests\**" />
-	  <None Remove="EvaluationTests\**" />
-	  <None Remove="FrameTests\**" />
-	  <None Remove="InputTests\**" />
-	  <None Remove="JSHandleTests\**" />
-	  <None Remove="KeyboardTests\**" />
-	  <None Remove="MouseTests\**" />
-	  <None Remove="QuerySelectorTests\**" />
-	  <None Remove="TouchScreenTests\**" />
-	</ItemGroup>
+
 	<ItemGroup>
 		<!--<PackageReference Include="MarkdownSnippets.MsBuild" Version="24.3.0" PrivateAssets="All" />-->
 		<PackageReference Include="PuppeteerSharp" Version="7.0.0" />

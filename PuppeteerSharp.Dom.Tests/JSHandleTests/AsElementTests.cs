@@ -15,7 +15,7 @@ namespace PuppeteerSharp.Dom.Tests.JSHandleTests
         [PuppeteerDomFact]
         public async Task ShouldWork()
         {
-            var element = await DevToolsContext.EvaluateExpressionHandleAsync<HtmlElement>("document.body");
+            var element = await Page.EvaluateExpressionHandleAsync<HtmlElement>("document.body");
             
             Assert.NotNull(element);
         }
@@ -23,7 +23,7 @@ namespace PuppeteerSharp.Dom.Tests.JSHandleTests
         [PuppeteerDomFact]
         public async Task ShouldReturnNullForNonElements()
         {
-            var aHandle = await DevToolsContext.EvaluateExpressionHandleAsync<HtmlElement>("2");
+            var aHandle = await Page.EvaluateExpressionHandleAsync<HtmlElement>("2");
 
             Assert.Null(aHandle);
         }
@@ -31,7 +31,7 @@ namespace PuppeteerSharp.Dom.Tests.JSHandleTests
         [PuppeteerDomFact]
         public async Task ShouldReturnNullForNull()
         {
-            var aHandle = await DevToolsContext.EvaluateExpressionHandleAsync<HtmlElement>("null");
+            var aHandle = await Page.EvaluateExpressionHandleAsync<HtmlElement>("null");
 
             Assert.Null(aHandle);
         }
@@ -39,12 +39,15 @@ namespace PuppeteerSharp.Dom.Tests.JSHandleTests
         [PuppeteerDomFact]
         public async Task ShouldReturnElementHandleForTextNodes()
         {
-            await DevToolsContext.SetContentAsync("<div>ee!</div>");
+            await Page.SetContentAsync("<div>ee!</div>");
 
-            var element = await DevToolsContext.EvaluateExpressionHandleAsync<Text>("document.querySelector('div').firstChild");
+            var element = await Page.EvaluateExpressionHandleAsync<Text>("document.querySelector('div').firstChild");
 
             Assert.NotNull(element);
-            Assert.True(await DevToolsContext.EvaluateFunctionAsync<bool>("e => e.nodeType === HTMLElement.TEXT_NODE", element));
+
+            var nodeType = await element.GetNodeTypeAsync();
+
+            Assert.Equal(NodeType.Text, nodeType);
         }
     }
 }

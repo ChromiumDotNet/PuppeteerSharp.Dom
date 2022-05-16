@@ -2,9 +2,9 @@ namespace PuppeteerSharp.Dom.Tests.MouseTests
 {
     public class Dimensions
     {
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Width { get; set; }
-        public double Height { get; set; }
+        public decimal X { get; set; }
+        public decimal Y { get; set; }
+        public decimal Width { get; set; }
+        public decimal Height { get; set; }
     }
 }
