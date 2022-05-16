@@ -28,7 +28,9 @@ namespace PuppeteerSharp.Dom
 
             // Types like FileList are of SubType other
             if (remoteObject.Type == Messaging.RemoteObjectType.Object &&
-                (remoteObject.Subtype == Messaging.RemoteObjectSubtype.Node || remoteObject.Subtype == Messaging.RemoteObjectSubtype.Other))
+                (remoteObject.Subtype == Messaging.RemoteObjectSubtype.Node ||
+                remoteObject.Subtype == Messaging.RemoteObjectSubtype.Array ||
+                remoteObject.Subtype == Messaging.RemoteObjectSubtype.Other))
             {
                 // If Puppeteer addds RemoteObject.ClassName we can skip this call.
                 var className = await jsHandle.EvaluateFunctionAsync<string>("e => e[Symbol.toStringTag]").ConfigureAwait(false);
