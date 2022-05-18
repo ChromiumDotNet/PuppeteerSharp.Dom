@@ -24,7 +24,7 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
             await using var page = await browser.NewPageAsync();
             await page.GoToAsync("http://www.google.com"); // In case of fonts being loaded from a CDN, use WaitUntilNavigation.Networkidle0 as a second param.
 
-            // Add using PuppeteerSharp.Dom to access QuerySelectorAllAsync<T> extension method
+            // Add using PuppeteerSharp.Dom to access QuerySelectorAsync<T> and QuerySelectorAllAsync<T> extension methods.
             // Get element by Id
             // https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
             var element = await Page.QuerySelectorAsync<HtmlElement>("#myElementId");
