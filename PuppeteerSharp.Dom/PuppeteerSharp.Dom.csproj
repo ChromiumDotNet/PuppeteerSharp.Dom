@@ -4,6 +4,40 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>PuppeteerSharp.Dom.snk</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Alex Maitland</Authors>
+    <Owners>amaitland</Owners>
+    <PackageProjectUrl>https://github.com/ChromiumDotNet/PuppeteerSharp.Dom</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>puppeteer,chrome,chromium,dom,csharp</PackageTags>
+    <Title>PuppeteerSharp.Dom</Title>
+    <Description>
+        PuppeteerSharp.Dom - Extension to PuppeteerSharp providing strongly typed DOM access.
+
+        ✔️ PuppeteerSharp.Dom is a library with extension methods for strongly typed DOM access when using Puppeteer Sharp.
+        ✔️ It provides a convenient way to write readable/robust/refactorable DOM access code.
+        
+        <![CDATA[
+        // Add using PuppeteerSharp.Dom to access QuerySelectorAsync<T> and QuerySelectorAllAsync<T> extension methods.
+        // Get element by Id
+        // https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
+        var element = await Page.QuerySelectorAsync<HtmlDivElement>("#myDivElementId");
+
+        //Set innerText property for the element
+        await element.SetInnerTextAsync("Welcome!");
+        ]]>
+
+        https://github.com/ChromiumDotNet/PuppeteerSharp.Dom
+    </Description>
+    <PackageId>PuppeteerSharp.Dom</PackageId>
+    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <EmbedAllSources>true</EmbedAllSources>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
