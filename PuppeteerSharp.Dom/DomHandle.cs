@@ -2,12 +2,14 @@ using PuppeteerSharp.Messaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Threading.Tasks;
 
 namespace PuppeteerSharp.Dom
 {
-    public class DomHandle : IAsyncDisposable
+    /// <summary>
+    /// DomHandle is a base clas providing for all DOM/HTML Elements
+    /// </summary>
+    public abstract class DomHandle : IAsyncDisposable
     {
         /// <summary>
         /// Class Name
@@ -34,7 +36,7 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
-        /// Disposes the Handle. It will mark the JSHandle as disposed and release the <see cref="RemoteObject.RemoteObj"/>
+        /// Disposes the underlying <see cref="Handle"/>.
         /// </summary>
         /// <returns>The async.</returns>
         public async ValueTask DisposeAsync()
@@ -213,6 +215,10 @@ namespace PuppeteerSharp.Dom
             return result;
         }
 
+        /// <summary>
+        /// Implicit operator, convert <see cref="DomHandle"/> to <see cref="JSHandle"/>
+        /// </summary>
+        /// <param name="domHandle">DomHandle</param>
         public static implicit operator JSHandle(DomHandle domHandle) => domHandle.Handle;
     }
 }

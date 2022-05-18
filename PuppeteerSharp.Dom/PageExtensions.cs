@@ -42,7 +42,7 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
-        /// Passes an expression to the <see cref="ExecutionContext.EvaluateExpressionHandleAsync(string)"/>, returns a <see cref="Task"/>, then <see cref="ExecutionContext.EvaluateExpressionHandleAsync(string)"/> would wait for the <see cref="Task"/> to resolve and return its value.
+        /// Passes an expression to the <see cref="Page.EvaluateExpressionHandleAsync(string)"/>, returns a <see cref="Task"/>, then <see cref="Page.EvaluateExpressionHandleAsync(string)"/> would wait for the <see cref="Task"/> to resolve and return its value.
         /// </summary>
         /// <example>
         /// <code>
@@ -51,8 +51,9 @@ namespace PuppeteerSharp.Dom
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Resolves to the return value of <paramref name="script"/></returns>
+        /// <param name="page">Page</param>
         /// <param name="script">Expression to be evaluated in the <seealso cref="ExecutionContext"/></param>
+        /// <returns>Resolves to the return value of <paramref name="script"/></returns>
         public static async Task<T> EvaluateExpressionHandleAsync<T>(this Page page, string script)
             where T : DomHandle
         {
@@ -65,6 +66,7 @@ namespace PuppeteerSharp.Dom
         /// Creates the HTML element specified
         /// </summary>
         /// <typeparam name="T">HtmlElementType</typeparam>
+        /// <param name="page">Page</param>
         /// <param name="tagName">
         /// A string that specifies the type of element to be created.
         /// The nodeName of the created element is initialized with the
@@ -88,6 +90,7 @@ namespace PuppeteerSharp.Dom
         /// Creates the HTML element specified
         /// </summary>
         /// <typeparam name="T">HtmlElementType</typeparam>
+        /// <param name="page">Page</param>
         /// <param name="tagName">
         /// A string that specifies the type of element to be created.
         /// The nodeName of the created element is initialized with the

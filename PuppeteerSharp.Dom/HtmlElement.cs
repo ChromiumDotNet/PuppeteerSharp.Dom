@@ -1,15 +1,13 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using PuppeteerSharp.Input;
 
 namespace PuppeteerSharp.Dom
 {
     /// <summary>
-    /// Inherits from <see cref="RemoteObject"/>. It represents an in-page DOM element.
-    /// ElementHandles can be created by <see cref="Page.QuerySelectorAsync(string)"/> or <see cref="Page.QuerySelectorAllAsync(string)"/>.
+    /// Inherits from <see cref="Element"/>. It represents an in-page DOM element.
+    /// HtmlElement can be created by <see cref="PageExtensions.QuerySelectorAsync{T}(Page, string)"/> or <see cref="PageExtensions.QuerySelectorAllAsync{T}(Page, string)"/>.
     /// </summary>
     public partial class HtmlElement
         : Element
@@ -76,7 +74,7 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
-        /// Scrolls element into view if needed, and then uses <see cref="Touchscreen.TapAsync(double, double)"/> to tap in the center of the element.
+        /// Scrolls element into view if needed, and then uses <see cref="Touchscreen.TapAsync(decimal, decimal)"/> to tap in the center of the element.
         /// </summary>
         /// <exception cref="PuppeteerException">if the element is detached from DOM</exception>
         /// <returns>Task which resolves when the element is successfully tapped</returns>

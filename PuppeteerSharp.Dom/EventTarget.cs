@@ -17,7 +17,7 @@ namespace PuppeteerSharp.Dom
         /// AddEventListenerAsync
         /// </summary>
         /// <param name="eventType">A case-sensitive string representing the event type to listen for.</param>
-        /// <param name="functionName">name of the function that was created using <see cref="Page.ExposeFunctionAsync(string, Action)"/></param>
+        /// <param name="functionName">name of the function that was created using <see cref="Page.ExposeFunctionAsync(string, System.Action)"/></param>
         /// <returns>Task</returns>
         public Task AddEventListenerAsync(string eventType, string functionName) => EvaluateFunctionInternalAsync(
                 @"(element, eventType, functionName) =>

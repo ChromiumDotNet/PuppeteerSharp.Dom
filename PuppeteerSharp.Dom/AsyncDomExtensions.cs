@@ -128,14 +128,14 @@ namespace PuppeteerSharp.Dom
         /// A helper function for chaining Tasks together, useful for retrieving
         /// a DOM elment then obtaining a single property value.
         /// </summary>
-        /// <typeparam name="TIn">RemoteObject</typeparam>
+        /// <typeparam name="TIn">DomHandle</typeparam>
         /// <typeparam name="TOut">Return Type</typeparam>
         /// <param name="inputTask">input task</param>
         /// <param name="func">func</param>
-        /// <param name="dispose">if true (default) the <see cref="RemoteObject"/> will be disposed after <paramref name="func"/> has been executed</param>
+        /// <param name="dispose">if true (default) the <see cref="DomHandle"/> will be disposed after <paramref name="func"/> has been executed</param>
         /// <returns>Task</returns>
         /// <remarks>
-        /// Disposing of the <see cref="RemoteObject"/> only frees our DevTools reference, the object in DOM Element/Javascript Object remains unchanged.
+        /// Disposing of the <see cref="DomHandle"/> only frees our DevTools reference, the object in DOM Element/Javascript Object remains unchanged.
         /// </remarks>
         /// <example>
         /// An chaining method calls together
@@ -176,19 +176,19 @@ namespace PuppeteerSharp.Dom
         /// A helper function for chaining Tasks together, useful for retrieving
         /// a DOM elment then obtaining a single property value.
         /// </summary>
-        /// <typeparam name="TIn">RemoteObject</typeparam>
+        /// <typeparam name="TIn">DomHandle</typeparam>
         /// <param name="inputTask">input task</param>
         /// <param name="func">func</param>
-        /// <param name="dispose">if true (default) the <see cref="RemoteObject"/> will be disposed after <paramref name="func"/> has been executed</param>
+        /// <param name="dispose">if true (default) the <see cref="DomHandle"/> will be disposed after <paramref name="func"/> has been executed</param>
         /// <returns>Task</returns>
         /// <remarks>
-        /// Disposing of the <see cref="RemoteObject"/> only frees our DevTools reference, the object in DOM Element/Javascript Object remains unchanged.
+        /// Disposing of the <see cref="DomHandle"/> only frees our DevTools reference, the object in DOM Element/Javascript Object remains unchanged.
         /// </remarks>
         /// <example>
         /// An chaining method calls together
         ///<code>
         ///<![CDATA[
-        /// var type = await Page.QuerySelectorAsync("body")
+        /// var type = await Page.QuerySelectorAsync<HtmlDivElement>("body")
         ///     .AndThen(x => x.QuerySelectorAsync("#agree"))
         ///     .AndThen(x => x.GetAttributeAsync<string>("type"));
         /// ]]>
