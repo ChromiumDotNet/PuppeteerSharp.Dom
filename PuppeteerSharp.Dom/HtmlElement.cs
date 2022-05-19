@@ -18,14 +18,6 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
-        /// Uploads files
-        /// </summary>
-        /// <param name="filePaths">Sets the value of the file input to these paths. Paths are resolved using <see cref="Path.GetFullPath(string)"/></param>
-        /// <remarks>This method expects <c>elementHandle</c> to point to an <c>input element</c> <see href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input"/> </remarks>
-        /// <returns>Task</returns>
-        public Task UploadFileAsync(params string[] filePaths) => UploadFileAsync(true, filePaths);
-
-        /// <summary>
         /// Calls <c>focus</c> <see href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus"/> on the element.
         /// </summary>
         /// <param name="preventScroll">
@@ -144,24 +136,7 @@ namespace PuppeteerSharp.Dom
             return elementHandle.ClickAsync(options);
         }
 
-        /// <summary>
-        /// Uploads files
-        /// </summary>
-        /// <param name="resolveFilePaths">Set to true to resolve paths using <see cref="Path.GetFullPath(string)"/></param>
-        /// <param name="filePaths">Sets the value of the file input to these paths. Paths are resolved using <see cref="Path.GetFullPath(string)"/></param>
-        /// <remarks>This method expects <c>elementHandle</c> to point to an <c>input element</c> <see href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input"/> </remarks>
-        /// <returns>Task</returns>
-        public Task UploadFileAsync(bool resolveFilePaths, params string[] filePaths)
-        {
-            var elementHandle = Handle as ElementHandle;
-
-            if (elementHandle == null)
-            {
-                throw new PuppeteerException("Unable to convert to ElementHandle");
-            }
-
-            return elementHandle.UploadFileAsync(resolveFilePaths, filePaths);
-        }
+        
 
         /// <summary>
         /// Invokes a member function (method).
@@ -343,15 +318,9 @@ namespace PuppeteerSharp.Dom
         /// for the attributes that are defined in the element's inline style attribute.
         /// </summary>
         /// <returns>A Task when awaited returns the inline style of the element.</returns>
-        public async Task<CssStyleDeclaration> GetStyleAsync()
+        public Task<CssStyleDeclaration> GetStyleAsync()
         {
-            var handle = await EvaluateFunctionHandleInternalAsync<CssStyleDeclaration>(
-                @"(object, propertyName) => {
-                    return object[propertyName];
-                }",
-                "style").ConfigureAwait(false);
-
-            return handle;
+            return EvaluateFunctionHandleInternalAsync<CssStyleDeclaration>("(element) => { return element.style; }");
         }
 
         /// <summary>

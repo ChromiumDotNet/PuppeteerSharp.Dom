@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 
 namespace PuppeteerSharp.Dom
@@ -10,6 +11,33 @@ namespace PuppeteerSharp.Dom
     {
         internal HtmlInputElement(string className, JSHandle jsHandle) : base(className, jsHandle)
         {
+        }
+
+        /// <summary>
+        /// Uploads files
+        /// </summary>
+        /// <param name="filePaths">Sets the value of the file input to these paths. Paths are resolved using <see cref="Path.GetFullPath(string)"/></param>
+        /// <remarks>This method expects <c>elementHandle</c> to point to an <c>input element</c> <see href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input"/> </remarks>
+        /// <returns>Task</returns>
+        public Task UploadFileAsync(params string[] filePaths) => UploadFileAsync(true, filePaths);
+
+        /// <summary>
+        /// Uploads files
+        /// </summary>
+        /// <param name="resolveFilePaths">Set to true to resolve paths using <see cref="Path.GetFullPath(string)"/></param>
+        /// <param name="filePaths">Sets the value of the file input to these paths. Paths are resolved using <see cref="Path.GetFullPath(string)"/></param>
+        /// <remarks>This method expects <c>elementHandle</c> to point to an <c>input element</c> <see href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input"/> </remarks>
+        /// <returns>Task</returns>
+        public Task UploadFileAsync(bool resolveFilePaths, params string[] filePaths)
+        {
+            var elementHandle = Handle as ElementHandle;
+
+            if (elementHandle == null)
+            {
+                throw new PuppeteerException("Unable to convert to ElementHandle");
+            }
+
+            return elementHandle.UploadFileAsync(resolveFilePaths, filePaths);
         }
 
         /// <summary>
