@@ -43,7 +43,7 @@ jobs:
     - name: Build
       run: |
         echo "Buid version is ${{github.run_number}}"
-        dotnet build PuppeteerSharp.Dom.sln --version-suffix preview${{github.run_number}}
+        dotnet build PuppeteerSharp.Dom.sln --version-suffix preview${{github.run_number}} --configuration Release
     
     - name: Test
       env:
