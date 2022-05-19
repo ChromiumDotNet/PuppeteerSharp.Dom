@@ -36,8 +36,10 @@ jobs:
         dotnet dev-certs https -ep PuppeteerSharp.Dom.TestServer/testCert.cer
         sudo openssl x509 -inform der -in PuppeteerSharp.Dom.TestServer/testCert.cer -out /usr/local/share/ca-certificates/testCert.crt -outform pem
         sudo update-ca-certificates
+    
     - name: Build
       run: dotnet build PuppeteerSharp.Dom.sln
+    
     - name: Test
       env:
         PRODUCT: ${{ matrix.browser }}
@@ -46,3 +48,8 @@ jobs:
           export DISPLAY=:1.5
           cd PuppeteerSharp.Dom.Tests
           dotnet test -f net5.0 -s test.runsettings -c Debug --logger "trx;LogFileName=TestResults.xml"
+    
+    - name: Publish Nuget to GitHub registry
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet nuget push ./PuppeteerSharp.Dom/bin/Release/*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/ChromiumDotNet/index.json --skip-duplicate --no-symbols 
