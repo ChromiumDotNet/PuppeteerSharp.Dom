@@ -12,7 +12,7 @@ on:
     - '**.csproj'
 
 env:
-  DOTNET_VERSION: '3.1.x' # The .NET SDK version to use
+  DOTNET_VERSION: '5.0.x' # The .NET SDK version to use
 
 jobs:
   build:
@@ -45,4 +45,4 @@ jobs:
           Xvfb :1 -screen 5 1024x768x8 &
           export DISPLAY=:1.5
           cd PuppeteerSharp.Dom.Tests
-          dotnet test -f netcoreapp3.1 -s test.runsettings -c Debug --logger "trx;LogFileName=TestResults.xml"
+          dotnet test -f net5.0 -s test.runsettings -c Debug --logger "trx;LogFileName=TestResults.xml"
