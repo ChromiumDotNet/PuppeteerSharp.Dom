@@ -38,7 +38,7 @@ jobs:
         sudo update-ca-certificates
     
     - name: Build
-      run: dotnet build PuppeteerSharp.Dom.sln
+      run: dotnet build PuppeteerSharp.Dom.sln --version-suffix preview${{github.run_number}}
     
     - name: Test
       env:
