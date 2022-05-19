@@ -3,8 +3,6 @@
 	<PropertyGroup>
         <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
 		<IsTestProject>true</IsTestProject>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<LangVersion>Latest</LangVersion>
 	</PropertyGroup>
 
