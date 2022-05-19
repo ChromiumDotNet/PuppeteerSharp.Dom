@@ -11,6 +11,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>puppeteer,chrome,chromium,dom,csharp</PackageTags>
     <Title>PuppeteerSharp.Dom</Title>
+    <RepositoryUrl>https://github.com/ChromiumDotNet/PuppeteerSharp.Dom.git</RepositoryUrl>
     <Description>
         PuppeteerSharp.Dom - Extension to PuppeteerSharp providing strongly typed DOM access.
 
