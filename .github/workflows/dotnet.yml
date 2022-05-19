@@ -1,0 +1,48 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+      - release-*
+  pull_request:
+    branches: [ main ]
+    paths:
+    - '**.cs'
+    - '**.csproj'
+
+env:
+  DOTNET_VERSION: '3.1.x' # The .NET SDK version to use
+
+jobs:
+  build:
+
+    name: build-${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        dotnet restore PuppeteerSharp.Dom.sln
+        dotnet dev-certs https -ep PuppeteerSharp.Dom.TestServer/testCert.cer
+        sudo openssl x509 -inform der -in PuppeteerSharp.Dom.TestServer/testCert.cer -out /usr/local/share/ca-certificates/testCert.crt -outform pem
+        sudo update-ca-certificates
+    - name: Build
+      run: dotnet build PuppeteerSharp.Dom.sln
+    - name: Test
+      env:
+        PRODUCT: ${{ matrix.browser }}
+      run: |
+          Xvfb :1 -screen 5 1024x768x8 &
+          export DISPLAY=:1.5
+          cd PuppeteerSharp.Dom.Tests
+          dotnet test -f netcoreapp3.1 -s test.runsettings -c Debug --logger "trx;LogFileName=TestResults.xml"
