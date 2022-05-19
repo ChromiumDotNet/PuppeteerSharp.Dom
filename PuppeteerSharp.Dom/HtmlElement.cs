@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using PuppeteerSharp.Input;
 
@@ -39,8 +38,8 @@ namespace PuppeteerSharp.Dom
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// elementHandle.TypeAsync("#mytextarea", "Hello"); // Types instantly
-        /// elementHandle.TypeAsync("#mytextarea", "World", new TypeOptions { Delay = 100 }); // Types slower, like a user
+        /// elementHandle.TypeAsync("Hello"); // Types instantly
+        /// elementHandle.TypeAsync("World", new TypeOptions { Delay = 100 }); // Types slower, like a user
         /// ]]>
         /// </code>
         /// An example of typing into a text field and then submitting the form:
