@@ -29,9 +29,6 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
-        source-url: https://nuget.pkg.github.com/ChromiumDotNet/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Install dependencies
       run: |
@@ -55,4 +52,4 @@ jobs:
           dotnet test -f net5.0 -s test.runsettings -c Debug --logger "trx;LogFileName=TestResults.xml"
     
     - name: Publish Nuget to GitHub
-      run: dotnet nuget push PuppeteerSharp.Dom/bin/Release/*.nupkg 
+      run: dotnet nuget push PuppeteerSharp.Dom/bin/Release/*.nupkg -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/ChromiumDotNet/index.json
