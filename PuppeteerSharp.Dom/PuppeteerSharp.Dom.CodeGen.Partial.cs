@@ -863,7 +863,7 @@ namespace PuppeteerSharp.Dom
         public virtual Task<T?> GetNextElementSiblingAsync<T>()
             where T : Element
         {
-            return EvaluateFunctionInternalAsync<T?>("(element) => { return element.nextElementSibling; }");
+            return EvaluateFunctionHandleInternalAsync<T?>("(element) => { return element.nextElementSibling; }");
         }
 
         ///  <summary>
@@ -876,16 +876,8 @@ namespace PuppeteerSharp.Dom
         public virtual Task<T?> GetPreviousElementSiblingAsync<T>()
             where T : Element
         {
-            return EvaluateFunctionInternalAsync<T?>("(element) => { return element.previousElementSibling; }");
+            return EvaluateFunctionHandleInternalAsync<T?>("(element) => { return element.previousElementSibling; }");
         }
-
-        private BoxModelPoint[] FromProtocolQuad(decimal[] quad) => new[]
-        {
-            new BoxModelPoint { X = quad[0], Y = quad[1] },
-            new BoxModelPoint { X = quad[2], Y = quad[3] },
-            new BoxModelPoint { X = quad[4], Y = quad[5] },
-            new BoxModelPoint { X = quad[6], Y = quad[7] }
-        };
     }
 
     /// <summary>
