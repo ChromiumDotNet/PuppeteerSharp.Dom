@@ -606,7 +606,7 @@ namespace PuppeteerSharp.Dom
         /// <param name="args">Arguments to pass to script</param>
         /// <remarks>
         /// If the script, returns a Promise, then the method would wait for the promise to resolve and return its value.
-        /// <see cref="RemoteObject"/> instances can be passed as arguments
+        /// <see cref="IDomHandle"/> instances can be passed as arguments
         /// </remarks>
         /// <returns>Task</returns>
         public Task EvaluateFunctionAsync(string script, params object[] args)
@@ -622,7 +622,7 @@ namespace PuppeteerSharp.Dom
         /// <param name="args">Arguments to pass to script</param>
         /// <remarks>
         /// If the script, returns a Promise, then the method would wait for the promise to resolve and return its value.
-        /// <see cref="RemoteObject"/> instances can be passed as arguments
+        /// <see cref="IDomHandle"/> instances can be passed as arguments
         /// </remarks>
         /// <returns>Task which resolves to script return value</returns>
         public Task<T> EvaluateFunctionAsync<T>(string script, params object[] args)

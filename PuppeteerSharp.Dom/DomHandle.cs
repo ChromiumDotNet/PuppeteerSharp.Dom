@@ -6,33 +6,25 @@ using System.Threading.Tasks;
 
 namespace PuppeteerSharp.Dom
 {
-    /// <summary>
-    /// DomHandle is a base clas providing for all DOM/HTML Elements
-    /// </summary>
-    public abstract class DomHandle : IAsyncDisposable
+    /// <inheritdoc />
+    public abstract class DomHandle : IDomHandle
     {
-        /// <summary>
-        /// Class Name
-        /// </summary>
+        /// <inheritdoc />
         public string ClassName { get; private set; }
-        /// <summary>
-        /// Javascript Handle
-        /// </summary>
+
+        /// <inheritdoc />
         public JSHandle Handle { get; private set; }
+
+        /// <inheritdoc />
+        public bool IsDisposed
+        {
+            get { return Handle.Disposed; }
+        }
 
         internal DomHandle(string className, JSHandle jSHandle)
         {
             ClassName = className;
             Handle = jSHandle;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="RemoteObject"/> is disposed.
-        /// </summary>
-        /// <value><c>true</c> if disposed; otherwise, <c>false</c>.</value>
-        public bool IsDisposed
-        {
-            get { return Handle.Disposed; }
         }
 
         /// <summary>
@@ -59,7 +51,7 @@ namespace PuppeteerSharp.Dom
         /// <param name="args">Arguments to pass to script</param>
         /// <remarks>
         /// If the script, returns a Promise, then the method would wait for the promise to resolve and return its value.
-        /// <see cref="RemoteObject"/> instances can be passed as arguments
+        /// <see cref="IDomHandle"/> instances can be passed as arguments
         /// </remarks>
         /// <returns>Task which resolves to script return value</returns>
         internal async Task<T> EvaluateFunctionInternalAsync<T>(string script, params object[] args)
@@ -107,7 +99,7 @@ namespace PuppeteerSharp.Dom
         /// <param name="args">Arguments to pass to script</param>
         /// <remarks>
         /// If the script, returns a Promise, then the method would wait for the promise to resolve and return its value.
-        /// <see cref="RemoteObject"/> instances can be passed as arguments
+        /// <see cref="IDomHandle"/> instances can be passed as arguments
         /// </remarks>
         /// <returns>Task which resolves to script return value</returns>
         internal Task EvaluateFunctionInternalAsync(string script, params object[] args)
@@ -120,7 +112,7 @@ namespace PuppeteerSharp.Dom
 
             var type = typeof(DomHandle);
 
-            foreach(var arg in args)
+            foreach (var arg in args)
             {
                 if (arg != null && type.IsAssignableFrom(arg.GetType()))
                 {
@@ -130,7 +122,7 @@ namespace PuppeteerSharp.Dom
                 else
                 {
                     list.Add(arg);
-                }                
+                }
             }
 
             return Handle.EvaluateFunctionAsync(script, list.ToArray());
