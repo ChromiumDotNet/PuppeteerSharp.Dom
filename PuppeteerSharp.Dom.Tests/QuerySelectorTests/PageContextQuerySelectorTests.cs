@@ -29,8 +29,7 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
             // https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
             var element = await Page.QuerySelectorAsync<HtmlElement>("#myElementId");
 
-            //Strongly typed element types
-            //Only a subset of element types have been added so far, use HtmlElement as a generic type for all others
+            //Strongly typed element types (this is only a subset of the types mapped)
             var htmlDivElement = await Page.QuerySelectorAsync<HtmlDivElement>("#myDivElementId");
             var htmlSpanElement = await Page.QuerySelectorAsync<HtmlSpanElement>("#mySpanElementId");
             var htmlSelectElement = await Page.QuerySelectorAsync<HtmlSelectElement>("#mySelectElementId");
@@ -51,8 +50,6 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
 
             //Get innerText property for the element
             var innerText = await element.GetInnerTextAsync();
-            //Can use this method to get any property that isn't currently mapped
-            innerText = await element.GetInnerTextAsync();
 
             //Get all child elements
             var childElements = await element.QuerySelectorAllAsync("div");
