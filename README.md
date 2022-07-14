@@ -36,20 +36,20 @@ await page.GoToAsync("http://www.google.com"); // In case of fonts being loaded 
 // Add using PuppeteerSharp.Dom to access QuerySelectorAsync<T> and QuerySelectorAllAsync<T> extension methods.
 // Get element by Id
 // https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
-var element = await Page.QuerySelectorAsync<HtmlElement>("#myElementId");
+var element = await page.QuerySelectorAsync<HtmlElement>("#myElementId");
 
 //Strongly typed element types (this is only a subset of the types mapped)
-var htmlDivElement = await Page.QuerySelectorAsync<HtmlDivElement>("#myDivElementId");
-var htmlSpanElement = await Page.QuerySelectorAsync<HtmlSpanElement>("#mySpanElementId");
-var htmlSelectElement = await Page.QuerySelectorAsync<HtmlSelectElement>("#mySelectElementId");
-var htmlInputElement = await Page.QuerySelectorAsync<HtmlInputElement>("#myInputElementId");
-var htmlFormElement = await Page.QuerySelectorAsync<HtmlFormElement>("#myFormElementId");
-var htmlAnchorElement = await Page.QuerySelectorAsync<HtmlAnchorElement>("#myAnchorElementId");
-var htmlImageElement = await Page.QuerySelectorAsync<HtmlImageElement>("#myImageElementId");
-var htmlTextAreaElement = await Page.QuerySelectorAsync<HtmlImageElement>("#myTextAreaElementId");
-var htmlButtonElement = await Page.QuerySelectorAsync<HtmlButtonElement>("#myButtonElementId");
-var htmlParagraphElement = await Page.QuerySelectorAsync<HtmlParagraphElement>("#myParagraphElementId");
-var htmlTableElement = await Page.QuerySelectorAsync<HtmlTableElement>("#myTableElementId");
+var htmlDivElement = await page.QuerySelectorAsync<HtmlDivElement>("#myDivElementId");
+var htmlSpanElement = await page.QuerySelectorAsync<HtmlSpanElement>("#mySpanElementId");
+var htmlSelectElement = await page.QuerySelectorAsync<HtmlSelectElement>("#mySelectElementId");
+var htmlInputElement = await page.QuerySelectorAsync<HtmlInputElement>("#myInputElementId");
+var htmlFormElement = await page.QuerySelectorAsync<HtmlFormElement>("#myFormElementId");
+var htmlAnchorElement = await page.QuerySelectorAsync<HtmlAnchorElement>("#myAnchorElementId");
+var htmlImageElement = await page.QuerySelectorAsync<HtmlImageElement>("#myImageElementId");
+var htmlTextAreaElement = await page.QuerySelectorAsync<HtmlImageElement>("#myTextAreaElementId");
+var htmlButtonElement = await page.QuerySelectorAsync<HtmlButtonElement>("#myButtonElementId");
+var htmlParagraphElement = await page.QuerySelectorAsync<HtmlParagraphElement>("#myParagraphElementId");
+var htmlTableElement = await page.QuerySelectorAsync<HtmlTableElement>("#myTableElementId");
 
 // Get a custom attribute value
 var customAttribute = await element.GetAttributeAsync<string>("data-customAttribute");
@@ -73,24 +73,24 @@ await element.TypeAsync("Welcome to my Website!");
 await element.ClickAsync();
 
 // Simple way of chaining method calls together when you don't need a handle to the HtmlElement
-var htmlButtonElementInnerText = await Page.QuerySelectorAsync<HtmlButtonElement>("#myButtonElementId")
+var htmlButtonElementInnerText = await page.QuerySelectorAsync<HtmlButtonElement>("#myButtonElementId")
     .AndThen(x => x.GetInnerTextAsync());
 
 //Event Handler
 //Expose a function to javascript, functions persist across navigations
 //So only need to do this once
-await Page.ExposeFunctionAsync("jsAlertButtonClick", () =>
+await page.ExposeFunctionAsync("jsAlertButtonClick", () =>
 {
-    _ = Page.EvaluateExpressionAsync("window.alert('Hello! You invoked window.alert()');");
+    _ = page.EvaluateExpressionAsync("window.alert('Hello! You invoked window.alert()');");
 });
 
-var jsAlertButton = await Page.QuerySelectorAsync<HtmlButtonElement>("#jsAlertButton");
+var jsAlertButton = await page.QuerySelectorAsync<HtmlButtonElement>("#jsAlertButton");
 
 //Write up the click event listner to call our exposed function
 _ = jsAlertButton.AddEventListenerAsync("click", "jsAlertButtonClick");
 
 //Get a collection of HtmlElements
-var divElements = await Page.QuerySelectorAllAsync<HtmlDivElement>("div");
+var divElements = await page.QuerySelectorAllAsync<HtmlDivElement>("div");
 
 foreach (var div in divElements)
 {
@@ -112,7 +112,7 @@ foreach (var row in tableRows)
     var cells = await row.GetCellsAsync().ToArrayAsync();
     foreach (var cell in cells)
     {
-        var newDiv = await Page.CreateHtmlElementAsync<HtmlDivElement>("div");
+        var newDiv = await page.CreateHtmlElementAsync<HtmlDivElement>("div");
         await newDiv.SetInnerTextAsync("New Div Added!");
         await cell.AppendChildAsync(newDiv);
     }
@@ -127,7 +127,7 @@ await foreach (var row in tableRowsHtmlCollection)
     var cells = await row.GetCellsAsync();
     await foreach (var cell in cells)
     {
-        var newDiv = await Page.CreateHtmlElementAsync<HtmlDivElement>("div");
+        var newDiv = await page.CreateHtmlElementAsync<HtmlDivElement>("div");
         await newDiv.SetInnerTextAsync("New Div Added!");
         await cell.AppendChildAsync(newDiv);
     }

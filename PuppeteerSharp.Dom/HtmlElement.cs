@@ -178,7 +178,7 @@ namespace PuppeteerSharp.Dom
 
             foreach(var jsHandle in properties.Values)
 {
-                var obj = await jsHandle.ToDomHandleAsync<HtmlElement>().ConfigureAwait(false);
+                var obj = jsHandle.ToDomHandle<HtmlElement>();
 
                 if (obj != null)
                 {

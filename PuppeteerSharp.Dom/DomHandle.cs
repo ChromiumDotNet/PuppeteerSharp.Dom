@@ -138,7 +138,7 @@ namespace PuppeteerSharp.Dom
                 return default;
             }
 
-            return await handle.ToDomHandleAsync<T>().ConfigureAwait(false);
+            return handle.ToDomHandle<T>();
         }
 
         internal async Task<IEnumerable<T>> GetArray<T>()
@@ -156,7 +156,7 @@ namespace PuppeteerSharp.Dom
                     continue;
                 }
 
-                var obj = await jSHandle.ToDomHandleAsync<T>().ConfigureAwait(false);
+                var obj = jSHandle.ToDomHandle<T>();
 
                 result.Add(obj);
             }

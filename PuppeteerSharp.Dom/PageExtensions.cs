@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace PuppeteerSharp.Dom
@@ -16,7 +15,7 @@ namespace PuppeteerSharp.Dom
         /// <typeparam name="T">Element type</typeparam>
         /// <param name="jsHandle">JSHandle</param>
         /// <returns>Element or null</returns>
-        public static async Task<T> ToDomHandleAsync<T>(this JSHandle jsHandle)
+        public static T ToDomHandle<T>(this JSHandle jsHandle)
             where T : DomHandle
         {
             if (jsHandle == null)
@@ -32,10 +31,7 @@ namespace PuppeteerSharp.Dom
                 remoteObject.Subtype == Messaging.RemoteObjectSubtype.Array ||
                 remoteObject.Subtype == Messaging.RemoteObjectSubtype.Other))
             {
-                // If Puppeteer addds RemoteObject.ClassName we can skip this call.
-                var className = await jsHandle.EvaluateFunctionAsync<string>("e => e[Symbol.toStringTag]").ConfigureAwait(false);
-
-                return HtmlObjectFactory.CreateObject<T>(className, jsHandle);
+                return HtmlObjectFactory.CreateObject<T>(remoteObject.ClassName, jsHandle);
             }
 
             return default;
@@ -59,7 +55,7 @@ namespace PuppeteerSharp.Dom
         {
             var handle = await page.EvaluateExpressionHandleAsync(script).ConfigureAwait(false);
 
-            return await handle.ToDomHandleAsync<T>().ConfigureAwait(false);
+            return handle.ToDomHandle<T>();
         }
 
         /// <summary>
@@ -83,7 +79,7 @@ namespace PuppeteerSharp.Dom
                 }",
                 tagName).ConfigureAwait(false);
 
-            return await handle.ToDomHandleAsync<T>().ConfigureAwait(false);
+            return handle.ToDomHandle<T>();
         }
 
         /// <summary>
@@ -111,7 +107,7 @@ namespace PuppeteerSharp.Dom
                 tagName,
                 id).ConfigureAwait(false);
 
-            return await handle.ToDomHandleAsync<T>().ConfigureAwait(false);
+            return handle.ToDomHandle<T>();
         }
 
         /// <summary>
@@ -145,9 +141,9 @@ namespace PuppeteerSharp.Dom
         public static async Task<T> QuerySelectorAsync<T>(this Frame frame, string querySelector)
             where T : Element
         {
-            var handle = await frame.QuerySelectorAsync(querySelector);
+            var handle = await frame.QuerySelectorAsync(querySelector).ConfigureAwait(false);
 
-            return await handle.ToDomHandleAsync<T>().ConfigureAwait(false);
+            return handle.ToDomHandle<T>();
         }
 
         /// <summary>
@@ -203,7 +199,7 @@ namespace PuppeteerSharp.Dom
 
             foreach(var element in elements)
             {
-                list.Add(await element.ToDomHandleAsync<T>());
+                list.Add(element.ToDomHandle<T>());
             }
 
             return list.ToArray();
