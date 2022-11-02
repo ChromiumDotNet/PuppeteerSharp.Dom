@@ -28,15 +28,26 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
+        /// returns the value of a specified CSS property as string
+        /// </summary>
+        /// <param name="propertyName">property to get</param>
+        /// <returns>Task of type string</returns>
+        /// <exception cref="PuppeteerException">Thrown if no matching property is found</exception>
+        public Task<string> GetPropertyValueAsync(string propertyName)
+        {
+            return GetPropertyValueAsync<string>(propertyName);
+        }
+
+        /// <summary>
         /// returns the value of a specified CSS property.
         /// </summary>
         /// <typeparam name="T">Property Value Type e.g. string, int</typeparam>
         /// <param name="propertyName">property to get</param>
         /// <returns>Task of <typeparamref name="T"/></returns>
         /// <exception cref="PuppeteerException">Thrown if no matching property is found</exception>
-        public Task<string> GetPropertyValueAsync<T>(string propertyName)
+        public Task<T> GetPropertyValueAsync<T>(string propertyName)
         {
-            return EvaluateFunctionInternalAsync<string>("(e, name) => { return e.getPropertyValue(name); }", propertyName);
+            return EvaluateFunctionInternalAsync<T>("(e, name) => { return e.getPropertyValue(name); }", propertyName);
         }
 
         /// <summary>

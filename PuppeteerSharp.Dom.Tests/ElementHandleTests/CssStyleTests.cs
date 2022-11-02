@@ -47,11 +47,56 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
 
             await style.SetPropertyAsync("border", "1px solid red", true);
 
-            var val = await style.GetPropertyValueAsync<string>("border");
-
             var priority = await style.GetPropertyPriorityAsync("border");
 
             Assert.True(priority);
+        }
+
+        [PuppeteerDomFact]
+        public async Task ShouldGetPropertyAsString()
+        {
+            await Page.GoToAsync(TestConstants.ServerUrl + "/input/button.html");
+            var button = await Page.QuerySelectorAsync<HtmlButtonElement>("button");
+
+            var style = await button.GetStyleAsync();
+
+            await style.SetPropertyAsync("border", "1px solid red", true);
+
+            var actual = await style.GetPropertyValueAsync<string>("border-width");
+
+            Assert.Equal("1px", actual);
+        }
+
+        [PuppeteerDomFact]
+        public async Task ShouldGetPropertyAsInt()
+        {
+            await Page.GoToAsync(TestConstants.ServerUrl + "/input/button.html");
+            var button = await Page.QuerySelectorAsync<HtmlButtonElement>("button");
+
+            var style = await button.GetStyleAsync();
+
+            await style.SetPropertyAsync("z-index", 10);
+
+            var actual = await style.GetPropertyValueAsync<int>("z-index");
+
+            Assert.Equal(10, actual);
+        }
+
+        [InlineData("auto")]
+        [InlineData("1")]
+        [PuppeteerDomTheory]
+        public async Task ShouldGetPropertyZIndexAsObject(object expected)
+        {
+            await Page.GoToAsync(TestConstants.ServerUrl + "/input/button.html");
+            var button = await Page.QuerySelectorAsync<HtmlButtonElement>("button");
+
+            var style = await button.GetStyleAsync();
+
+            await style.SetPropertyAsync("z-index", expected);
+
+            var actual = await style.GetPropertyValueAsync<object>("z-index");
+
+            Assert.Equal(expected, actual);
         }
 
         [PuppeteerDomFact]
