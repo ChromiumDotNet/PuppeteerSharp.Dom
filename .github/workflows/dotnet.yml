@@ -39,19 +39,17 @@ jobs:
     
     - name: Build
       run: |
-        echo "Buid version is ${{github.run_number}}"
+        echo "Buid version is 2.0.${{github.run_number}}"
         dotnet build PuppeteerSharp.Dom.sln /p:Version=2.0.${{github.run_number}} --configuration Release
     
     - name: Test
-      env:
-        PRODUCT: ${{ matrix.browser }}
       run: |
           Xvfb :1 -screen 5 1024x768x8 &
           export DISPLAY=:1.5
           cd PuppeteerSharp.Dom.Tests
           dotnet test -f net5.0 -s test.runsettings -c Debug --logger "trx;LogFileName=TestResults.xml"
     
-    - name: Publish Nuget to GitHub
+    - name: Publish Nuget packages
       run: | 
           dotnet nuget push PuppeteerSharp.Dom/bin/Release/*.nupkg -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/ChromiumDotNet/index.json
           dotnet nuget push PuppeteerSharp.Dom/bin/Release/*.nupkg -k ${{ secrets.PuppeteerSharpDom }} -s https://www.myget.org/F/cefsharp/api/v3/index.json
