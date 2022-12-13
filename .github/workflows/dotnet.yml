@@ -52,4 +52,6 @@ jobs:
           dotnet test -f net5.0 -s test.runsettings -c Debug --logger "trx;LogFileName=TestResults.xml"
     
     - name: Publish Nuget to GitHub
-      run: dotnet nuget push PuppeteerSharp.Dom/bin/Release/*.nupkg -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/ChromiumDotNet/index.json
+      run: | 
+          dotnet nuget push PuppeteerSharp.Dom/bin/Release/*.nupkg -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/ChromiumDotNet/index.json
+          dotnet nuget push PuppeteerSharp.Dom/bin/Release/*.nupkg -k ${{ secrets.PuppeteerSharpDom }} -s https://www.myget.org/F/cefsharp/api/v3/index.json
