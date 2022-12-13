@@ -11,7 +11,7 @@ namespace PuppeteerSharp.Dom
     /// <seealso href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLLinkElement" />
     public partial class HtmlLinkElement : HtmlElement
     {
-        internal HtmlLinkElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlLinkElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 

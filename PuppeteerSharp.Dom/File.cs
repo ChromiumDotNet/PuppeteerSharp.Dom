@@ -8,7 +8,7 @@ namespace PuppeteerSharp.Dom
     /// https://developer.mozilla.org/en-US/docs/Web/API/File
     public class File : DomHandle
     {
-        internal File(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal File(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 

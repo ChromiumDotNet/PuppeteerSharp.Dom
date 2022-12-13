@@ -9,7 +9,7 @@ namespace PuppeteerSharp.Dom
     /// <seealso href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableElement" />
     public partial class HtmlTableElement : HtmlElement
     {
-        internal HtmlTableElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlTableElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 

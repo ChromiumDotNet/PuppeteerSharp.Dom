@@ -10,12 +10,12 @@ namespace PuppeteerSharp.Dom
     public static class PageExtensions
     {
         /// <summary>
-        /// Creates a Html Element from the <see cref="JSHandle"/>
+        /// Creates a Html Element from the <see cref="IJSHandle"/>
         /// </summary>
         /// <typeparam name="T">Element type</typeparam>
         /// <param name="jsHandle">JSHandle</param>
         /// <returns>Element or null</returns>
-        public static T ToDomHandle<T>(this JSHandle jsHandle)
+        public static T ToDomHandle<T>(this IJSHandle jsHandle)
             where T : DomHandle
         {
             if (jsHandle == null)
@@ -38,7 +38,7 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
-        /// Passes an expression to the <see cref="Page.EvaluateExpressionHandleAsync(string)"/>, returns a <see cref="Task"/>, then <see cref="Page.EvaluateExpressionHandleAsync(string)"/> would wait for the <see cref="Task"/> to resolve and return its value.
+        /// Passes an expression to the <see cref="IPage.EvaluateExpressionHandleAsync(string)"/>, returns a <see cref="Task"/>, then <see cref="IPage.EvaluateExpressionHandleAsync(string)"/> would wait for the <see cref="Task"/> to resolve and return its value.
         /// </summary>
         /// <example>
         /// <code>
@@ -50,7 +50,7 @@ namespace PuppeteerSharp.Dom
         /// <param name="page">Page</param>
         /// <param name="script">Expression to be evaluated in the <seealso cref="ExecutionContext"/></param>
         /// <returns>Resolves to the return value of <paramref name="script"/></returns>
-        public static async Task<T> EvaluateExpressionHandleAsync<T>(this Page page, string script)
+        public static async Task<T> EvaluateExpressionHandleAsync<T>(this IPage page, string script)
             where T : DomHandle
         {
             var handle = await page.EvaluateExpressionHandleAsync(script).ConfigureAwait(false);
@@ -70,7 +70,7 @@ namespace PuppeteerSharp.Dom
         /// with this method.
         /// </param>
         /// <returns>Created element</returns>
-        public static async Task<T> CreateHtmlElementAsync<T>(this Page page, string tagName)
+        public static async Task<T> CreateHtmlElementAsync<T>(this IPage page, string tagName)
             where T : HtmlElement
         {
             var handle = await page.EvaluateFunctionHandleAsync(
@@ -95,7 +95,7 @@ namespace PuppeteerSharp.Dom
         /// </param>
         /// <param name="id">element id</param>
         /// <returns>Created element</returns>
-        public static async Task<T> CreateHtmlElementAsync<T>(this Page page, string tagName, string id)
+        public static async Task<T> CreateHtmlElementAsync<T>(this IPage page, string tagName, string id)
             where T : HtmlElement
         {
             var handle = await page.EvaluateFunctionHandleAsync(
@@ -121,7 +121,7 @@ namespace PuppeteerSharp.Dom
         /// Shortcut for <c>page.MainFrame.QuerySelectorAsync(selector)</c>
         /// </remarks>
         /// <seealso cref="Frame.QuerySelectorAsync(string)"/>
-        public static Task<T> QuerySelectorAsync<T>(this Page page, string querySelector)
+        public static Task<T> QuerySelectorAsync<T>(this IPage page, string querySelector)
             where T : Element
         {
             return page.MainFrame.QuerySelectorAsync<T>(querySelector);
@@ -138,7 +138,7 @@ namespace PuppeteerSharp.Dom
         /// Shortcut for <c>page.MainFrame.QuerySelectorAsync(selector)</c>
         /// </remarks>
         /// <seealso cref="Frame.QuerySelectorAsync(string)"/>
-        public static async Task<T> QuerySelectorAsync<T>(this Frame frame, string querySelector)
+        public static async Task<T> QuerySelectorAsync<T>(this IFrame frame, string querySelector)
             where T : Element
         {
             var handle = await frame.QuerySelectorAsync(querySelector).ConfigureAwait(false);
@@ -155,8 +155,8 @@ namespace PuppeteerSharp.Dom
         /// <remarks>
         /// Shortcut for <c>page.MainFrame.QuerySelectorAsync(selector)</c>
         /// </remarks>
-        /// <seealso cref="Frame.QuerySelectorAsync(string)"/>
-        public static Task<HtmlElement> QuerySelectorAsync(this Page page, string querySelector)
+        /// <seealso cref="IFrame.QuerySelectorAsync(string)"/>
+        public static Task<HtmlElement> QuerySelectorAsync(this IPage page, string querySelector)
             => page.QuerySelectorAsync<HtmlElement>(querySelector);
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace PuppeteerSharp.Dom
         /// Shortcut for <c>page.MainFrame.QuerySelectorAsync(selector)</c>
         /// </remarks>
         /// <seealso cref="Frame.QuerySelectorAsync(string)"/>
-        public static Task<HtmlElement> QuerySelectorAsync(this Frame frame, string querySelector)
+        public static Task<HtmlElement> QuerySelectorAsync(this IFrame frame, string querySelector)
             => frame.QuerySelectorAsync<HtmlElement>(querySelector);
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace PuppeteerSharp.Dom
         /// <param name="querySelector">A selector to query page for</param>
         /// <returns>Task which resolves to ElementHandles pointing to the frame elements</returns>
         /// <seealso cref="Frame.QuerySelectorAllAsync(string)"/>
-        public static Task<HtmlElement[]> QuerySelectorAllAsync(this Page page, string querySelector)
+        public static Task<HtmlElement[]> QuerySelectorAllAsync(this IPage page, string querySelector)
             => page.QuerySelectorAllAsync<HtmlElement>(querySelector);
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace PuppeteerSharp.Dom
         /// <param name="querySelector">A selector to query page for</param>
         /// <returns>Task which resolves to ElementHandles pointing to the frame elements</returns>
         /// <seealso cref="Frame.QuerySelectorAllAsync(string)"/>
-        public static async Task<T[]> QuerySelectorAllAsync<T>(this Page page, string querySelector)
+        public static async Task<T[]> QuerySelectorAllAsync<T>(this IPage page, string querySelector)
             where T : Element
         {
             var elements = await page.QuerySelectorAllAsync(querySelector).ConfigureAwait(false);

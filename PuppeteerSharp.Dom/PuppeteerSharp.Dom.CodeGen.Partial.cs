@@ -15,7 +15,7 @@ namespace PuppeteerSharp.Dom
 #nullable enable
     public static partial class HtmlObjectFactory
     {
-        internal static T? CreateObject<T>(string className, JSHandle jsHandle)
+        internal static T? CreateObject<T>(string className, IJSHandle jsHandle)
             where T : DomHandle
         {
             var type = typeof(T);
@@ -53,49 +53,49 @@ namespace PuppeteerSharp.Dom
 
     public partial class DocumentType
     {
-        internal DocumentType(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal DocumentType(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class Range
     {
-        internal Range(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal Range(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class StyleSheetList
     {
-        internal StyleSheetList(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal StyleSheetList(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class StringList
     {
-        internal StringList(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal StringList(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class ValidityState
     {
-        internal ValidityState(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal ValidityState(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class MediaList
     {
-        internal MediaList(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal MediaList(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class StyleSheet
     {
-        internal StyleSheet(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal StyleSheet(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
@@ -105,7 +105,7 @@ namespace PuppeteerSharp.Dom
     /// </summary>
     public partial class Node
     {
-        internal Node(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal Node(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 
@@ -125,203 +125,203 @@ namespace PuppeteerSharp.Dom
 
     public partial class UrlUtilities
     {
-        internal UrlUtilities(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal UrlUtilities(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class NavigatorId
     {
-        internal NavigatorId(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal NavigatorId(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class Navigator
     {
-        internal Navigator(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal Navigator(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class Location
     {
-        internal Location(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal Location(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class History
     {
-        internal History(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal History(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class Window
     {
-        internal Window(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal Window(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlBaseElement
     {
-        internal HtmlBaseElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlBaseElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlBodyElement
     {
-        internal HtmlBodyElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlBodyElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlBreakRowElement
     {
-        internal HtmlBreakRowElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlBreakRowElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlDetailsElement
     {
-        internal HtmlDetailsElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlDetailsElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlDialogElement
     {
-        internal HtmlDialogElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlDialogElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlEmbedElement
     {
-        internal HtmlEmbedElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlEmbedElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlFieldSetElement
     {
-        internal HtmlFieldSetElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlFieldSetElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlHeadElement
     {
-        internal HtmlHeadElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlHeadElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlHeadingElement
     {
-        internal HtmlHeadingElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlHeadingElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlHrElement
     {
-        internal HtmlHrElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlHrElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlInlineFrameElement
     {
-        internal HtmlInlineFrameElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlInlineFrameElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlKeygenElement
     {
-        internal HtmlKeygenElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlKeygenElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlLabelElement
     {
-        internal HtmlLabelElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlLabelElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlListItemElement
     {
-        internal HtmlListItemElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlListItemElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlAreaElement
     {
-        internal HtmlAreaElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlAreaElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlTitleElement
     {
-        internal HtmlTitleElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlTitleElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlUnorderedListElement
     {
-        internal HtmlUnorderedListElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlUnorderedListElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlUnknownElement
     {
-        internal HtmlUnknownElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlUnknownElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlTimeElement
     {
-        internal HtmlTimeElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlTimeElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlTemplateElement
     {
-        internal HtmlTemplateElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlTemplateElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlCommandElement
     {
-        internal HtmlCommandElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlCommandElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlDataElement
     {
-        internal HtmlDataElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlDataElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlDocument
     {
-        internal HtmlDocument(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlDocument(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 
@@ -408,147 +408,147 @@ namespace PuppeteerSharp.Dom
 
     public partial class HtmlLegendElement
     {
-        internal HtmlLegendElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlLegendElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlMapElement
     {
-        internal HtmlMapElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlMapElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlMarqueeElement
     {
-        internal HtmlMarqueeElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlMarqueeElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlHtmlElement
     {
-        internal HtmlHtmlElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlHtmlElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlMenuItemElement
     {
-        internal HtmlMenuItemElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlMenuItemElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlMetaElement
     {
-        internal HtmlMetaElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlMetaElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlMeterElement
     {
-        internal HtmlMeterElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlMeterElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlModElement
     {
-        internal HtmlModElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlModElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlObjectElement
     {
-        internal HtmlObjectElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlObjectElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlOrderedListElement
     {
-        internal HtmlOrderedListElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlOrderedListElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlOutputElement
     {
-        internal HtmlOutputElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlOutputElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlParamElement
     {
-        internal HtmlParamElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlParamElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlPictureElement
     {
-        internal HtmlPictureElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlPictureElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlPreElement
     {
-        internal HtmlPreElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlPreElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlProgressElement
     {
-        internal HtmlProgressElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlProgressElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlQuoteElement
     {
-        internal HtmlQuoteElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlQuoteElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlScriptElement
     {
-        internal HtmlScriptElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlScriptElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlSourceElement
     {
-        internal HtmlSourceElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlSourceElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlStyleElement
     {
-        internal HtmlStyleElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlStyleElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlTableColumnElement
     {
-        internal HtmlTableColumnElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlTableColumnElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlTableDataCellElement
     {
-        internal HtmlTableDataCellElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlTableDataCellElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
@@ -559,7 +559,7 @@ namespace PuppeteerSharp.Dom
     /// </summary>
     public partial class Element
     {
-        internal Element(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal Element(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 
@@ -885,21 +885,21 @@ namespace PuppeteerSharp.Dom
     /// </summary>
     public partial class Document : Node
     {
-        internal Document(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal Document(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class CharacterData
     {
-        internal CharacterData(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal CharacterData(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class Text
     {
-        internal Text(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal Text(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
@@ -909,7 +909,7 @@ namespace PuppeteerSharp.Dom
     /// </summary>
     public partial class ShadowRoot : DocumentFragment
     {
-        internal ShadowRoot(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal ShadowRoot(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
@@ -920,7 +920,7 @@ namespace PuppeteerSharp.Dom
     /// </summary>
     public partial class DocumentFragment : DomHandle
     {
-        internal DocumentFragment(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal DocumentFragment(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
@@ -932,14 +932,14 @@ namespace PuppeteerSharp.Dom
     /// </summary>
     public partial class Attr
     {
-        internal Attr(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal Attr(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class NamedNodeMap : IAsyncEnumerable<Attr>
     {
-        internal NamedNodeMap(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal NamedNodeMap(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 
@@ -970,7 +970,7 @@ namespace PuppeteerSharp.Dom
 
     public partial class TokenList : IAsyncEnumerable<string>
     {
-        internal TokenList(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal TokenList(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 
@@ -1001,7 +1001,7 @@ namespace PuppeteerSharp.Dom
 
     public partial class StringMap : IAsyncEnumerable<KeyValuePair<string, string>>
     {
-        internal StringMap(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal StringMap(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 
@@ -1032,28 +1032,28 @@ namespace PuppeteerSharp.Dom
 
     public partial class SettableTokenList
     {
-        internal SettableTokenList(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal SettableTokenList(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlOptionsCollection
     {
-        internal HtmlOptionsCollection(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlOptionsCollection(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlFormControlsCollection
     {
-        internal HtmlFormControlsCollection(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlFormControlsCollection(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }
 
     public partial class HtmlOptionsGroupElement
     {
-        internal HtmlOptionsGroupElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlOptionsGroupElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
 
         }
@@ -1061,7 +1061,7 @@ namespace PuppeteerSharp.Dom
 
     public partial class HtmlDataListElement
     {
-        internal HtmlDataListElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlDataListElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
 
         }
@@ -1069,7 +1069,7 @@ namespace PuppeteerSharp.Dom
 
     public partial class HtmlTableCaptionElement
     {
-        internal HtmlTableCaptionElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlTableCaptionElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
 
         }
@@ -1077,7 +1077,7 @@ namespace PuppeteerSharp.Dom
 
     public partial class HtmlMenuElement
     {
-        internal HtmlMenuElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlMenuElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
 
         }

@@ -8,7 +8,7 @@ namespace PuppeteerSharp.Dom
     /// <seealso href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement" />
     public partial class HtmlFormElement : HtmlElement
     {
-        internal HtmlFormElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlFormElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }

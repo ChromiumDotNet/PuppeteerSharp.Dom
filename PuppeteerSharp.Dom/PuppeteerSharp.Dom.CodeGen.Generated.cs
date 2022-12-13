@@ -19,7 +19,7 @@ namespace PuppeteerSharp.Dom
     {
         
         /// <summary>CreateObject</summary>
-        static object? CreateObjectInternal(string className, PuppeteerSharp.JSHandle jsHandle)
+        static object? CreateObjectInternal(string className, PuppeteerSharp.IJSHandle jsHandle)
         {
             if ((className == "Range"))
             {

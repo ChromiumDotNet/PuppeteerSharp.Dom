@@ -8,7 +8,7 @@ namespace PuppeteerSharp.Dom
     /// <seealso href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement" />
     public partial class HtmlButtonElement : HtmlElement
     {
-        internal HtmlButtonElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlButtonElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }

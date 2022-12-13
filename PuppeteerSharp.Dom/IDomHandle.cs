@@ -15,7 +15,7 @@ namespace PuppeteerSharp.Dom
         /// <summary>
         /// Javascript Handle
         /// </summary>
-        JSHandle Handle { get; }
+        IJSHandle Handle { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="DomHandle"/> is disposed.

@@ -7,7 +7,7 @@ namespace PuppeteerSharp.Dom
     /// <seealso href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLSpanElement" />
     public partial class HtmlSpanElement : HtmlElement
     {
-        internal HtmlSpanElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlSpanElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
     }

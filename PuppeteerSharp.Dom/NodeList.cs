@@ -13,7 +13,7 @@ namespace PuppeteerSharp.Dom
     public class NodeList : DomHandle, IAsyncEnumerable<Node>
 
     {
-        internal NodeList(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal NodeList(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 

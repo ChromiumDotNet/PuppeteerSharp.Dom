@@ -7,7 +7,7 @@ namespace PuppeteerSharp.Dom
     /// </summary>
     public class CssStyleDeclaration : DomHandle
     {
-        internal CssStyleDeclaration(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal CssStyleDeclaration(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
 
         }

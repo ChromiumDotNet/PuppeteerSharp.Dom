@@ -11,7 +11,7 @@ namespace PuppeteerSharp.Dom
     /// </summary>
     public class FileList : DomHandle, IAsyncEnumerable<File>
     {
-        internal FileList(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal FileList(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
 
         }

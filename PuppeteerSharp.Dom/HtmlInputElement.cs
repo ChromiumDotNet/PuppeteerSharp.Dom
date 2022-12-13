@@ -9,7 +9,7 @@ namespace PuppeteerSharp.Dom
     /// <seealso href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement" />
     public partial class HtmlInputElement : HtmlElement
     {
-        internal HtmlInputElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlInputElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 

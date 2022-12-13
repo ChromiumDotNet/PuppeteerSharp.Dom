@@ -9,7 +9,7 @@ namespace PuppeteerSharp.Dom
     /// <seealso href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement" />
     public partial class HtmlSelectElement : HtmlElement
     {
-        internal HtmlSelectElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlSelectElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 

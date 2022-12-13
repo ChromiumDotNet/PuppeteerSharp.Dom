@@ -11,7 +11,7 @@ namespace PuppeteerSharp.Dom.Tests
         {
         }
 
-        protected BrowserContext Context { get; set; }
+        protected IBrowserContext Context { get; set; }
         public override async Task InitializeAsync()
         {
             await base.InitializeAsync();

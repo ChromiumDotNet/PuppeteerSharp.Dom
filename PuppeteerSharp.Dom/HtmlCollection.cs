@@ -13,7 +13,7 @@ namespace PuppeteerSharp.Dom
     public class HtmlCollection<T> : DomHandle, IAsyncEnumerable<T>
         where T : Element
     {
-        internal HtmlCollection(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlCollection(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 

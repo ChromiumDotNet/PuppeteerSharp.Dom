@@ -1,4 +1,3 @@
-using PuppeteerSharp.Messaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +12,7 @@ namespace PuppeteerSharp.Dom
         public string ClassName { get; private set; }
 
         /// <inheritdoc />
-        public JSHandle Handle { get; private set; }
+        public IJSHandle Handle { get; private set; }
 
         /// <inheritdoc />
         public bool IsDisposed
@@ -21,7 +20,7 @@ namespace PuppeteerSharp.Dom
             get { return Handle.Disposed; }
         }
 
-        internal DomHandle(string className, JSHandle jSHandle)
+        internal DomHandle(string className, IJSHandle jSHandle)
         {
             ClassName = className;
             Handle = jSHandle;
@@ -211,6 +210,6 @@ namespace PuppeteerSharp.Dom
         /// Implicit operator, convert <see cref="DomHandle"/> to <see cref="JSHandle"/>
         /// </summary>
         /// <param name="domHandle">DomHandle</param>
-        public static implicit operator JSHandle(DomHandle domHandle) => domHandle.Handle;
+        public static implicit operator JSHandle(DomHandle domHandle) => (JSHandle)domHandle.Handle;
     }
 }

@@ -6,12 +6,12 @@ namespace PuppeteerSharp.Dom
 {
     /// <summary>
     /// Inherits from <see cref="Element"/>. It represents an in-page DOM element.
-    /// HtmlElement can be created by <see cref="PageExtensions.QuerySelectorAsync{T}(Page, string)"/> or <see cref="PageExtensions.QuerySelectorAllAsync{T}(Page, string)"/>.
+    /// HtmlElement can be created by <see cref="PageExtensions.QuerySelectorAsync{T}(IPage, string)"/> or <see cref="PageExtensions.QuerySelectorAllAsync{T}(IPage, string)"/>.
     /// </summary>
     public partial class HtmlElement
         : Element
     {
-        internal HtmlElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
             
         }
@@ -227,9 +227,9 @@ namespace PuppeteerSharp.Dom
         /// Content frame for element handles referencing iframe nodes, or null otherwise.
         /// </summary>
         /// <returns>Resolves to the content frame</returns>
-        public Task<Frame> ContentFrameAsync()
+        public Task<IFrame> ContentFrameAsync()
         {
-            var elementHandle = Handle as ElementHandle;
+            var elementHandle = Handle as IElementHandle;
 
             if (elementHandle == null)
             {

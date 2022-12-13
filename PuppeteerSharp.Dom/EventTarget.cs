@@ -8,7 +8,7 @@ namespace PuppeteerSharp.Dom
     /// </summary>
     public class EventTarget : DomHandle
     {
-        internal EventTarget(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal EventTarget(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 

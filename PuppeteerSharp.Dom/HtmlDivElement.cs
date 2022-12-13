@@ -9,7 +9,7 @@ namespace PuppeteerSharp.Dom
     /// <seealso href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement" />
     public partial class HtmlDivElement : HtmlElement
     {
-        internal HtmlDivElement(string className, JSHandle jsHandle) : base(className, jsHandle)
+        internal HtmlDivElement(string className, IJSHandle jsHandle) : base(className, jsHandle)
         {
         }
 
