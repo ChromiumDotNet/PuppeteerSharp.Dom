@@ -147,6 +147,29 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
+        /// Evaluates the XPath expression
+        /// </summary>
+        /// <typeparam name="T">Type of <see cref="Element"/> or derived type</typeparam>
+        /// <param name="page">Puppeteer Page</param>
+        /// <param name="expression">Expression to evaluate <see href="https://developer.mozilla.org/en-US/docs/Web/API/Document/evaluate"/></param>
+        /// <returns>Task which resolves to an array of <typeparamref name="T"/> </returns>
+        /// <seealso cref="IFrame.XPathAsync(string)"/>
+        public static async Task<T[]> XPathAsync<T>(this IPage page, string expression)
+            where T : Element
+        {
+            var elements = await page.XPathAsync(expression).ConfigureAwait(false);
+
+            var list = new List<T>();
+
+            foreach (var element in elements)
+            {
+                list.Add(element.ToDomHandle<T>());
+            }
+
+            return list.ToArray();
+        }
+
+        /// <summary>
         /// The method runs <c>document.querySelector</c> within the page. If no element matches the selector, the return value resolve to <c>null</c>.
         /// </summary>
         /// <param name="page">Puppeteer Page</param>
@@ -203,6 +226,42 @@ namespace PuppeteerSharp.Dom
             }
 
             return list.ToArray();
+        }
+
+        /// <summary>
+        /// Waits for a selector to be added to the DOM
+        /// </summary>
+        /// <typeparam name="T">Type derived from <see cref="Element"/></typeparam>
+        /// <param name="page">Puppeteer Page</param>
+        /// <param name="selector">A selector of an element to wait for</param>
+        /// <param name="options">Optional waiting parameters</param>
+        /// <returns>A task that resolves when element specified by selector string is added to DOM.
+        /// Resolves to `null` if waiting for `hidden: true` and selector is not found in DOM.</returns>
+        /// <seealso cref="IPage.WaitForXPathAsync(string, WaitForSelectorOptions)"/>
+        public static async Task<T> WaitForSelectorAsync<T>(this IPage page, string selector, WaitForSelectorOptions options = null)
+            where T : Element
+        {
+            var element = await page.WaitForSelectorAsync(selector, options).ConfigureAwait(false);
+
+            return element.ToDomHandle<T>();
+        }
+
+        /// <summary>
+        /// Waits for a xpath selector to be added to the DOM
+        /// </summary>
+        /// <typeparam name="T">Type derived from <see cref="Element"/></typeparam>
+        /// <param name="page">Puppeteer Page</param>
+        /// <param name="xpath">A xpath selector of an element to wait for</param>
+        /// <param name="options">Optional waiting parameters</param>
+        /// <returns>A task which resolves when element specified by xpath string is added to DOM.
+        /// Resolves to `null` if waiting for `hidden: true` and xpath is not found in DOM.</returns>
+        /// <seealso cref="IPage.WaitForSelectorAsync(string, WaitForSelectorOptions)"/>
+        public static async Task<T> WaitForXPathAsync<T>(this IPage page, string xpath, WaitForSelectorOptions options = null)
+            where T : Element
+        {
+            var element = await page.WaitForXPathAsync(xpath, options).ConfigureAwait(false);
+
+            return element.ToDomHandle<T>();
         }
     }
 }
