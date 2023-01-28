@@ -78,20 +78,24 @@ namespace PuppeteerSharp.Dom.Tests.MouseTests
             const string expectedText = "This is the text that we are going to try to select. Let's see how it goes.";
 
             await Page.GoToAsync(TestConstants.ServerUrl + "/input/textarea.html");
-            await Page.FocusAsync("textarea");
-            
-            await Page.Keyboard.TypeAsync(expectedText);
+            var textArea = await Page.QuerySelectorAsync<HtmlTextAreaElement>("textarea");
+            await textArea.FocusAsync();
+            await textArea.TypeAsync(expectedText);
+            // Firefox needs an extra frame here after typing or it will fail to set the scrollTop
+            await Page.EvaluateExpressionAsync("new Promise(requestAnimationFrame)");
             await Page.EvaluateExpressionAsync("document.querySelector('textarea').scrollTop = 0");
             var dimensions = await Page.EvaluateFunctionAsync<Dimensions>(Dimensions);
             await Page.Mouse.MoveAsync(dimensions.X + 2, dimensions.Y + 2);
             await Page.Mouse.DownAsync();
             await Page.Mouse.MoveAsync(dimensions.Width, dimensions.Height + 20);
             await Page.Mouse.UpAsync();
-            var actualTest = await Page.EvaluateFunctionAsync<string>(@"() => {
-                const textarea = document.querySelector('textarea');
-                return textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
-            }");
-            Assert.Equal(expectedText, actualTest);
+
+            var selectionStart = await textArea.GetSelectionStartAsync();
+            var selectionEnd = await textArea.GetSelectionEndAsync();
+            var value = await textArea.GetValueAsync();
+            var actualText = value.Substring(selectionStart, selectionEnd);
+
+            Assert.Equal(expectedText, actualText);
         }
 
         [PuppeteerDomFact]
