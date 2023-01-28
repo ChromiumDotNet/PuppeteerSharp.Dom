@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using PuppeteerSharp.Messaging;
 
 namespace PuppeteerSharp.Dom
 {
     /// <inheritdoc />
-    public abstract class DomHandle : IDomHandle
+    public abstract class DomHandle : IDomHandle, IJSHandle
     {
         /// <inheritdoc />
         public string ClassName { get; private set; }
@@ -18,6 +20,21 @@ namespace PuppeteerSharp.Dom
         public bool IsDisposed
         {
             get { return Handle.Disposed; }
+        }
+
+        bool IJSHandle.Disposed
+        {
+            get { return Handle?.Disposed == true; }
+        }
+
+        IExecutionContext IJSHandle.ExecutionContext
+        {
+            get { return Handle?.ExecutionContext; }
+        }
+
+        RemoteObject IJSHandle.RemoteObject
+        {
+            get { return Handle?.RemoteObject; }
         }
 
         internal DomHandle(string className, IJSHandle jSHandle)
@@ -54,41 +71,19 @@ namespace PuppeteerSharp.Dom
         /// </remarks>
         /// <returns>Task which resolves to script return value</returns>
         internal async Task<T> EvaluateFunctionInternalAsync<T>(string script, params object[] args)
-        {
-            var list = new List<object>(args.Length);
-
-            // TODO: If https://github.com/hardkoded/puppeteer-sharp/issues/1925
-            // is implemented hopefully a IJSHandle interface is added and we can implement that
-            // directly
-
-            var type = typeof(DomHandle);
-
-            foreach (var arg in args)
-            {
-                if (arg != null && type.IsAssignableFrom(arg.GetType()))
-                {
-                    var handle = (DomHandle)arg;
-                    list.Add(handle.Handle);
-                }
-                else
-                {
-                    list.Add(arg);
-                }
-            }
-
+        {            
             var returnType = typeof(T);
 
             if (returnType.IsEnum)
             {
-                var result = await Handle.EvaluateFunctionAsync(script, list.ToArray()).ConfigureAwait(false);
+                var result = await Handle.EvaluateFunctionAsync(script, args).ConfigureAwait(false);
 
                 var typeConverter = TypeDescriptor.GetConverter(returnType);
 
                 return (T)typeConverter.ConvertFrom(result.ToString());
-
             }
 
-            return await Handle.EvaluateFunctionAsync<T>(script, list.ToArray()).ConfigureAwait(false);
+            return await Handle.EvaluateFunctionAsync<T>(script, args).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -103,28 +98,7 @@ namespace PuppeteerSharp.Dom
         /// <returns>Task which resolves to script return value</returns>
         internal Task EvaluateFunctionInternalAsync(string script, params object[] args)
         {
-            var list = new List<object>(args.Length);
-
-            // TODO: If https://github.com/hardkoded/puppeteer-sharp/issues/1925
-            // is implemented hopefully a IJSHandle interface is added and we can implement that
-            // directly
-
-            var type = typeof(DomHandle);
-
-            foreach (var arg in args)
-            {
-                if (arg != null && type.IsAssignableFrom(arg.GetType()))
-                {
-                    var handle = (DomHandle)arg;
-                    list.Add(handle.Handle);
-                }
-                else
-                {
-                    list.Add(arg);
-                }
-            }
-
-            return Handle.EvaluateFunctionAsync(script, list.ToArray());
+            return Handle.EvaluateFunctionAsync(script, args);
         }
 
         internal async Task<T> EvaluateFunctionHandleInternalAsync<T>(string script, params object[] args)
@@ -204,6 +178,41 @@ namespace PuppeteerSharp.Dom
                 await jsHandle.DisposeAsync().ConfigureAwait(false);
             }
             return result;
+        }
+
+        Task<JToken> IJSHandle.EvaluateFunctionAsync(string script, params object[] args)
+        {
+            return Handle.EvaluateFunctionAsync<JToken>(script, args);
+        }
+
+        Task<T> IJSHandle.EvaluateFunctionAsync<T>(string script, params object[] args)
+        {
+            return Handle.EvaluateFunctionAsync<T>(script, args);
+        }
+
+        Task<IJSHandle> IJSHandle.EvaluateFunctionHandleAsync(string pageFunction, params object[] args)
+        {
+            return Handle.EvaluateFunctionHandleAsync(pageFunction, args);
+        }
+
+        Task<Dictionary<string, IJSHandle>> IJSHandle.GetPropertiesAsync()
+        {
+            return Handle.GetPropertiesAsync();
+        }
+
+        Task<IJSHandle> IJSHandle.GetPropertyAsync(string propertyName)
+        {
+            return Handle.GetPropertyAsync(propertyName);
+        }
+
+        Task<object> IJSHandle.JsonValueAsync()
+        {
+            return Handle.JsonValueAsync();
+        }
+
+        Task<T> IJSHandle.JsonValueAsync<T>()
+        {
+            return Handle.JsonValueAsync<T>();
         }
 
         /// <summary>

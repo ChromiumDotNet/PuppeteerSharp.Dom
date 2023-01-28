@@ -22,8 +22,8 @@
     </Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageId>PuppeteerSharp.Dom</PackageId>
-    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <PackageReleaseNotes>Upgrade to PuppeteerSharp to 9.0</PackageReleaseNotes>
+    <VersionPrefix>3.0.0</VersionPrefix>
     <!--<VersionSuffix>preview01</VersionSuffix>-->
     <DebugType>embedded</DebugType>
     <DebugSymbols>true</DebugSymbols>
@@ -37,7 +37,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="PuppeteerSharp" Version="8.0.0" />
+    <PackageReference Include="PuppeteerSharp" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
