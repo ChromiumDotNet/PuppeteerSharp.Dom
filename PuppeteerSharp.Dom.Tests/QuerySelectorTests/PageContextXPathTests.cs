@@ -16,7 +16,9 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
         public async Task ShouldQueryExistingElement()
         {
             await Page.SetContentAsync("<section>test</section>");
+#pragma warning disable CS0618 // Type or member is obsolete
             var elements = await Page.XPathAsync("/html/body/section");
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.NotNull(elements[0]);
             Assert.Single(elements);
         }
@@ -24,7 +26,9 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
         [PuppeteerDomFact]
         public async Task ShouldReturnEmptyArrayForNonExistingElement()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             var elements = await Page.XPathAsync("/html/body/non-existing-element");
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.Empty(elements);
         }
 
@@ -32,7 +36,9 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
         public async Task ShouldReturnMultipleElements()
         {
             await Page.SetContentAsync("<div></div><div></div>");
+#pragma warning disable CS0618 // Type or member is obsolete
             var elements = await Page.XPathAsync("/html/body/div");
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.Equal(2, elements.Length);
         }
     }

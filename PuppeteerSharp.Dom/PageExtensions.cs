@@ -154,6 +154,7 @@ namespace PuppeteerSharp.Dom
         /// <param name="expression">Expression to evaluate <see href="https://developer.mozilla.org/en-US/docs/Web/API/Document/evaluate"/></param>
         /// <returns>Task which resolves to an array of <typeparamref name="T"/> </returns>
         /// <seealso cref="IFrame.XPathAsync(string)"/>
+        [Obsolete("Use " + nameof(QuerySelectorAsync) + " instead")]
         public static async Task<T[]> XPathAsync<T>(this IPage page, string expression)
             where T : Element
         {
@@ -256,6 +257,7 @@ namespace PuppeteerSharp.Dom
         /// <returns>A task which resolves when element specified by xpath string is added to DOM.
         /// Resolves to `null` if waiting for `hidden: true` and xpath is not found in DOM.</returns>
         /// <seealso cref="IPage.WaitForSelectorAsync(string, WaitForSelectorOptions)"/>
+        [Obsolete("Use " + nameof(WaitForSelectorAsync) + " instead")]
         public static async Task<T> WaitForXPathAsync<T>(this IPage page, string xpath, WaitForSelectorOptions options = null)
             where T : Element
         {

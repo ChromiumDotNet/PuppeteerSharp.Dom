@@ -242,8 +242,9 @@ namespace PuppeteerSharp.Dom
         /// <summary>
         /// Evaluates if the element is visible in the current viewport.
         /// </summary>
+        /// <param name="threshold">A number between 0 and 1 specifying the fraction of the element's area that must be visible to pass the check.</param>
         /// <returns>A task which resolves to true if the element is visible in the current viewport.</returns>
-        public Task<bool> IsIntersectingViewportAsync()
+        public Task<bool> IsIntersectingViewportAsync(int threshold = 0)
         {
             var elementHandle = Handle as ElementHandle;
 
@@ -252,7 +253,7 @@ namespace PuppeteerSharp.Dom
                 throw new PuppeteerException("Unable to convert to ElementHandle");
             }
 
-            return elementHandle.IsIntersectingViewportAsync();
+            return elementHandle.IsIntersectingViewportAsync(threshold);
         }
 
         /// <summary>

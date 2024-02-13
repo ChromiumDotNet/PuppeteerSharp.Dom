@@ -37,7 +37,7 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
             var button = await Page.QuerySelectorAsync<HtmlButtonElement>("button");
             await button.RemoveAsync();
             var exception = await Assert.ThrowsAsync<PuppeteerException>(async () => await button.ClickAsync());
-            Assert.Equal("Node is detached from document", exception.Message);
+            Assert.Equal("Node is either not visible or not an HTMLElement", exception.Message);
         }
 
         [PuppeteerDomFact]

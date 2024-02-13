@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using PuppeteerSharp.Messaging;
@@ -25,11 +26,6 @@ namespace PuppeteerSharp.Dom
         bool IJSHandle.Disposed
         {
             get { return Handle?.Disposed == true; }
-        }
-
-        IExecutionContext IJSHandle.ExecutionContext
-        {
-            get { return Handle?.ExecutionContext; }
         }
 
         RemoteObject IJSHandle.RemoteObject
@@ -76,14 +72,14 @@ namespace PuppeteerSharp.Dom
 
             if (returnType.IsEnum)
             {
-                var result = await Handle.EvaluateFunctionAsync(script, args).ConfigureAwait(false);
+                var result = await Handle.EvaluateFunctionAsync(script, GetArguments(args)).ConfigureAwait(false);
 
                 var typeConverter = TypeDescriptor.GetConverter(returnType);
 
                 return (T)typeConverter.ConvertFrom(result.ToString());
             }
 
-            return await Handle.EvaluateFunctionAsync<T>(script, args).ConfigureAwait(false);
+            return await Handle.EvaluateFunctionAsync<T>(script, GetArguments(args)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -98,13 +94,13 @@ namespace PuppeteerSharp.Dom
         /// <returns>Task which resolves to script return value</returns>
         internal Task EvaluateFunctionInternalAsync(string script, params object[] args)
         {
-            return Handle.EvaluateFunctionAsync(script, args);
+            return Handle.EvaluateFunctionAsync(script, GetArguments(args));
         }
 
         internal async Task<T> EvaluateFunctionHandleInternalAsync<T>(string script, params object[] args)
             where T : DomHandle
         {
-            var handle = await Handle.EvaluateFunctionHandleAsync(script, args).ConfigureAwait(false);
+            var handle = await Handle.EvaluateFunctionHandleAsync(script, GetArguments(args)).ConfigureAwait(false);
 
             if (handle == null)
             {
@@ -178,6 +174,13 @@ namespace PuppeteerSharp.Dom
                 await jsHandle.DisposeAsync().ConfigureAwait(false);
             }
             return result;
+        }
+
+        private static object[] GetArguments(object[] args)
+        {
+            return args
+                .Select(arg => (arg is IDomHandle domHandle) ? domHandle.Handle : arg)
+                .ToArray();
         }
 
         Task<JToken> IJSHandle.EvaluateFunctionAsync(string script, params object[] args)

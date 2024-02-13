@@ -32,7 +32,9 @@ namespace PuppeteerSharp.Dom.Tests.WaitForTests
         public async Task ShouldWaitForAnXpath()
         {
             var found = false;
+#pragma warning disable CS0618 // Type or member is obsolete
             var waitFor = Page.WaitForXPathAsync<HtmlDivElement>("//div").ContinueWith(_ => found = true);
+#pragma warning restore CS0618 // Type or member is obsolete
             await Page.GoToAsync(TestConstants.EmptyPage);
             Assert.False(found);
             await Page.GoToAsync(TestConstants.ServerUrl + "/grid.html");
@@ -45,7 +47,7 @@ namespace PuppeteerSharp.Dom.Tests.WaitForTests
         {
             await Page.SetContentAsync("<div>some text</div>");
 
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(() =>
+            var exception = await Assert.ThrowsAsync<WaitTaskTimeoutException>(() =>
                 Page.WaitForSelectorAsync<HtmlDivElement>("/html/body/div"));
 
             Assert.NotNull(exception);

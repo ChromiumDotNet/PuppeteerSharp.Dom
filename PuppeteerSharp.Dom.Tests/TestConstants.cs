@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using PuppeteerSharp.BrowserData;
 
 namespace PuppeteerSharp.Dom.Tests
 {
@@ -21,6 +22,7 @@ namespace PuppeteerSharp.Dom.Tests
         public static readonly string EmptyPage = $"{ServerUrl}/empty.html";
         public static readonly string CrossProcessUrl = ServerIpUrl;
         public static readonly string ExtensionPath = Path.Combine(AppContext.BaseDirectory, "Assets", "simple-extension");
+        public static readonly bool IsChrome = Environment.GetEnvironmentVariable("PRODUCT") != "FIREFOX";
 
         public static ILoggerFactory LoggerFactory { get; private set; }
         public static string FileToUpload => Path.Combine(AppContext.BaseDirectory, "Assets", "file-to-upload.txt");
@@ -34,11 +36,13 @@ namespace PuppeteerSharp.Dom.Tests
             "    http://localhost:<PORT>/frames/frame.html (aframe)"
         };
 
-        public static LaunchOptions DefaultBrowserOptions() => new LaunchOptions
+        public static LaunchOptions DefaultBrowserOptions() => new()
         {
             SlowMo = Convert.ToInt32(Environment.GetEnvironmentVariable("SLOW_MO")),
-            Headless = Convert.ToBoolean(Environment.GetEnvironmentVariable("HEADLESS") ?? "true"),
-            Product = Product.Chrome,
+            Headless = Convert.ToBoolean(
+                Environment.GetEnvironmentVariable("HEADLESS") ??
+                (System.Diagnostics.Debugger.IsAttached ? "false" : "true")),
+            Browser = IsChrome ? SupportedBrowser.Chrome : SupportedBrowser.Firefox,
             EnqueueAsyncMessages = Convert.ToBoolean(Environment.GetEnvironmentVariable("ENQUEUE_ASYNC_MESSAGES") ?? "false"),
             Timeout = 0,
             LogProcess = true,
