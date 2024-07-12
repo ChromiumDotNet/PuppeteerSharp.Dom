@@ -96,8 +96,8 @@ namespace PuppeteerSharp.Dom.Tests.ClickTests
 
             await Page.Keyboard.TypeAsync(expected);
             await Page.ClickAsync("textarea");
-            await Page.ClickAsync("textarea", new ClickOptions { ClickCount = 2 });
-            await Page.ClickAsync("textarea", new ClickOptions { ClickCount = 3 });
+            await Page.ClickAsync("textarea", new ClickOptions { Count = 2 });
+            await Page.ClickAsync("textarea", new ClickOptions { Count = 3 });
 
             var actual = await Page.EvaluateFunctionAsync<string>(@"() => {
                 const textarea = document.querySelector('textarea');
@@ -187,7 +187,7 @@ namespace PuppeteerSharp.Dom.Tests.ClickTests
                });
             }");
             var button = await Page.QuerySelectorAsync<HtmlButtonElement>("button");
-            await button.ClickAsync(new ClickOptions { ClickCount = 2 });
+            await button.ClickAsync(new ClickOptions { Count = 2 });
             Assert.True(await Page.EvaluateExpressionAsync<bool>("double"));
             Assert.Equal("Clicked", await Page.EvaluateExpressionAsync<string>("result"));
         }

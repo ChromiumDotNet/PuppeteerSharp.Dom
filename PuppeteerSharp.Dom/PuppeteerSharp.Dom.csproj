@@ -22,7 +22,7 @@
     </Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageId>PuppeteerSharp.Dom</PackageId>
-    <PackageReleaseNotes>Upgrade to PuppeteerSharp to 14.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade to PuppeteerSharp 18.0</PackageReleaseNotes>
     <VersionPrefix>4.0.0</VersionPrefix>
     <!--<VersionSuffix>preview01</VersionSuffix>-->
     <DebugType>embedded</DebugType>
@@ -37,7 +37,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="PuppeteerSharp" Version="14.0.0" />
+    <PackageReference Include="PuppeteerSharp" Version="18.0.3" />
   </ItemGroup>
 
   <ItemGroup>

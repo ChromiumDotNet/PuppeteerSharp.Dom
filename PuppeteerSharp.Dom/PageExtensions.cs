@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PuppeteerSharp.Cdp.Messaging;
 
 namespace PuppeteerSharp.Dom
 {
@@ -26,10 +27,10 @@ namespace PuppeteerSharp.Dom
             var remoteObject = jsHandle.RemoteObject;
 
             // Types like FileList are of SubType other
-            if (remoteObject.Type == Messaging.RemoteObjectType.Object &&
-                (remoteObject.Subtype == Messaging.RemoteObjectSubtype.Node ||
-                remoteObject.Subtype == Messaging.RemoteObjectSubtype.Array ||
-                remoteObject.Subtype == Messaging.RemoteObjectSubtype.Other))
+            if (remoteObject.Type == RemoteObjectType.Object &&
+                (remoteObject.Subtype == RemoteObjectSubtype.Node ||
+                remoteObject.Subtype == RemoteObjectSubtype.Array ||
+                remoteObject.Subtype == RemoteObjectSubtype.Other))
             {
                 return HtmlObjectFactory.CreateObject<T>(remoteObject.ClassName, jsHandle);
             }

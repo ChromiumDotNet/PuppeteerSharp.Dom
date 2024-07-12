@@ -103,7 +103,7 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
-        /// Scrolls element into view if needed, and then uses <see cref="Page.Mouse"/> to hover over the center of the element.
+        /// Scrolls element into view if needed, and then uses <see cref="IPage.Mouse"/> to hover over the center of the element.
         /// </summary>
         /// <returns>Task which resolves when the element is successfully hovered</returns>
         public Task HoverAsync()
@@ -118,7 +118,7 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
-        /// Scrolls element into view if needed, and then uses <see cref="Page.Mouse"/> to click in the center of the element.
+        /// Scrolls element into view if needed, and then uses <see cref="IPage.Mouse"/> to click in the center of the element.
         /// </summary>
         /// <param name="options">click options</param>
         /// <exception cref="PuppeteerException">if the element is detached from DOM</exception>

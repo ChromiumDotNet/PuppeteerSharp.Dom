@@ -15,7 +15,7 @@ namespace PuppeteerSharp.Dom.Tests
         public override async Task InitializeAsync()
         {
             await base.InitializeAsync();
-            Context = await Browser.CreateIncognitoBrowserContextAsync();
+            Context = await Browser.CreateBrowserContextAsync();
         }
     }
 }

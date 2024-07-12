@@ -30,9 +30,12 @@ namespace PuppeteerSharp.Dom.Tests
         public static IEnumerable<string> DumpFrames(IFrame frame, string indentation = "")
         {
             var description = indentation + Regex.Replace(frame.Url, @":\d{4}", ":<PORT>");
-            if (!string.IsNullOrEmpty(frame.Name))
+#pragma warning disable CS0618 // Type or member is obsolete
+            var name = frame.Name;
+#pragma warning restore CS0618 // Type or member is obsolete
+            if (!string.IsNullOrEmpty(name))
             {
-                description += $" ({frame.Name})";
+                description += $" ({name})";
             }
             var result = new List<string>() { description };
             foreach (var child in frame.ChildFrames)
