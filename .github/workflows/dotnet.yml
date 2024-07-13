@@ -39,15 +39,15 @@ jobs:
     
     - name: Build
       run: |
-        echo "Buid version is 3.0.${{github.run_number}}"
-        dotnet build PuppeteerSharp.Dom.sln /p:Version=3.0.${{github.run_number}} --configuration Release
+        echo "Buid version is 4.0.${{github.run_number}}"
+        dotnet build PuppeteerSharp.Dom.sln /p:Version=4.0.${{github.run_number}} --configuration Release
     
     - name: Test
       run: |
           Xvfb :1 -screen 5 1024x768x8 &
           export DISPLAY=:1.5
           cd PuppeteerSharp.Dom.Tests
-          dotnet test -f net5.0 -s test.runsettings -c Debug --logger "trx;LogFileName=TestResults.xml"
+          dotnet test -f net6.0 -s test.runsettings -c Debug --logger "trx;LogFileName=TestResults.xml"
     
     - name: Publish Nuget packages
       run: | 
