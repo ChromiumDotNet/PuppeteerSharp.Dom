@@ -37,7 +37,7 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
             var button = await Page.QuerySelectorAsync<HtmlButtonElement>("button");
             await button.RemoveAsync();
             var exception = await Assert.ThrowsAsync<PuppeteerException>(async () => await button.ClickAsync());
-            Assert.Equal("Node is either not visible or not an HTMLElement", exception.Message);
+            Assert.Equal("Node is detached from document", exception.Message);
         }
 
         [PuppeteerDomFact]
@@ -49,7 +49,7 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
                 .AndThen(x => x.SetPropertyAsync("display", "none"));
             //await Page.EvaluateFunctionAsync("button => button.style.display = 'none'", (JSHandle)button);
             var exception = await Assert.ThrowsAsync<PuppeteerException>(async () => await button.ClickAsync());
-            Assert.Equal("Node is either not visible or not an HTMLElement", exception.Message);
+            Assert.Equal("Node is either not clickable or not an Element", exception.Message);
         }
 
         [PuppeteerDomFact]
@@ -61,7 +61,7 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
                 .AndThen(x => x.GetStyleAsync())
                 .AndThen(x => x.SetPropertyAsync("display", "none"));
             var exception = await Assert.ThrowsAsync<PuppeteerException>(async () => await button.ClickAsync());
-            Assert.Equal("Node is either not visible or not an HTMLElement", exception.Message);
+            Assert.Equal("Node is either not clickable or not an Element", exception.Message);
         }
 
         [PuppeteerDomFact]
@@ -70,7 +70,7 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
             await Page.SetContentAsync("hello<br>goodbye");
             var br = await Page.QuerySelectorAsync<HtmlElement>("br");
             var exception = await Assert.ThrowsAsync<PuppeteerException>(async () => await br.ClickAsync());
-            Assert.Equal("Node is either not visible or not an HTMLElement", exception.Message);
+            Assert.Equal("Node is either not clickable or not an Element", exception.Message);
         }
     }
 }
