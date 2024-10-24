@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using PuppeteerSharp.Cdp.Messaging;
 
 namespace PuppeteerSharp.Dom
@@ -183,9 +183,9 @@ namespace PuppeteerSharp.Dom
                 .ToArray();
         }
 
-        Task<JToken> IJSHandle.EvaluateFunctionAsync(string script, params object[] args)
+        Task<JsonElement?> IJSHandle.EvaluateFunctionAsync(string script, params object[] args)
         {
-            return Handle.EvaluateFunctionAsync<JToken>(script, args);
+            return Handle.EvaluateFunctionAsync<JsonElement?>(script, args);
         }
 
         Task<T> IJSHandle.EvaluateFunctionAsync<T>(string script, params object[] args)
