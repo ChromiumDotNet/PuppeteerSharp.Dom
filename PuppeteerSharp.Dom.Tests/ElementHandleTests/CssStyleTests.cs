@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Threading.Tasks;
 using PuppeteerSharp.Dom.Tests.Attributes;
 using Xunit.Abstractions;
@@ -96,7 +97,11 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
 
             var actual = await style.GetPropertyValueAsync<object>("z-index");
 
-            Assert.Equal(expected, actual);
+            Assert.IsType<JsonElement>(actual);
+
+            var actualJE = (JsonElement)actual;
+            Assert.Equal(JsonValueKind.String, actualJE.ValueKind);
+            Assert.Equal(expected, actualJE.GetString());
         }
 
         [PuppeteerDomFact]
