@@ -209,62 +209,49 @@ namespace PuppeteerSharp.Dom
             return Handle.JsonValueAsync<T>();
         }
 
-        internal T ParseJSValueTo<T>(JsonElement? value)
+        /// <summary>
+        /// Parse value of element to designated type
+        /// </summary>
+        /// <typeparam name="T">Designated type</typeparam>
+        /// <param name="value">Value element</param>
+        /// <returns>Value of element of designated type</returns>
+        /// <exception cref="InvalidOperationException">Value not found (null).</exception>
+        /// <exception cref="FormatException">Type not recognized and value was unable to be parsed.</exception>
+        public static T ParseJSValueTo<T>(JsonElement? value)
         {
             var returnType = typeof(T);
             if (returnType == typeof(object) || returnType == value.GetType())
             {
                 return (T)(object)value;
             }
-            if (returnType == typeof(JsonElement?))
-            {
-                if (value != null)
-                {
-                    return (T)(object)value;
-                }
-                else
-                {
-                    throw new InvalidOperationException("Result of evaluating a script is null when non-nullable result expected.");
-                }
-            }
-
-            var nullable = false;
+            var valueIsNull = value == null || value.Value.ValueKind == JsonValueKind.Null || value.Value.ValueKind == JsonValueKind.Undefined;
+            var nullable = returnType.IsClass;
             if (Nullable.GetUnderlyingType(returnType) != null)
             {
                 nullable = true;
                 returnType = Nullable.GetUnderlyingType(returnType);
             }
 
-            if (returnType == typeof(string))
+            if (valueIsNull)
             {
-                if (value == null)
+                if (nullable)
                 {
-                    return default;
+                    return (T)(object)null;
                 }
+                throw new InvalidOperationException($"Result of evaluating a script is null when type {typeof(T)} expected.");
+            }
+            else if (returnType == typeof(string))
+            {
                 return (T)(object)value.Value.GetString();
             }
-            if (returnType.IsEnum)
+            else if (returnType.IsEnum)
             {
                 var typeConverter = TypeDescriptor.GetConverter(returnType);
                 return (T)typeConverter.ConvertFrom(value.ToString());
             }
-            if (value == null || value.Value.ValueKind == JsonValueKind.Null || value.Value.ValueKind == JsonValueKind.Undefined)
-            {
-                if (!nullable)
-                {
-                    throw new InvalidOperationException($"Unable to parse null value to {typeof(T)}.");
-                }
-                return default;
-            }
-
-            if (returnType == typeof(int))
+            else if (returnType == typeof(int))
             {
                 if (int.TryParse(value.ToString(), out var result))
-                { return (T)(object)result; }
-            }
-            else if (returnType == typeof(double))
-            {
-                if (double.TryParse(value.ToString(), out var result))
                 { return (T)(object)result; }
             }
             else if (returnType == typeof(bool))
@@ -279,6 +266,11 @@ namespace PuppeteerSharp.Dom
                 }
 
                 if (bool.TryParse(value.ToString(), out var result))
+                { return (T)(object)result; }
+            }
+            else if (returnType == typeof(double))
+            {
+                if (double.TryParse(value.ToString(), out var result))
                 { return (T)(object)result; }
             }
             else if (returnType == typeof(DateTime))
