@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using PuppeteerSharp.Input;
 
 namespace PuppeteerSharp.Dom
 {
@@ -637,10 +638,15 @@ namespace PuppeteerSharp.Dom
         public async Task<T> GetAttributeAsync<T>(string attribute)
         {
             var attr = await Handle.EvaluateFunctionHandleAsync("(element, attr) => element.getAttribute(attr)", attribute).ConfigureAwait(false);
-
-            var val = await attr.JsonValueAsync<T>().ConfigureAwait(false);
-
-            return val;
+            if (attr != null && attr.RemoteObject != null)
+            {
+                return ParseJSValueTo<T>(attr.RemoteObject.Value);
+            }
+            if (Nullable.GetUnderlyingType(typeof(T)) != null || typeof(T).IsClass)
+            {
+                return (T)(object)null!;
+            }
+            throw new InvalidOperationException($"Unable to parse null value to {typeof(T)}.");
         }
 
         /// <summary>
