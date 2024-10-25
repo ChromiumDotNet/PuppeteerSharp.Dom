@@ -67,19 +67,9 @@ namespace PuppeteerSharp.Dom
         /// </remarks>
         /// <returns>Task which resolves to script return value</returns>
         internal async Task<T> EvaluateFunctionInternalAsync<T>(string script, params object[] args)
-        {            
-            var returnType = typeof(T);
-
-            if (returnType.IsEnum)
-            {
-                var result = await Handle.EvaluateFunctionAsync(script, GetArguments(args)).ConfigureAwait(false);
-
-                var typeConverter = TypeDescriptor.GetConverter(returnType);
-
-                return (T)typeConverter.ConvertFrom(result.ToString());
-            }
-
-            return await Handle.EvaluateFunctionAsync<T>(script, GetArguments(args)).ConfigureAwait(false);
+        {
+            JsonElement? result = await Handle.EvaluateFunctionAsync(script, GetArguments(args)).ConfigureAwait(false);
+            return ParseJSValueTo<T>(result);
         }
 
         /// <summary>
@@ -188,9 +178,10 @@ namespace PuppeteerSharp.Dom
             return Handle.EvaluateFunctionAsync<JsonElement?>(script, args);
         }
 
-        Task<T> IJSHandle.EvaluateFunctionAsync<T>(string script, params object[] args)
+        async Task<T> IJSHandle.EvaluateFunctionAsync<T>(string script, params object[] args)
         {
-            return Handle.EvaluateFunctionAsync<T>(script, args);
+            var result = await Handle.EvaluateFunctionAsync<JsonElement?>(script, args);
+            return ParseJSValueTo<T>(result);
         }
 
         Task<IJSHandle> IJSHandle.EvaluateFunctionHandleAsync(string pageFunction, params object[] args)
@@ -216,6 +207,112 @@ namespace PuppeteerSharp.Dom
         Task<T> IJSHandle.JsonValueAsync<T>()
         {
             return Handle.JsonValueAsync<T>();
+        }
+
+        internal T ParseJSValueTo<T>(JsonElement? value)
+        {
+            var returnType = typeof(T);
+            if (returnType == typeof(object) || returnType == value.GetType())
+            {
+                return (T)(object)value;
+            }
+            if (returnType == typeof(JsonElement?))
+            {
+                if (value != null)
+                {
+                    return (T)(object)value;
+                }
+                else
+                {
+                    throw new InvalidOperationException("Result of evaluating a script is null when non-nullable result expected.");
+                }
+            }
+
+            var nullable = false;
+            if (Nullable.GetUnderlyingType(returnType) != null)
+            {
+                nullable = true;
+                returnType = Nullable.GetUnderlyingType(returnType);
+            }
+
+            if (returnType == typeof(string))
+            {
+                if (value == null)
+                {
+                    return default;
+                }
+                return (T)(object)value.Value.GetString();
+            }
+            if (returnType.IsEnum)
+            {
+                var typeConverter = TypeDescriptor.GetConverter(returnType);
+                return (T)typeConverter.ConvertFrom(value.ToString());
+            }
+            if (value == null || value.Value.ValueKind == JsonValueKind.Null || value.Value.ValueKind == JsonValueKind.Undefined)
+            {
+                if (!nullable)
+                {
+                    throw new InvalidOperationException($"Unable to parse null value to {typeof(T)}.");
+                }
+                return default;
+            }
+
+            if (returnType == typeof(int))
+            {
+                if (int.TryParse(value.ToString(), out var result))
+                { return (T)(object)result; }
+            }
+            else if (returnType == typeof(double))
+            {
+                if (double.TryParse(value.ToString(), out var result))
+                { return (T)(object)result; }
+            }
+            else if (returnType == typeof(bool))
+            {
+                if (value.Value.ValueKind == JsonValueKind.True)
+                {
+                    return (T)(object)true;
+                }
+                if (value.Value.ValueKind == JsonValueKind.False)
+                {
+                    return (T)(object)false;
+                }
+
+                if (bool.TryParse(value.ToString(), out var result))
+                { return (T)(object)result; }
+            }
+            else if (returnType == typeof(DateTime))
+            {
+                if (DateTime.TryParse(value.ToString(), out var result))
+                { return (T)(object)result; }
+            }
+            else if (returnType == typeof(float))
+            {
+                if (float.TryParse(value.ToString(), out var result))
+                { return (T)(object)result; }
+            }
+            else if (returnType == typeof(decimal))
+            {
+                if (decimal.TryParse(value.ToString(), out var result))
+                { return (T)(object)result; }
+            }
+            else if (returnType == typeof(long))
+            {
+                if (long.TryParse(value.ToString(), out var result))
+                { return (T)(object)result; }
+            }
+            else if (returnType == typeof(short))
+            {
+                if (short.TryParse(value.ToString(), out var result))
+                { return (T)(object)result; }
+            }
+            else if (returnType == typeof(byte))
+            {
+                if (byte.TryParse(value.ToString(), out var result))
+                { return (T)(object)result; }
+            }
+
+            throw new FormatException($"Failed to parse '{value}' to {typeof(T)}");
         }
 
         /// <summary>
