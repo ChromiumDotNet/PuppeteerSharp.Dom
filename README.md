@@ -10,7 +10,7 @@ PuppeteerSharp.Dom is an extension of [puppeteer-sharp by Darío Kondratiuk](htt
 # Prerequisites
 
  * .Net Standard 2.0
- * [PuppeteerSharp](https://www.nuget.org/packages/PuppeteerSharp/) 7.0 or greater
+ * [PuppeteerSharp](https://www.nuget.org/packages/PuppeteerSharp/) 19.0.2 or greater
 
 # Questions and Support
 
@@ -133,5 +133,22 @@ await foreach (var row in tableRowsHtmlCollection)
     }
 }
 ```
+
+# Notes
+
+## Upgrade to PuppeteerSharp.Dom 5.0.0
+
+After transition of **PuppeteerSharp** from `Newtonsoft.Json` to `System.Text.Json` in version **19.0.0** there was quite some changes so this version is no longer compatible with **PuppeterSharp** lower than **19.0.0**
+
+You may have to make changes to your code after updating to newer version
+
+## Values parsing
+
+**PuppeteerSharp** considers variable types from within JavaScript when requesting typed values on pages.
+
+**PuppeteerSharp.Dom** however allow you to obtain variables with desired data types as long as they are accurate and will throw if there is error parsing data
+
+That makes sense for strongly typed language like C# to require correct data types from evaluating but complicates interaction with DOM so is simplified
+
 <sup><a href='/PuppeteerSharp.Dom.Tests/QuerySelectorTests/PageContextQuerySelectorTests.cs#L19-L127' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
