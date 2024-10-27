@@ -180,7 +180,7 @@ namespace PuppeteerSharp.Dom
 
         async Task<T> IJSHandle.EvaluateFunctionAsync<T>(string script, params object[] args)
         {
-            var result = await Handle.EvaluateFunctionAsync<JsonElement?>(script, args).ConfigureAwait(false);;
+            var result = await Handle.EvaluateFunctionAsync<JsonElement?>(script, args).ConfigureAwait(false);
             return ParseJSValueTo<T>(result);
         }
 
