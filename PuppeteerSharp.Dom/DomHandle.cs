@@ -220,7 +220,7 @@ namespace PuppeteerSharp.Dom
         public static T ParseJSValueTo<T>(JsonElement? value)
         {
             var returnType = typeof(T);
-            if (returnType == typeof(object) || returnType == value.GetType())
+            if (returnType == typeof(object) || returnType == typeof(JsonElement?))
             {
                 return (T)(object)value;
             }
@@ -242,7 +242,7 @@ namespace PuppeteerSharp.Dom
             }
             else if (returnType == typeof(string))
             {
-                return (T)(object)value.Value.GetString();
+                return (T)(object)value.ToString();
             }
             else if (returnType.IsEnum)
             {
