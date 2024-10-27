@@ -134,15 +134,7 @@ await foreach (var row in tableRowsHtmlCollection)
 }
 ```
 
-# Notes
-
-## Upgrade to PuppeteerSharp.Dom 5.0.0
-
-After transition of **PuppeteerSharp** from `Newtonsoft.Json` to `System.Text.Json` in version **19.0.0** there was quite some changes so this version is no longer compatible with **PuppeterSharp** lower than **19.0.0**
-
-You may have to make changes to your code after updating to newer version
-
-## Values parsing
+### Be aware
 
 **PuppeteerSharp** considers variable types from within JavaScript when requesting typed values on pages.
 
