@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PuppeteerSharp.Dom
@@ -211,7 +210,7 @@ namespace PuppeteerSharp.Dom
 
             await func(input).ConfigureAwait(false);
 
-            if (dispose)
+            if (dispose && input != null)
             {
                 await input.DisposeAsync().ConfigureAwait(false);
             }

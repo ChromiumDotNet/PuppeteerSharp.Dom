@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using PuppeteerSharp.Dom.Tests.Attributes;
 using Xunit.Abstractions;
 using Xunit;
+using System;
 
 namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
 {
@@ -54,6 +55,22 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
 
             Assert.Equal(expected, actual);
             Assert.False(element.Result.IsDisposed);
+        }
+
+        [PuppeteerDomFact]
+        public async Task ShouldThrowNullReferenceException()
+        {
+            await Page.GoToAsync(TestConstants.ServerUrl + "/input/checkbox.html");
+
+            var element = await Page.QuerySelectorAsync<HtmlBodyElement>("body");
+
+            var exception = await Assert.ThrowsAsync<NullReferenceException>(async () =>
+            {
+                var content = await element.QuerySelectorAsync<HtmlDivElement>(".MyElement")
+                .AndThen(x => x.GetTextContentAsync());
+            });
+
+            Assert.NotNull(exception);
         }
     }
 }
