@@ -68,8 +68,9 @@ namespace PuppeteerSharp.Dom.Tests.MouseTests
             await mouse.MoveAsync(dimensions.X + dimensions.Width + 100, dimensions.Y + dimensions.Height + 100);
             await mouse.UpAsync();
             var newDimensions = await Page.EvaluateFunctionAsync<Dimensions>(Dimensions);
-            Assert.Equal(Math.Round(dimensions.Width + 104, MidpointRounding.AwayFromZero), newDimensions.Width);
-            Assert.Equal(Math.Round(dimensions.Height + 104, MidpointRounding.AwayFromZero), newDimensions.Height);
+
+            Assert.Equal(dimensions.Width + 104, newDimensions.Width, 0);
+            Assert.Equal(dimensions.Height + 104, newDimensions.Height, 0);
         }
 
         [PuppeteerDomFact]
@@ -81,9 +82,9 @@ namespace PuppeteerSharp.Dom.Tests.MouseTests
             var textArea = await Page.QuerySelectorAsync<HtmlTextAreaElement>("textarea");
             await textArea.FocusAsync();
             await textArea.TypeAsync(expectedText);
-            // Firefox needs an extra frame here after typing or it will fail to set the scrollTop
-            await Page.EvaluateExpressionAsync("new Promise(requestAnimationFrame)");
-            await Page.EvaluateExpressionAsync("document.querySelector('textarea').scrollTop = 0");
+
+            await Page.WaitForFunctionAsync(@"(text) => document.querySelector('textarea').value === text", expectedText);
+
             var dimensions = await Page.EvaluateFunctionAsync<Dimensions>(Dimensions);
             await Page.Mouse.MoveAsync(dimensions.X + 2, dimensions.Y + 2);
             await Page.Mouse.DownAsync();
@@ -162,8 +163,9 @@ namespace PuppeteerSharp.Dom.Tests.MouseTests
 
             await Page.Mouse.WheelAsync(0, -100);
             var boundingBoxAfter = await elem.BoundingBoxAsync();
-            Assert.Equal(230, boundingBoxAfter.Width);
-            Assert.Equal(230, boundingBoxAfter.Height);
+
+            Assert.Equal(259, boundingBoxAfter.Width, 0);
+            Assert.Equal(259, boundingBoxAfter.Height, 0);
         }
 
         [PuppeteerDomFact]

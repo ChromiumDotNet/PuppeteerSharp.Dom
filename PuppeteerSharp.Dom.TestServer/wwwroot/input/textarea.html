@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Textarea test</title>
-  </head>
-  <body>
-    <textarea></textarea>
+</head>
+<body>
+    <textarea rows="5" cols="20"></textarea>
     <script src='mouse-helper.js'></script>
     <script>
-      globalThis.result = '';
-      globalThis.textarea = document.querySelector('textarea');
-      textarea.addEventListener('input', () => result = textarea.value, false);
+        globalThis.result = '';
+        globalThis.textarea = document.querySelector('textarea');
+        textarea.addEventListener('input', () => result = textarea.value, false);
     </script>
-  </body>
+</body>
 </html>

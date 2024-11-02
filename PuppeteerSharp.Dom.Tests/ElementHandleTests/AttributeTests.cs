@@ -27,13 +27,13 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
         [PuppeteerDomFact]
         public async Task ShouldSetAttribute()
         {
-            const int expected = 1676;
+            const string expected = "1676";
 
             await Page.GoToAsync(TestConstants.ServerUrl + "/input/checkbox.html");
             var checkbox = await Page.QuerySelectorAsync<HtmlInputElement>("#agree");
             await checkbox.SetAttributeAsync("data-custom", expected);
 
-            var actual = await checkbox.GetAttributeAsync<int>("data-custom");
+            var actual = await checkbox.GetAttributeAsync<string>("data-custom");
 
             Assert.Equal(expected, actual);
         }

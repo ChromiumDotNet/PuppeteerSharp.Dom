@@ -63,13 +63,13 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
 
             await style.SetPropertyAsync("border", "1px solid red", true);
 
-            var actual = await style.GetPropertyValueAsync<string>("border-width");
+            var actual = await style.GetPropertyValueAsync("border-width");
 
             Assert.Equal("1px", actual);
         }
 
         [PuppeteerDomFact]
-        public async Task ShouldGetPropertyAsInt()
+        public async Task ShouldSetProperty()
         {
             await Page.GoToAsync(TestConstants.ServerUrl + "/input/button.html");
             var button = await Page.QuerySelectorAsync<HtmlButtonElement>("button");
@@ -78,9 +78,9 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
 
             await style.SetPropertyAsync("z-index", 10);
 
-            var actual = await style.GetPropertyValueAsync<int>("z-index");
+            var actual = await style.GetPropertyValueAsync("z-index");
 
-            Assert.Equal(10, actual);
+            Assert.Equal("10", actual);
         }
 
         [InlineData("auto")]
@@ -95,13 +95,9 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
 
             await style.SetPropertyAsync("z-index", expected);
 
-            var actual = await style.GetPropertyValueAsync<object>("z-index");
+            var actual = await style.GetPropertyValueAsync("z-index");
 
-            Assert.IsType<JsonElement>(actual);
-
-            var actualJE = (JsonElement)actual;
-            Assert.Equal(JsonValueKind.String, actualJE.ValueKind);
-            Assert.Equal(expected, actualJE.GetString());
+            Assert.Equal(expected, actual);
         }
 
         [PuppeteerDomFact]

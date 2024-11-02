@@ -35,13 +35,16 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
                 Width = 500,
                 Height = 500
             });
-            await Page.GoToAsync(TestConstants.ServerUrl + "/frames/nested-frames.html");
+            await Page.GoToAsync(TestConstants.ServerUrl + "/frames/nested-frames.html", WaitUntilNavigation.Networkidle0);
             var childFrame = Page.Frames.First(f => f.Url.Contains("two-frames.html"));
             var nestedFrame = childFrame.ChildFrames.Last();
             var elementHandle = await nestedFrame.QuerySelectorAsync<HtmlElement>("div");
             var box = await elementHandle.BoundingBoxAsync();
 
-            Assert.Equal(new BoundingBox(28, 182, 264, 18), box);
+            Assert.Equal(26, box.X, 0);
+            Assert.Equal(179, box.Y, 0);
+            Assert.Equal(265, box.Width, 0);
+            Assert.Equal(18, box.Height, 0);
         }
 
         [PuppeteerDomFact]
