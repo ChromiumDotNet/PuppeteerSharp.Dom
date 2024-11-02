@@ -43,7 +43,7 @@ namespace PuppeteerSharp.Dom.Tests.QuerySelectorTests
             var htmlTableElement = await page.QuerySelectorAsync<HtmlTableElement>("#myTableElementId");
 
             // Get a custom attribute value
-            var customAttribute = await element.GetAttributeAsync<string>("data-customAttribute");
+            var customAttribute = await element.GetAttributeAsync("data-customAttribute");
 
             //Set innerText property for the element
             await element.SetInnerTextAsync("Welcome!");

@@ -629,21 +629,6 @@ namespace PuppeteerSharp.Dom
         }
 
         /// <summary>
-        /// Get element attribute value
-        /// </summary>
-        /// <typeparam name="T">The type to deserialize the result to</typeparam>
-        /// <param name="attribute">attribute</param>
-        /// <returns>Task which resolves to the attributes value.</returns>
-        public async Task<T> GetAttributeAsync<T>(string attribute)
-        {
-            var attr = await Handle.EvaluateFunctionHandleAsync("(element, attr) => element.getAttribute(attr)", attribute).ConfigureAwait(false);
-
-            var val = await attr.JsonValueAsync<T>().ConfigureAwait(false);
-
-            return val;
-        }
-
-        /// <summary>
         /// Set element attribute value
         /// </summary>
         /// <param name="attribute">attribute name</param>

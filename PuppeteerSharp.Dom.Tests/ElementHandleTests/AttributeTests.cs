@@ -19,7 +19,7 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
 
             await Page.GoToAsync(TestConstants.ServerUrl + "/input/checkbox.html");
             var checkbox = await Page.QuerySelectorAsync<HtmlInputElement>("#agree");
-            var actual = await checkbox.GetAttributeAsync<string>("type");
+            var actual = await checkbox.GetAttributeAsync("type");
 
             Assert.Equal(expected, actual);
         }
@@ -33,7 +33,7 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
             var checkbox = await Page.QuerySelectorAsync<HtmlInputElement>("#agree");
             await checkbox.SetAttributeAsync("data-custom", expected);
 
-            var actual = await checkbox.GetAttributeAsync<string>("data-custom");
+            var actual = await checkbox.GetAttributeAsync("data-custom");
 
             Assert.Equal(expected, actual);
         }

@@ -21,7 +21,7 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
             await Page.GoToAsync(TestConstants.ServerUrl + "/input/checkbox.html");
 
             var element = Page.QuerySelectorAsync<HtmlInputElement>("#agree");
-            var actual = await element.AndThen(x => x.GetAttributeAsync<string>("type"));
+            var actual = await element.AndThen(x => x.GetAttributeAsync("type"));
 
             Assert.Equal(expected, actual);
             Assert.True(element.Result.IsDisposed);
@@ -37,7 +37,7 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
             var element = Page.QuerySelectorAsync<HtmlBodyElement>("body");
             var actual = await element
                 .AndThen(x => x.QuerySelectorAsync<HtmlInputElement>("#agree"))
-                .AndThen(x => x.GetAttributeAsync<string>("type"));
+                .AndThen(x => x.GetAttributeAsync("type"));
 
             Assert.Equal(expected, actual);
             Assert.True(element.Result.IsDisposed);
@@ -51,7 +51,7 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
             await Page.GoToAsync(TestConstants.ServerUrl + "/input/checkbox.html");
 
             var element = Page.QuerySelectorAsync<HtmlInputElement>("#agree");
-            var actual = await element.AndThen(x => x.GetAttributeAsync<string>("type"), dispose: false);
+            var actual = await element.AndThen(x => x.GetAttributeAsync("type"), dispose: false);
 
             Assert.Equal(expected, actual);
             Assert.False(element.Result.IsDisposed);
