@@ -164,7 +164,7 @@ namespace PuppeteerSharp.Dom
 
             var result = await func(input).ConfigureAwait(false);
 
-            if (dispose)
+            if (dispose && input != null)
             {
                 await input.DisposeAsync().ConfigureAwait(false);
             }
