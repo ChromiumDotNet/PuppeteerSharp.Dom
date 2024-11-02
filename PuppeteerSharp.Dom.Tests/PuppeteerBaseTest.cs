@@ -1,6 +1,6 @@
-using Newtonsoft.Json.Linq;
 using PuppeteerSharp.Dom.TestServer;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
 
@@ -32,9 +32,9 @@ namespace PuppeteerSharp.Dom.Tests
             HttpsServer.Reset();
         }
 
-        protected static Task<JToken> WaitEvent(CDPSession emitter, string eventName)
+        protected static Task<JsonElement?> WaitEvent(CDPSession emitter, string eventName)
         {
-            var completion = new TaskCompletionSource<JToken>();
+            var completion = new TaskCompletionSource<JsonElement?>();
             void handler(object sender, MessageEventArgs e)
             {
                 if (e.MessageID != eventName)
