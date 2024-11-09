@@ -39,8 +39,8 @@ jobs:
     
     - name: Build
       run: |
-        echo "Buid version is 4.0.${{github.run_number}}"
-        dotnet build PuppeteerSharp.Dom.sln /p:Version=4.0.${{github.run_number}} --configuration Release
+        echo "Buid version is 5.0.${{github.run_number}}"
+        dotnet build PuppeteerSharp.Dom.sln /p:Version=5.0.${{github.run_number}} --configuration Release
     
     - name: Test
       run: |
