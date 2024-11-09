@@ -25,7 +25,7 @@ Need priority support? [Sponsor @amaitland via GitHub Sponsors](https://github.c
 
 Read/write to the DOM
 <!-- snippet: QuerySelector -->
-<a id='snippet-queryselector'></a>
+<a id='snippet-QuerySelector'></a>
 ```cs
 var browserFetcher = new BrowserFetcher();
 await browserFetcher.DownloadAsync();
@@ -133,5 +133,5 @@ await foreach (var row in tableRowsHtmlCollection)
     }
 }
 ```
-<sup><a href='/PuppeteerSharp.Dom.Tests/QuerySelectorTests/PageContextQuerySelectorTests.cs#L19-L127' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/PuppeteerSharp.Dom.Tests/QuerySelectorTests/PageContextQuerySelectorTests.cs#L19-L127' title='Snippet source file'>snippet source</a> | <a href='#snippet-QuerySelector' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->

@@ -132,7 +132,7 @@ namespace PuppeteerSharp.Dom.Tests.MouseTests
                 await Page.ClickAsync("#button-3");
                 if (!(await Page.EvaluateFunctionAsync<bool>("mod => window.lastEvent[mod]", modifier.Value)))
                 {
-                    Assert.True(false, $"{modifier.Value} should be true");
+                    Assert.Fail($"{modifier.Value} should be true");
                 }
 
                 await Page.Keyboard.UpAsync(modifier.Key);
@@ -142,7 +142,7 @@ namespace PuppeteerSharp.Dom.Tests.MouseTests
             {
                 if (await Page.EvaluateFunctionAsync<bool>("mod => window.lastEvent[mod]", modifier.Value))
                 {
-                    Assert.False(true, $"{modifiers.Values} should be false");
+                    Assert.Fail($"{modifiers.Values} should be false");
                 }
             }
         }
