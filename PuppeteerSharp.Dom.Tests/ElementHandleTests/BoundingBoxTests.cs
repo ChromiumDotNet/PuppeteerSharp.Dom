@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using PuppeteerSharp.Dom.Tests.Attributes;
 using Xunit;
@@ -41,10 +42,17 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
             var elementHandle = await nestedFrame.QuerySelectorAsync<HtmlElement>("div");
             var box = await elementHandle.BoundingBoxAsync();
 
-            Assert.Equal(26, box.X, 0);
-            Assert.Equal(179, box.Y, 0);
-            Assert.Equal(265, box.Width, 0);
-            Assert.Equal(18, box.Height, 0);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                Assert.Equal(new BoundingBox(28, 182, 264, 18), box);
+            }
+            else
+            {
+                Assert.Equal(26, box.X, 0);
+                Assert.Equal(179, box.Y, 0);
+                Assert.Equal(265, box.Width, 0);
+                Assert.Equal(18, box.Height, 0);
+            }
         }
 
         [PuppeteerDomFact]

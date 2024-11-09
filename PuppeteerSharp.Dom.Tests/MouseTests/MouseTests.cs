@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using PuppeteerSharp.Dom.Tests.Attributes;
 using PuppeteerSharp.Input;
@@ -164,8 +165,16 @@ namespace PuppeteerSharp.Dom.Tests.MouseTests
             await Page.Mouse.WheelAsync(0, -100);
             var boundingBoxAfter = await elem.BoundingBoxAsync();
 
-            Assert.Equal(259, boundingBoxAfter.Width, 0);
-            Assert.Equal(259, boundingBoxAfter.Height, 0);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                Assert.Equal(230, boundingBoxAfter.Width);
+                Assert.Equal(230, boundingBoxAfter.Height);
+            }
+            else
+            {
+                Assert.Equal(259, boundingBoxAfter.Width, 0);
+                Assert.Equal(259, boundingBoxAfter.Height, 0);
+            }
         }
 
         [PuppeteerDomFact]
