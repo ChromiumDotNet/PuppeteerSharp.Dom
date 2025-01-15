@@ -41,6 +41,10 @@ jobs:
       run: |
         echo "Buid version is 5.0.${{github.run_number}}"
         dotnet build PuppeteerSharp.Dom.sln /p:Version=5.0.${{github.run_number}} --configuration Release
+        
+    - name: Disable AppArmor
+      if: matrix.os == 'ubuntu-latest'
+      run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
     
     - name: Test
       run: |
