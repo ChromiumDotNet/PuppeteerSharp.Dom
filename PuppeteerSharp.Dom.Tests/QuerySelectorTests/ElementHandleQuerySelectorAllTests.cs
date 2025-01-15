@@ -25,6 +25,17 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
         }
 
         [PuppeteerDomFact]
+        public async Task ShouldQueryExistingDivElements()
+        {
+            await Page.SetContentAsync("<html><body><div>A</div><br/><div>B</div></body></html>");
+            var html = await Page.QuerySelectorAsync<HtmlHtmlElement>("html");
+            var elements = await html.QuerySelectorAllAsync<HtmlDivElement>("div");
+            Assert.Equal(2, elements.Length);
+            var values = await Task.WhenAll(elements.Select(element => element.GetTextContentAsync()));
+            Assert.Equal(new[] { "A", "B" }, values);
+        }
+
+        [PuppeteerDomFact]
         public async Task ShouldReturnEmptyArrayForNonExistingElements()
         {
             await Page.SetContentAsync("<html><body><span>A</span><br/><span>B</span></body></html>");

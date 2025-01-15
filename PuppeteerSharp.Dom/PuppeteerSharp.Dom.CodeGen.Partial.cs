@@ -358,14 +358,14 @@ namespace PuppeteerSharp.Dom
         public async Task<T[]> QuerySelectorAllAsync<T>(string selector)
             where T : Element
         {
-            var arrayHandle = await EvaluateFunctionHandleInternalAsync<DomHandle>(
+            var arrayHandle = await Handle.EvaluateFunctionHandleAsync(
                 "(element, selector) => element.querySelectorAll(selector)",
                 selector).ConfigureAwait(false);
 
-            var properties = await arrayHandle.GetArray<T>().ConfigureAwait(false);
+            var properties = await arrayHandle.GetPropertiesAsync().ConfigureAwait(false);
             await arrayHandle.DisposeAsync().ConfigureAwait(false);
 
-            return properties.ToArray();
+            return properties.Select(kvp => kvp.Value.ToDomHandle<T>()).ToArray();
         }
 
         /// <summary>
@@ -674,14 +674,14 @@ namespace PuppeteerSharp.Dom
         public async Task<T[]> QuerySelectorAllAsync<T>(string selector)
             where T : Element
         {
-            var arrayHandle = await EvaluateFunctionHandleInternalAsync<DomHandle>(
+            var arrayHandle = await Handle.EvaluateFunctionHandleAsync(
                 "(element, selector) => element.querySelectorAll(selector)",
                 selector).ConfigureAwait(false);
 
-            var properties = await arrayHandle.GetArray<T>().ConfigureAwait(false);
+            var properties = await arrayHandle.GetPropertiesAsync().ConfigureAwait(false);
             await arrayHandle.DisposeAsync().ConfigureAwait(false);
 
-            return properties.ToArray();
+            return properties.Select(kvp => kvp.Value.ToDomHandle<T>()).ToArray();
         }
 
         /// <summary>
