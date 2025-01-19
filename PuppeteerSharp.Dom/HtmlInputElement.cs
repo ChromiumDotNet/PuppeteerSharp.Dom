@@ -90,7 +90,7 @@ namespace PuppeteerSharp.Dom
         /// </summary>
         /// <param name="start">start index</param>
         /// <param name="end">end index</param>
-        /// <param name="selectionDirection ">indicating the direction in which the selection is considered to have been performed.</param>
+        /// <param name="selectionDirection">indicating the direction in which the selection is considered to have been performed.</param>
         /// <returns>A Task that when awaited sets the start and end positions of the current text selection</returns>
         public Task SetSelectionRangeAsync(int start, int end, HtmlElementSelectionDirectionType? selectionDirection = null)
         {
