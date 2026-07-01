@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PuppeteerSharp.Cdp;
 using PuppeteerSharp.Cdp.Messaging;
 
 namespace PuppeteerSharp.Dom
@@ -24,7 +25,12 @@ namespace PuppeteerSharp.Dom
                 return default;
             }
 
-            var remoteObject = jsHandle.RemoteObject;
+            if (jsHandle is not ICdpHandle cdpHandle)
+            {
+                throw new NotSupportedException("Only CDP is supported currently.");
+            }
+
+            var remoteObject = cdpHandle.RemoteObject;
 
             // Types like FileList are of SubType other
             if (remoteObject.Type == RemoteObjectType.Object &&

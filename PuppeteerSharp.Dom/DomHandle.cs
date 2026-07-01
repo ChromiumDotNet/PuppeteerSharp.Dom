@@ -4,12 +4,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using PuppeteerSharp.Cdp;
 using PuppeteerSharp.Cdp.Messaging;
 
 namespace PuppeteerSharp.Dom
 {
     /// <inheritdoc />
-    public abstract class DomHandle : IDomHandle, IJSHandle
+    public abstract class DomHandle : IDomHandle, ICdpHandle
     {
         /// <inheritdoc />
         public string ClassName { get; private set; }
@@ -28,9 +29,17 @@ namespace PuppeteerSharp.Dom
             get { return Handle?.Disposed == true; }
         }
 
-        RemoteObject IJSHandle.RemoteObject
+        RemoteObject ICdpHandle.RemoteObject
         {
-            get { return Handle?.RemoteObject; }
+            get
+            {
+                if (Handle is ICdpHandle cdpHandle)
+                {
+                    return cdpHandle.RemoteObject;
+                }
+
+                throw new NotSupportedException("CDP is currently required.");
+            }
         }
 
         internal DomHandle(string className, IJSHandle jSHandle)
@@ -138,8 +147,10 @@ namespace PuppeteerSharp.Dom
 
             var result = new List<string>();
 
-            foreach (var jsHandle in response.Values)
+            foreach (var kvp in response)
             {
+                var jsHandle = kvp.Value as ICdpHandle;
+
                 if (jsHandle == null)
                 {
                     result.Add(default);
@@ -160,7 +171,7 @@ namespace PuppeteerSharp.Dom
 
             foreach (var kvp in response)
             {
-                var jsHandle = kvp.Value;
+                var jsHandle = kvp.Value as ICdpHandle;
 
                 if (jsHandle == null)
                 {
@@ -216,6 +227,11 @@ namespace PuppeteerSharp.Dom
         Task<T> IJSHandle.JsonValueAsync<T>()
         {
             return Handle.JsonValueAsync<T>();
+        }
+
+        IJSHandle IJSHandle.Move()
+        {
+            return Handle.Move();
         }
 
         /// <summary>

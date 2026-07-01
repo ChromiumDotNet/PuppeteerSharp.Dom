@@ -48,9 +48,9 @@ namespace PuppeteerSharp.Dom.Tests.ElementHandleTests
             }
             else
             {
-                Assert.Equal(26, box.X, 0);
-                Assert.Equal(179, box.Y, 0);
-                Assert.Equal(265, box.Width, 0);
+                Assert.Equal(28, box.X, 0);
+                Assert.Equal(182, box.Y, 0);
+                Assert.Equal(264, box.Width, 0);
                 Assert.Equal(18, box.Height, 0);
             }
         }

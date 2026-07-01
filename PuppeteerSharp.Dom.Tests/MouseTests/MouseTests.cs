@@ -172,8 +172,8 @@ namespace PuppeteerSharp.Dom.Tests.MouseTests
             }
             else
             {
-                Assert.Equal(259, boundingBoxAfter.Width, 0);
-                Assert.Equal(259, boundingBoxAfter.Height, 0);
+                Assert.Equal(230, boundingBoxAfter.Width, 0);
+                Assert.Equal(230, boundingBoxAfter.Height, 0);
             }
         }
 
